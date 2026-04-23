@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Veille Investissements Industriels — France & International</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #f5f4f0;
+    --surface: #ffffff;
+    --surface2: #f0ede8;
+    --border: rgba(0,0,0,0.1);
+    --border-strong: rgba(0,0,0,0.18);
+    --text: #1a1a18;
+    --text-muted: #6b6b67;
+    --text-faint: #9b9b96;
+    --blue: #185FA5;
+    --blue-bg: #E6F1FB;
+    --blue-border: #85B7EB;
+    --green: #0F6E56;
+    --green-bg: #E1F5EE;
+    --amber: #854F0B;
+    --amber-bg: #FAEEDA;
+    --radius: 10px;
+    --radius-lg: 14px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1a1a18;
+      --surface: #242422;
+      --surface2: #2e2e2b;
+      --border: rgba(255,255,255,0.08);
+      --border-strong: rgba(255,255,255,0.15);
+      --text: #e8e6e0;
+      --text-muted: #9a9890;
+      --text-faint: #6a6860;
+      --blue: #85B7EB;
+      --blue-bg: #0C447C;
+      --blue-border: #185FA5;
+      --green: #5DCAA5;
+      --green-bg: #085041;
+      --amber: #FAC775;
+      --amber-bg: #633806;
+    }
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* --- NAV --- */
+  nav {
+    background: var(--surface);
+    border-bottom: 0.5px solid var(--border);
+    padding: 0 2rem;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav-brand { display: flex; align-items: center; gap: 10px; }
+  .nav-logo {
+    width: 30px; height: 30px; border-radius: 8px;
+    background: var(--text); display: flex; align-items: center; justify-content: center;
+  }
+  .nav-logo svg { width: 16px; height: 16px; fill: var(--bg); }
+  .nav-title { font-size: 15px; font-weight: 600; letter-spacing: -0.01em; }
+  .nav-sub { font-size: 12px; color: var(--text-muted); }
+  .nav-right { display: flex; align-items: center; gap: 10px; }
+  .status-pill {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 12px; color: var(--text-muted);
+    background: var(--surface2); border-radius: 20px;
+    padding: 4px 10px; border: 0.5px solid var(--border);
+  }
+  .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); flex-shrink: 0; }
+  .dot.loading { background: #EF9F27; animation: pulse 1s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1}50%{opacity:0.35} }
+
+  /* --- LAYOUT --- */
+  .page { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+
+  /* --- TOOLBAR --- */
+  .toolbar {
+    display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
+    margin-bottom: 1.25rem;
+  }
+  .search-wrap { position: relative; flex: 1; min-width: 220px; }
+  .search-wrap input {
+    width: 100%; height: 40px; padding: 0 12px 0 38px;
+    border: 0.5px solid var(--border-strong); border-radius: var(--radius);
+    background: var(--surface); color: var(--text);
+    font-size: 14px; outline: none;
+    transition: border-color 0.15s;
+  }
+  .search-wrap input:focus { border-color: var(--blue); }
+  .search-icon {
+    position: absolute; left: 11px; top: 50%; transform: translateY(-50%);
+    color: var(--text-faint); pointer-events: none;
+  }
+  .refresh-btn {
+    height: 40px; padding: 0 18px; border-radius: var(--radius);
+    border: 0.5px solid var(--border-strong);
+    background: var(--text); color: var(--bg);
+    font-size: 13px; font-weight: 500; cursor: pointer;
+    display: flex; align-items: center; gap: 6px;
+    transition: opacity 0.15s;
+    white-space: nowrap;
+  }
+  .refresh-btn:hover { opacity: 0.85; }
+  .refresh-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  /* --- FILTERS --- */
+  .filters { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1.5rem; }
+  .chip {
+    font-size: 12px; padding: 5px 12px; border-radius: 20px;
+    border: 0.5px solid var(--border-strong);
+    background: var(--surface); color: var(--text-muted);
+    cursor: pointer; transition: all 0.15s; user-select: none;
+  }
+  .chip:hover { background: var(--surface2); color: var(--text); }
+  .chip.active { background: var(--blue-bg); color: var(--blue); border-color: var(--blue-border); }
+
+  /* --- STATS --- */
+  .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 1.5rem; }
+  .stat-card {
+    background: var(--surface); border: 0.5px solid var(--border);
+    border-radius: var(--radius); padding: 14px 16px;
+  }
+  .stat-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+  .stat-value { font-size: 22px; font-weight: 600; letter-spacing: -0.02em; }
+  .stat-sub { font-size: 11px; color: var(--text-faint); margin-top: 2px; }
+
+  /* --- CARDS --- */
+  .cards-grid { display: flex; flex-direction: column; gap: 10px; }
+
+  .project-card {
+    background: var(--surface); border: 0.5px solid var(--border);
+    border-radius: var(--radius-lg); overflow: hidden;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .project-card:hover { border-color: var(--border-strong); }
+
+  .card-main { padding: 1.1rem 1.25rem; cursor: pointer; }
+  .card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
+  .card-title { font-size: 14px; font-weight: 600; line-height: 1.4; flex: 1; }
+  .card-badges { display: flex; gap: 6px; flex-shrink: 0; flex-wrap: wrap; justify-content: flex-end; }
+  .badge {
+    font-size: 11px; padding: 3px 8px; border-radius: 20px;
+    font-weight: 500; white-space: nowrap;
+  }
+  .badge-fr { background: var(--green-bg); color: var(--green); }
+  .badge-int { background: var(--blue-bg); color: var(--blue); }
+  .badge-watch { background: var(--amber-bg); color: var(--amber); }
+  .badge-ongoing { background: var(--green-bg); color: var(--green); }
+  .badge-announced { background: var(--blue-bg); color: var(--blue); }
+
+  .card-meta { display: flex; gap: 14px; flex-wrap: wrap; font-size: 12px; color: var(--text-muted); margin-bottom: 10px; }
+  .meta-item { display: flex; align-items: center; gap: 4px; }
+  .meta-icon { font-size: 13px; }
+
+  .card-summary { font-size: 13px; color: var(--text-muted); line-height: 1.65; }
+
+  .card-footer {
+    padding: 10px 1.25rem;
+    border-top: 0.5px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap;
+    background: var(--surface2);
+  }
+  .card-tags { display: flex; gap: 5px; flex-wrap: wrap; }
+  .tag {
+    font-size: 11px; padding: 2px 7px; border-radius: 4px;
+    background: var(--border); color: var(--text-muted);
+  }
+  .expand-btn {
+    font-size: 12px; color: var(--blue); background: none; border: none;
+    cursor: pointer; white-space: nowrap; padding: 0; display: flex; align-items: center; gap: 4px;
+  }
+  .expand-btn:hover { opacity: 0.75; }
+
+  /* --- DETAIL PANEL --- */
+  .detail-panel {
+    border-top: 0.5px solid var(--border);
+    padding: 1.1rem 1.25rem;
+    display: none;
+    background: var(--surface);
+  }
+  .detail-panel.open { display: block; }
+  .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  @media (max-width: 600px) { .detail-grid { grid-template-columns: 1fr; } }
+
+  .detail-section-title {
+    font-size: 11px; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.06em; color: var(--text-faint); margin-bottom: 10px;
+  }
+  .opp-item {
+    display: flex; align-items: flex-start; gap: 8px;
+    padding: 7px 0; border-bottom: 0.5px solid var(--border); font-size: 13px;
+  }
+  .opp-item:last-child { border-bottom: none; }
+  .opp-check {
+    width: 18px; height: 18px; border-radius: 4px; flex-shrink: 0;
+    background: var(--green-bg); color: var(--green);
+    display: flex; align-items: center; justify-content: center; font-size: 10px; margin-top: 1px;
+  }
+  .company-chip {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 12px; padding: 4px 9px; border-radius: 6px;
+    background: var(--surface2); border: 0.5px solid var(--border);
+    color: var(--text-muted); margin: 3px;
+  }
+  .detail-actions { margin-top: 1rem; display: flex; gap: 8px; flex-wrap: wrap; }
+  .action-btn {
+    font-size: 12px; padding: 7px 14px; border-radius: var(--radius);
+    border: 0.5px solid var(--border-strong);
+    background: var(--surface); color: var(--text);
+    cursor: pointer; transition: background 0.15s;
+    text-decoration: none; display: inline-flex; align-items: center; gap: 5px;
+  }
+  .action-btn:hover { background: var(--surface2); }
+  .action-btn.primary {
+    background: var(--blue-bg); border-color: var(--blue-border); color: var(--blue);
+  }
+  .action-btn.primary:hover { opacity: 0.85; }
+
+  /* --- EMPTY / LOADING --- */
+  .skeleton { background: var(--border); border-radius: 4px; }
+  .sk-line { height: 13px; margin-bottom: 8px; }
+  .loading-cards { display: flex; flex-direction: column; gap: 10px; }
+  .loading-card {
+    background: var(--surface); border: 0.5px solid var(--border);
+    border-radius: var(--radius-lg); padding: 1.1rem 1.25rem;
+  }
+  @keyframes shimmer {
+    0%,100%{opacity:0.4} 50%{opacity:0.9}
+  }
+  .skeleton { animation: shimmer 1.6s ease-in-out infinite; }
+
+  .empty-state {
+    text-align: center; padding: 4rem 1rem; color: var(--text-muted);
+  }
+  .empty-icon { font-size: 2rem; margin-bottom: 0.75rem; }
+  .empty-text { font-size: 14px; }
+
+  /* --- FOOTER --- */
+  footer {
+    margin-top: 3rem; padding-top: 1.5rem;
+    border-top: 0.5px solid var(--border);
+    font-size: 12px; color: var(--text-faint);
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;
+  }
+
+  /* API KEY MODAL */
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 200; padding: 1rem;
+  }
+  .modal-overlay.hidden { display: none; }
+  .modal {
+    background: var(--surface); border-radius: var(--radius-lg);
+    border: 0.5px solid var(--border-strong);
+    padding: 2rem; max-width: 440px; width: 100%;
+  }
+  .modal h2 { font-size: 17px; font-weight: 600; margin-bottom: 8px; }
+  .modal p { font-size: 13px; color: var(--text-muted); margin-bottom: 1.25rem; line-height: 1.6; }
+  .modal input {
+    width: 100%; height: 40px; padding: 0 12px;
+    border: 0.5px solid var(--border-strong); border-radius: var(--radius);
+    background: var(--surface2); color: var(--text);
+    font-size: 14px; outline: none; margin-bottom: 10px;
+    font-family: monospace;
+  }
+  .modal input:focus { border-color: var(--blue); }
+  .modal-actions { display: flex; gap: 8px; }
+  .modal-btn {
+    flex: 1; height: 38px; border-radius: var(--radius);
+    font-size: 13px; font-weight: 500; cursor: pointer; border: none;
+  }
+  .modal-btn.primary { background: var(--text); color: var(--bg); }
+  .modal-btn.secondary { background: var(--surface2); color: var(--text); border: 0.5px solid var(--border-strong); }
+  .modal-note { font-size: 11px; color: var(--text-faint); margin-top: 10px; }
+
+  @media (max-width: 640px) {
+    nav { padding: 0 1rem; }
+    .page { padding: 1.25rem 1rem 3rem; }
+    .stats-row { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<!-- API KEY MODAL -->
+<div class="modal-overlay" id="apiModal">
+  <div class="modal">
+    <h2>Clé API Anthropic</h2>
+    <p>Pour utiliser cet outil, saisissez votre clé API Anthropic. Elle est stockée uniquement dans votre navigateur (localStorage) et n'est jamais envoyée ailleurs.</p>
+    <input type="password" id="apiKeyInput" placeholder="sk-ant-api03-..." autocomplete="off" />
+    <div class="modal-actions">
+      <button class="modal-btn secondary" onclick="useDemoMode()">Mode démo</button>
+      <button class="modal-btn primary" onclick="saveApiKey()">Valider</button>
+    </div>
+    <p class="modal-note">Obtenez votre clé sur <a href="https://console.anthropic.com" target="_blank" style="color:var(--blue)">console.anthropic.com</a> — Modèle : claude-sonnet-4</p>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">
+    <div class="nav-logo">
+      <svg viewBox="0 0 16 16"><path d="M8 1L1 5v6l7 4 7-4V5L8 1zm0 1.5l5.5 3.1v5L8 13.5 2.5 10.6V5.6L8 2.5z"/></svg>
+    </div>
+    <div>
+      <div class="nav-title">Veille Industrielle</div>
+      <div class="nav-sub">France & International</div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <div class="status-pill">
+      <span class="dot" id="navDot"></span>
+      <span id="navStatus">Prêt</span>
+    </div>
+    <button class="action-btn" onclick="showApiModal()" style="font-size:11px;padding:5px 10px;">Clé API</button>
+  </div>
+</nav>
+
+<!-- PAGE -->
+<div class="page">
+
+  <!-- STATS -->
+  <div class="stats-row" id="statsRow">
+    <div class="stat-card">
+      <div class="stat-label">Projets</div>
+      <div class="stat-value" id="statTotal">—</div>
+      <div class="stat-sub">chargés</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">France</div>
+      <div class="stat-value" id="statFr">—</div>
+      <div class="stat-sub">projets nationaux</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">International</div>
+      <div class="stat-value" id="statInt">—</div>
+      <div class="stat-sub">avec entreprises FR</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Volume total</div>
+      <div class="stat-value" id="statVolume">—</div>
+      <div class="stat-sub">estimé</div>
+    </div>
+  </div>
+
+  <!-- TOOLBAR -->
+  <div class="toolbar">
+    <div class="search-wrap">
+      <span class="search-icon">
+        <svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.5">
+          <circle cx="6.5" cy="6.5" r="5"/><path d="M11 11l2.5 2.5"/>
+        </svg>
+      </span>
+      <input type="text" id="searchInput" placeholder="Projet, entreprise, secteur, ville..." oninput="renderCards()" />
+    </div>
+    <button class="refresh-btn" id="refreshBtn" onclick="fetchProjects()">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
+        <path d="M1 7a6 6 0 1 0 1-3.2M1 1v3h3"/>
+      </svg>
+      Actualiser
+    </button>
+  </div>
+
+  <!-- FILTERS -->
+  <div class="filters" id="filters">
+    <span class="chip active" data-f="all" onclick="setFilter('all',this)">Tous</span>
+    <span class="chip" data-f="fr" onclick="setFilter('fr',this)">🇫🇷 France</span>
+    <span class="chip" data-f="int" onclick="setFilter('int',this)">🌍 International</span>
+    <span class="chip" data-f="energie" onclick="setFilter('energie',this)">⚡ Énergie</span>
+    <span class="chip" data-f="defense" onclick="setFilter('defense',this)">🛡 Défense</span>
+    <span class="chip" data-f="transport" onclick="setFilter('transport',this)">🚆 Transport</span>
+    <span class="chip" data-f="industrie" onclick="setFilter('industrie',this)">🏭 Industrie</span>
+    <span class="chip" data-f="infra" onclick="setFilter('infra',this)">🏗 Infrastructures</span>
+  </div>
+
+  <!-- CARDS -->
+  <div id="cardsContainer">
+    <div class="empty-state">
+      <div class="empty-icon">📡</div>
+      <div class="empty-text">Cliquez sur <strong>Actualiser</strong> pour charger les projets via IA</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer style="max-width:1100px;margin:0 auto;padding:0 1.5rem 2rem;">
+  <span>Veille Investissements Industriels — propulsé par Claude (Anthropic)</span>
+  <span id="lastUpdate" style="color:var(--text-faint)"></span>
+</footer>
+
+<script>
+let allProjects = [];
+let activeFilter = 'all';
+let apiKey = localStorage.getItem('anthropic_key') || '';
+let demoMode = false;
+
+function showApiModal() {
+  document.getElementById('apiModal').classList.remove('hidden');
+  document.getElementById('apiKeyInput').value = apiKey;
+}
+function hideApiModal() {
+  document.getElementById('apiModal').classList.add('hidden');
+}
+function saveApiKey() {
+  const v = document.getElementById('apiKeyInput').value.trim();
+  if (!v.startsWith('sk-')) { alert('Clé API invalide. Elle doit commencer par sk-ant-...'); return; }
+  apiKey = v;
+  localStorage.setItem('anthropic_key', v);
+  demoMode = false;
+  hideApiModal();
+  fetchProjects();
+}
+function useDemoMode() {
+  demoMode = true;
+  hideApiModal();
+  allProjects = getDemoProjects();
+  updateStats();
+  renderCards();
+  setStatus(false, 'Mode démo — ' + allProjects.length + ' projets');
+  document.getElementById('lastUpdate').textContent = 'Données de démonstration';
+}
+
+if (!apiKey) {
+  setTimeout(() => document.getElementById('apiModal').classList.remove('hidden'), 300);
+} else {
+  document.getElementById('apiModal').classList.add('hidden');
+  fetchProjects();
+}
+
+function setStatus(loading, text) {
+  const dot = document.getElementById('navDot');
+  document.getElementById('navStatus').textContent = text;
+  dot.className = loading ? 'dot loading' : 'dot';
+}
+
+async function fetchProjects() {
+  if (!apiKey && !demoMode) { showApiModal(); return; }
+  if (demoMode) { useDemoMode(); return; }
+
+  const btn = document.getElementById('refreshBtn');
+  btn.disabled = true;
+  setStatus(true, 'Recherche en cours…');
+
+  document.getElementById('cardsContainer').innerHTML = [1,2,3,4].map(() => `
+    <div class="loading-card">
+      <div class="skeleton sk-line" style="width:65%;height:15px;margin-bottom:12px;"></div>
+      <div style="display:flex;gap:10px;margin-bottom:14px;">
+        <div class="skeleton sk-line" style="width:90px;height:11px;"></div>
+        <div class="skeleton sk-line" style="width:70px;height:11px;"></div>
+        <div class="skeleton sk-line" style="width:80px;height:11px;"></div>
+      </div>
+      <div class="skeleton sk-line" style="width:100%;height:11px;margin-bottom:6px;"></div>
+      <div class="skeleton sk-line" style="width:82%;height:11px;"></div>
+    </div>
+  `).join('');
+
+  const prompt = `Tu es un expert en veille économique et industrielle française. Génère une liste de 10 projets d'investissements industriels récents ou en cours (2024-2025), soit en France soit à l'étranger avec participation d'entreprises françaises majeures.
+
+Réponds UNIQUEMENT en JSON valide, sans markdown, sans backticks, sans commentaires. Format exact :
+{
+  "projects": [
+    {
+      "id": "p1",
+      "title": "Nom du projet",
+      "type": "fr" ou "int",
+      "sector": "energie" ou "defense" ou "transport" ou "industrie" ou "infra",
+      "montant": "ex: 2,3 Md€",
+      "montant_num": 2300,
+      "localisation": "ex: Dunkerque, France",
+      "entreprises": ["Nom entreprise 1", "Nom entreprise 2"],
+      "horizon": "ex: 2026-2028",
+      "statut": "Annoncé" ou "En cours" ou "À suivre",
+      "summary": "Description factuelle en 2 phrases du projet et de son enjeu industriel.",
+      "opportunites": ["Opportunité 1 pour sous-traitants", "Opportunité 2", "Opportunité 3"],
+      "tags": ["tag1", "tag2", "tag3"]
+    }
+  ],
+  "total_volume": "ex: 85 Md€"
+}
+
+Inclure des projets variés : nucléaire (Grand Carénage EDF), hydrogène, ferroviaire (SNCF, Alstom), aéronautique (Airbus, Safran), défense (KNDS, Naval Group, Thales), data centers, usines de batteries, éolien offshore. Priorise les projets avec fort appel à sous-traitance industrielle (chaudronnerie, tuyauterie, génie civil, électricité industrielle, maintenance).`;
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 4000,
+        tools: [{ type: 'web_search_20250305', name: 'web_search' }],
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+
+    if (!res.ok) {
+      const err = await res.json();
+      throw new Error(err.error?.message || 'Erreur API');
+    }
+
+    const data = await res.json();
+    const fullText = data.content.map(i => i.type === 'text' ? i.text : '').join('');
+    const clean = fullText.replace(/```json|```/g, '').trim();
+    const jsonStr = clean.substring(clean.indexOf('{'), clean.lastIndexOf('}') + 1);
+    const parsed = JSON.parse(jsonStr);
+    allProjects = parsed.projects;
+
+    const now = new Date();
+    document.getElementById('lastUpdate').textContent = 'Mis à jour le ' + now.toLocaleDateString('fr-FR') + ' à ' + now.toLocaleTimeString('fr-FR', {hour:'2-digit',minute:'2-digit'});
+    setStatus(false, allProjects.length + ' projets chargés');
+    updateStats(parsed.total_volume);
+    renderCards();
+  } catch(e) {
+    console.error(e);
+    setStatus(false, 'Erreur — mode démo activé');
+    allProjects = getDemoProjects();
+    updateStats();
+    renderCards();
+    document.getElementById('lastUpdate').textContent = 'Données de démonstration (erreur API: ' + e.message + ')';
+  }
+
+  btn.disabled = false;
+}
+
+function updateStats(volume) {
+  document.getElementById('statTotal').textContent = allProjects.length;
+  document.getElementById('statFr').textContent = allProjects.filter(p => p.type === 'fr').length;
+  document.getElementById('statInt').textContent = allProjects.filter(p => p.type === 'int').length;
+  document.getElementById('statVolume').textContent = volume || '—';
+}
+
+function setFilter(f, el) {
+  activeFilter = f;
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  renderCards();
+}
+
+function renderCards() {
+  const search = (document.getElementById('searchInput').value || '').toLowerCase();
+  let filtered = allProjects.filter(p => {
+    const matchF = activeFilter === 'all' || p.type === activeFilter || p.sector === activeFilter;
+    const matchS = !search || [p.title, p.summary, p.localisation, ...(p.entreprises||[]), ...(p.tags||[])].join(' ').toLowerCase().includes(search);
+    return matchF && matchS;
+  });
+
+  const container = document.getElementById('cardsContainer');
+  if (!filtered.length) {
+    container.innerHTML = '<div class="empty-state"><div class="empty-icon">🔍</div><div class="empty-text">Aucun projet pour ces critères.</div></div>';
+    return;
+  }
+
+  container.innerHTML = filtered.map(p => {
+    const geoClass = p.type === 'fr' ? 'badge-fr' : 'badge-int';
+    const geoLabel = p.type === 'fr' ? '🇫🇷 France' : '🌍 International';
+    const statClass = p.statut === 'En cours' ? 'badge-ongoing' : p.statut === 'Annoncé' ? 'badge-announced' : 'badge-watch';
+
+    return `
+    <div class="project-card" id="card-${p.id}">
+      <div class="card-main" onclick="toggleDetail('${p.id}')">
+        <div class="card-top">
+          <div class="card-title">${p.title}</div>
+          <div class="card-badges">
+            <span class="badge ${geoClass}">${geoLabel}</span>
+            <span class="badge ${statClass}">${p.statut}</span>
+          </div>
+        </div>
+        <div class="card-meta">
+          <span class="meta-item"><span class="meta-icon">📍</span>${p.localisation}</span>
+          <span class="meta-item"><span class="meta-icon">💶</span>${p.montant}</span>
+          <span class="meta-item"><span class="meta-icon">📅</span>${p.horizon}</span>
+        </div>
+        <div class="card-summary">${p.summary}</div>
+      </div>
+      <div class="card-footer">
+        <div class="card-tags">
+          ${(p.entreprises||[]).map(e => `<span class="tag">${e}</span>`).join('')}
+          ${(p.tags||[]).map(t => `<span class="tag">${t}</span>`).join('')}
+        </div>
+        <button class="expand-btn" id="expandBtn-${p.id}" onclick="event.stopPropagation();toggleDetail('${p.id}')">
+          Opportunités ▾
+        </button>
+      </div>
+      <div class="detail-panel" id="detail-${p.id}">
+        <div class="detail-grid">
+          <div>
+            <div class="detail-section-title">Opportunités pour nos métiers</div>
+            ${(p.opportunites||[]).map(o => `
+              <div class="opp-item">
+                <div class="opp-check">✓</div>
+                <span>${o}</span>
+              </div>
+            `).join('')}
+          </div>
+          <div>
+            <div class="detail-section-title">Entreprises impliquées</div>
+            <div style="margin-top:4px">
+              ${(p.entreprises||[]).map(e => `<span class="company-chip">🏢 ${e}</span>`).join('')}
+            </div>
+            <div style="margin-top:1.25rem">
+              <div class="detail-section-title">Secteur</div>
+              <span class="company-chip">${p.sector}</span>
+              <span class="company-chip">${p.horizon}</span>
+            </div>
+          </div>
+        </div>
+        <div class="detail-actions">
+          <a class="action-btn primary" href="https://www.google.com/search?q=${encodeURIComponent(p.title + ' appel offres sous-traitance')}" target="_blank">
+            🔍 Rechercher appels d'offres
+          </a>
+          <a class="action-btn" href="https://www.boamp.fr" target="_blank">BOAMP</a>
+          <a class="action-btn" href="https://ted.europa.eu" target="_blank">TED Europa</a>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function toggleDetail(id) {
+  const panel = document.getElementById('detail-' + id);
+  const btn = document.getElementById('expandBtn-' + id);
+  const isOpen = panel.classList.contains('open');
+  panel.classList.toggle('open');
+  btn.textContent = isOpen ? 'Opportunités ▾' : 'Réduire ▴';
+}
+
+function getDemoProjects() {
+  return [
+    { id:"d1", title:"Gigafactory ACC — batteries VE", type:"fr", sector:"industrie", montant:"7,5 Md€", montant_num:7500, localisation:"Douvrin, Hauts-de-France", entreprises:["Stellantis","TotalEnergies","ACC"], horizon:"2026", statut:"En cours", summary:"Construction de la plus grande gigafactory française de cellules batteries pour véhicules électriques. Phase 2 en cours avec montée en capacité progressive.", opportunites:["Tuyauterie & fluides procédés","Génie électrique BT/HTA","Maintenance préventive équipements"], tags:["batteries","VE","gigafactory","Hauts-de-France"] },
+    { id:"d2", title:"Grand Carénage EDF — maintenance parc nucléaire", type:"fr", sector:"energie", montant:"51 Md€", montant_num:51000, localisation:"Parc nucléaire France", entreprises:["EDF","Framatome","Orano","Bouygues"], horizon:"2035", statut:"En cours", summary:"Programme de maintenance lourde, modernisation et prolongation de durée de vie du parc nucléaire existant (56 réacteurs). Appels à sous-traitance massifs et récurrents.", opportunites:["Chaudronnerie & tuyauterie nucléaire N1/N2","Contrôles non destructifs (CND)","Électricité industrielle en zone contrôlée","Échafaudage & calorifuge"], tags:["nucléaire","EDF","maintenance","long-terme"] },
+    { id:"d3", title:"Canal Seine-Nord Europe", type:"fr", sector:"infra", montant:"5,1 Md€", montant_num:5100, localisation:"Hauts-de-France (107 km)", entreprises:["SCNL","Eiffage","Vinci","Bouygues TP"], horizon:"2030", statut:"En cours", summary:"Grand canal fluvial reliant la Seine à l'Escaut sur 107 km avec 7 écluses et 59 ouvrages d'art. Plus grand chantier de génie civil d'Europe.", opportunites:["Génie civil & terrassement","Équipements hydrauliques écluses","Réseaux électriques & utilities","Sécurité chantier"], tags:["fluvial","génie civil","logistique","export"] },
+    { id:"d4", title:"Programme MGCS — char du futur franco-allemand", type:"int", sector:"defense", montant:"100 Md€", montant_num:100000, localisation:"France / Allemagne", entreprises:["KNDS","Rheinmetall","Thales","Safran"], horizon:"2035+", statut:"Annoncé", summary:"Programme Main Ground Combat System, successeur franco-allemand du Leclerc et du Leopard 2. Commandes industrielles massives attendues côté français sur 15 ans.", opportunites:["Mécanique de précision & usinage","Structures blindées soudées","Électronique embarquée & câblage","Intégration systèmes de tir"], tags:["défense","MGCS","char","export"] },
+    { id:"d5", title:"Data centers IA Microsoft & hyperscalers en France", type:"fr", sector:"industrie", montant:"3,2 Md€", montant_num:3200, localisation:"Île-de-France, Lyon, Marseille", entreprises:["Microsoft","Orange Business","Bouygues Immobilier"], horizon:"2026-2027", statut:"Annoncé", summary:"Déploiement massif de data centers haute densité pour l'IA en France. Appel massif aux entreprises françaises BTP, réseaux et refroidissement.", opportunites:["Génie électrique HTA & groupe électrogène","Climatisation industrielle CRAH","Câblage structuré cuivre & fibre","Sécurité incendie"], tags:["data center","IA","numérique","immobilier"] },
+    { id:"d6", title:"Train à hydrogène Alstom — déploiement régional", type:"fr", sector:"transport", montant:"2,8 Md€", montant_num:2800, localisation:"Grand Est, Bourgogne-Franche-Comté", entreprises:["Alstom","SNCF","Air Liquide","TotalEnergies"], horizon:"2026-2028", statut:"À suivre", summary:"Premier déploiement à grande échelle de trains à hydrogène sur lignes non électrifiées, avec stations de remplissage H2 et production locale d'hydrogène vert.", opportunites:["Stations de remplissage H2 (tuyauterie haute pression)","Maintenance matériel roulant alternatif","Chaudronnerie cuves & réservoirs H2"], tags:["hydrogène","ferroviaire","Alstom","décarbonation"] },
+    { id:"d7", title:"Métro Grand Paris Express — lots travaux restants", type:"fr", sector:"transport", montant:"36 Md€", montant_num:36000, localisation:"Île-de-France", entreprises:["SGP","Vinci","Eiffage","Bouygues","Alstom"], horizon:"2030", statut:"En cours", summary:"Plus grand projet de transport en Europe. Nombreux lots en cours de réalisation et en appel d'offres pour équipements, systèmes et finitions des 200 km de lignes.", opportunites:["Électromécanique tunnels & gares","Ventilation & désenfumage","Signalisation & SCADA","Maintenance équipements fixes"], tags:["métro","GPE","Île-de-France","tunnels"] },
+    { id:"d8", title:"Éolien offshore Bretagne & Normandie — parcs en construction", type:"fr", sector:"energie", montant:"6,2 Md€", montant_num:6200, localisation:"Saint-Brieuc, Fécamp, Dieppe", entreprises:["Iberdrola","EDF Renouvelables","Siemens Gamesa","Chantiers Nantes"], horizon:"2025-2027", statut:"En cours", summary:"Construction simultanée de plusieurs parcs éoliens offshore avec fabrication française de fondations monopieux et jackets. Fort recours à sous-traitance locale.", opportunites:["Structures métalliques & soudage offshore","Câbles sous-marins HTA & raccordements","Maintenance O&M (bateaux service)","Peinture anticorrosion marine"], tags:["éolien","offshore","maritime","ENR"] },
+    { id:"d9", title:"Extension raffinerie Totalenergies — SAF & biocarburants", type:"fr", sector:"energie", montant:"1,5 Md€", montant_num:1500, localisation:"Gonfreville-l'Orcher, Normandie", entreprises:["TotalEnergies","Air France","Thales"], horizon:"2026", statut:"Annoncé", summary:"Conversion partielle de la raffinerie de Normandie pour produire du carburant d'aviation durable (SAF). Forts besoins en tuyauterie procédés et instrumentation.", opportunites:["Tuyauterie procédés haute température","Chaudronnerie (échangeurs, colonnes)","Instrumentation & robinetterie","Calorifuge industriel"], tags:["SAF","raffinerie","Normandie","pétrochimie"] },
+    { id:"d10", title:"Sous-marins Shortfin Barracuda — Australie (Naval Group)", type:"int", sector:"defense", montant:"30 Md€", montant_num:30000, localisation:"Australie / Cherbourg", entreprises:["Naval Group","Thales","DCNS","MBDA"], horizon:"2030+", statut:"À suivre", summary:"Malgré les tensions AUKUS, Naval Group maintient ses programmes export sous-marins. Fort contenu industriel français sur les équipements embarqués.", opportunites:["Mécanique navale de précision","Systèmes propulsion électrique","Câblage naval & connectique","Soudage acier à haute limite élastique"], tags:["naval","défense","sous-marin","export"] }
+  ];
+}
+</script>
+</body>
+</html>
