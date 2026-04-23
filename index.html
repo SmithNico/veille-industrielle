@@ -1,667 +1,359 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Veille Investissements Industriels — France & International</title>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Veille & Prospection Industrielle</title>
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  :root {
-    --bg: #f5f4f0;
-    --surface: #ffffff;
-    --surface2: #f0ede8;
-    --border: rgba(0,0,0,0.1);
-    --border-strong: rgba(0,0,0,0.18);
-    --text: #1a1a18;
-    --text-muted: #6b6b67;
-    --text-faint: #9b9b96;
-    --blue: #185FA5;
-    --blue-bg: #E6F1FB;
-    --blue-border: #85B7EB;
-    --green: #0F6E56;
-    --green-bg: #E1F5EE;
-    --amber: #854F0B;
-    --amber-bg: #FAEEDA;
-    --radius: 10px;
-    --radius-lg: 14px;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #1a1a18;
-      --surface: #242422;
-      --surface2: #2e2e2b;
-      --border: rgba(255,255,255,0.08);
-      --border-strong: rgba(255,255,255,0.15);
-      --text: #e8e6e0;
-      --text-muted: #9a9890;
-      --text-faint: #6a6860;
-      --blue: #85B7EB;
-      --blue-bg: #0C447C;
-      --blue-border: #185FA5;
-      --green: #5DCAA5;
-      --green-bg: #085041;
-      --amber: #FAC775;
-      --amber-bg: #633806;
-    }
-  }
-
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    font-size: 15px;
-    line-height: 1.6;
-    min-height: 100vh;
-  }
-
-  /* --- NAV --- */
-  nav {
-    background: var(--surface);
-    border-bottom: 0.5px solid var(--border);
-    padding: 0 2rem;
-    height: 56px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-  }
-  .nav-brand { display: flex; align-items: center; gap: 10px; }
-  .nav-logo {
-    width: 30px; height: 30px; border-radius: 8px;
-    background: var(--text); display: flex; align-items: center; justify-content: center;
-  }
-  .nav-logo svg { width: 16px; height: 16px; fill: var(--bg); }
-  .nav-title { font-size: 15px; font-weight: 600; letter-spacing: -0.01em; }
-  .nav-sub { font-size: 12px; color: var(--text-muted); }
-  .nav-right { display: flex; align-items: center; gap: 10px; }
-  .status-pill {
-    display: flex; align-items: center; gap: 6px;
-    font-size: 12px; color: var(--text-muted);
-    background: var(--surface2); border-radius: 20px;
-    padding: 4px 10px; border: 0.5px solid var(--border);
-  }
-  .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); flex-shrink: 0; }
-  .dot.loading { background: #EF9F27; animation: pulse 1s infinite; }
-  @keyframes pulse { 0%,100%{opacity:1}50%{opacity:0.35} }
-
-  /* --- LAYOUT --- */
-  .page { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
-
-  /* --- TOOLBAR --- */
-  .toolbar {
-    display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
-    margin-bottom: 1.25rem;
-  }
-  .search-wrap { position: relative; flex: 1; min-width: 220px; }
-  .search-wrap input {
-    width: 100%; height: 40px; padding: 0 12px 0 38px;
-    border: 0.5px solid var(--border-strong); border-radius: var(--radius);
-    background: var(--surface); color: var(--text);
-    font-size: 14px; outline: none;
-    transition: border-color 0.15s;
-  }
-  .search-wrap input:focus { border-color: var(--blue); }
-  .search-icon {
-    position: absolute; left: 11px; top: 50%; transform: translateY(-50%);
-    color: var(--text-faint); pointer-events: none;
-  }
-  .refresh-btn {
-    height: 40px; padding: 0 18px; border-radius: var(--radius);
-    border: 0.5px solid var(--border-strong);
-    background: var(--text); color: var(--bg);
-    font-size: 13px; font-weight: 500; cursor: pointer;
-    display: flex; align-items: center; gap: 6px;
-    transition: opacity 0.15s;
-    white-space: nowrap;
-  }
-  .refresh-btn:hover { opacity: 0.85; }
-  .refresh-btn:disabled { opacity: 0.4; cursor: not-allowed; }
-
-  /* --- FILTERS --- */
-  .filters { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1.5rem; }
-  .chip {
-    font-size: 12px; padding: 5px 12px; border-radius: 20px;
-    border: 0.5px solid var(--border-strong);
-    background: var(--surface); color: var(--text-muted);
-    cursor: pointer; transition: all 0.15s; user-select: none;
-  }
-  .chip:hover { background: var(--surface2); color: var(--text); }
-  .chip.active { background: var(--blue-bg); color: var(--blue); border-color: var(--blue-border); }
-
-  /* --- STATS --- */
-  .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 1.5rem; }
-  .stat-card {
-    background: var(--surface); border: 0.5px solid var(--border);
-    border-radius: var(--radius); padding: 14px 16px;
-  }
-  .stat-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
-  .stat-value { font-size: 22px; font-weight: 600; letter-spacing: -0.02em; }
-  .stat-sub { font-size: 11px; color: var(--text-faint); margin-top: 2px; }
-
-  /* --- CARDS --- */
-  .cards-grid { display: flex; flex-direction: column; gap: 10px; }
-
-  .project-card {
-    background: var(--surface); border: 0.5px solid var(--border);
-    border-radius: var(--radius-lg); overflow: hidden;
-    transition: border-color 0.15s, box-shadow 0.15s;
-  }
-  .project-card:hover { border-color: var(--border-strong); }
-
-  .card-main { padding: 1.1rem 1.25rem; cursor: pointer; }
-  .card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
-  .card-title { font-size: 14px; font-weight: 600; line-height: 1.4; flex: 1; }
-  .card-badges { display: flex; gap: 6px; flex-shrink: 0; flex-wrap: wrap; justify-content: flex-end; }
-  .badge {
-    font-size: 11px; padding: 3px 8px; border-radius: 20px;
-    font-weight: 500; white-space: nowrap;
-  }
-  .badge-fr { background: var(--green-bg); color: var(--green); }
-  .badge-int { background: var(--blue-bg); color: var(--blue); }
-  .badge-watch { background: var(--amber-bg); color: var(--amber); }
-  .badge-ongoing { background: var(--green-bg); color: var(--green); }
-  .badge-announced { background: var(--blue-bg); color: var(--blue); }
-
-  .card-meta { display: flex; gap: 14px; flex-wrap: wrap; font-size: 12px; color: var(--text-muted); margin-bottom: 10px; }
-  .meta-item { display: flex; align-items: center; gap: 4px; }
-  .meta-icon { font-size: 13px; }
-
-  .card-summary { font-size: 13px; color: var(--text-muted); line-height: 1.65; }
-
-  .card-footer {
-    padding: 10px 1.25rem;
-    border-top: 0.5px solid var(--border);
-    display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap;
-    background: var(--surface2);
-  }
-  .card-tags { display: flex; gap: 5px; flex-wrap: wrap; }
-  .tag {
-    font-size: 11px; padding: 2px 7px; border-radius: 4px;
-    background: var(--border); color: var(--text-muted);
-  }
-  .expand-btn {
-    font-size: 12px; color: var(--blue); background: none; border: none;
-    cursor: pointer; white-space: nowrap; padding: 0; display: flex; align-items: center; gap: 4px;
-  }
-  .expand-btn:hover { opacity: 0.75; }
-
-  /* --- DETAIL PANEL --- */
-  .detail-panel {
-    border-top: 0.5px solid var(--border);
-    padding: 1.1rem 1.25rem;
-    display: none;
-    background: var(--surface);
-  }
-  .detail-panel.open { display: block; }
-  .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-  @media (max-width: 600px) { .detail-grid { grid-template-columns: 1fr; } }
-
-  .detail-section-title {
-    font-size: 11px; font-weight: 600; text-transform: uppercase;
-    letter-spacing: 0.06em; color: var(--text-faint); margin-bottom: 10px;
-  }
-  .opp-item {
-    display: flex; align-items: flex-start; gap: 8px;
-    padding: 7px 0; border-bottom: 0.5px solid var(--border); font-size: 13px;
-  }
-  .opp-item:last-child { border-bottom: none; }
-  .opp-check {
-    width: 18px; height: 18px; border-radius: 4px; flex-shrink: 0;
-    background: var(--green-bg); color: var(--green);
-    display: flex; align-items: center; justify-content: center; font-size: 10px; margin-top: 1px;
-  }
-  .company-chip {
-    display: inline-flex; align-items: center; gap: 4px;
-    font-size: 12px; padding: 4px 9px; border-radius: 6px;
-    background: var(--surface2); border: 0.5px solid var(--border);
-    color: var(--text-muted); margin: 3px;
-  }
-  .detail-actions { margin-top: 1rem; display: flex; gap: 8px; flex-wrap: wrap; }
-  .action-btn {
-    font-size: 12px; padding: 7px 14px; border-radius: var(--radius);
-    border: 0.5px solid var(--border-strong);
-    background: var(--surface); color: var(--text);
-    cursor: pointer; transition: background 0.15s;
-    text-decoration: none; display: inline-flex; align-items: center; gap: 5px;
-  }
-  .action-btn:hover { background: var(--surface2); }
-  .action-btn.primary {
-    background: var(--blue-bg); border-color: var(--blue-border); color: var(--blue);
-  }
-  .action-btn.primary:hover { opacity: 0.85; }
-
-  /* --- EMPTY / LOADING --- */
-  .skeleton { background: var(--border); border-radius: 4px; }
-  .sk-line { height: 13px; margin-bottom: 8px; }
-  .loading-cards { display: flex; flex-direction: column; gap: 10px; }
-  .loading-card {
-    background: var(--surface); border: 0.5px solid var(--border);
-    border-radius: var(--radius-lg); padding: 1.1rem 1.25rem;
-  }
-  @keyframes shimmer {
-    0%,100%{opacity:0.4} 50%{opacity:0.9}
-  }
-  .skeleton { animation: shimmer 1.6s ease-in-out infinite; }
-
-  .empty-state {
-    text-align: center; padding: 4rem 1rem; color: var(--text-muted);
-  }
-  .empty-icon { font-size: 2rem; margin-bottom: 0.75rem; }
-  .empty-text { font-size: 14px; }
-
-  /* --- FOOTER --- */
-  footer {
-    margin-top: 3rem; padding-top: 1.5rem;
-    border-top: 0.5px solid var(--border);
-    font-size: 12px; color: var(--text-faint);
-    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;
-  }
-
-  /* API KEY MODAL */
-  .modal-overlay {
-    position: fixed; inset: 0; background: rgba(0,0,0,0.5);
-    display: flex; align-items: center; justify-content: center;
-    z-index: 200; padding: 1rem;
-  }
-  .modal-overlay.hidden { display: none; }
-  .modal {
-    background: var(--surface); border-radius: var(--radius-lg);
-    border: 0.5px solid var(--border-strong);
-    padding: 2rem; max-width: 440px; width: 100%;
-  }
-  .modal h2 { font-size: 17px; font-weight: 600; margin-bottom: 8px; }
-  .modal p { font-size: 13px; color: var(--text-muted); margin-bottom: 1.25rem; line-height: 1.6; }
-  .modal input {
-    width: 100%; height: 40px; padding: 0 12px;
-    border: 0.5px solid var(--border-strong); border-radius: var(--radius);
-    background: var(--surface2); color: var(--text);
-    font-size: 14px; outline: none; margin-bottom: 10px;
-    font-family: monospace;
-  }
-  .modal input:focus { border-color: var(--blue); }
-  .modal-actions { display: flex; gap: 8px; }
-  .modal-btn {
-    flex: 1; height: 38px; border-radius: var(--radius);
-    font-size: 13px; font-weight: 500; cursor: pointer; border: none;
-  }
-  .modal-btn.primary { background: var(--text); color: var(--bg); }
-  .modal-btn.secondary { background: var(--surface2); color: var(--text); border: 0.5px solid var(--border-strong); }
-  .modal-note { font-size: 11px; color: var(--text-faint); margin-top: 10px; }
-
-  @media (max-width: 640px) {
-    nav { padding: 0 1rem; }
-    .page { padding: 1.25rem 1rem 3rem; }
-    .stats-row { grid-template-columns: repeat(2, 1fr); }
-  }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#f5f4f0;--surface:#fff;--surface2:#f0ede8;--border:rgba(0,0,0,.1);--border-strong:rgba(0,0,0,.2);--text:#1a1a18;--text-muted:#6b6b67;--text-faint:#9b9b96;--blue:#185FA5;--blue-bg:#E6F1FB;--blue-border:#85B7EB;--green:#0F6E56;--green-bg:#E1F5EE;--green-border:#5DCAA5;--amber:#854F0B;--amber-bg:#FAEEDA;--red:#A32D2D;--red-bg:#FCEBEB;--purple:#534AB7;--purple-bg:#EEEDFE;--r:10px;--rl:14px}
+@media(prefers-color-scheme:dark){:root{--bg:#1a1a18;--surface:#242422;--surface2:#2e2e2b;--border:rgba(255,255,255,.08);--border-strong:rgba(255,255,255,.15);--text:#e8e6e0;--text-muted:#9a9890;--text-faint:#6a6860;--blue:#85B7EB;--blue-bg:#0C447C;--blue-border:#185FA5;--green:#5DCAA5;--green-bg:#085041;--green-border:#1D9E75;--amber:#FAC775;--amber-bg:#633806;--red:#F09595;--red-bg:#501313;--purple:#AFA9EC;--purple-bg:#26215C}}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);font-size:15px;line-height:1.6;min-height:100vh}
+nav{background:var(--surface);border-bottom:.5px solid var(--border);padding:0 2rem;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;gap:12px}
+.nav-brand{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.nav-logo{width:30px;height:30px;border-radius:8px;background:var(--text);display:flex;align-items:center;justify-content:center}
+.nav-logo svg{width:16px;height:16px;fill:var(--bg)}
+.nav-title{font-size:15px;font-weight:600;letter-spacing:-.01em}
+.nav-sub{font-size:11px;color:var(--text-muted)}
+.nav-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.status-pill{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-muted);background:var(--surface2);border-radius:20px;padding:4px 10px;border:.5px solid var(--border);white-space:nowrap}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--green);flex-shrink:0}
+.dot.loading{background:#EF9F27;animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.nav-btn{font-size:12px;padding:5px 10px;border-radius:var(--r);border:.5px solid var(--border-strong);background:var(--surface);color:var(--text);cursor:pointer;white-space:nowrap}
+.nav-btn:hover{background:var(--surface2)}
+.nav-btn.green{background:var(--green-bg);border-color:var(--green-border);color:var(--green)}
+.page{max-width:1200px;margin:0 auto;padding:1.5rem 1.5rem 4rem}
+.progress-bar{background:var(--surface);border:.5px solid var(--border);border-radius:var(--r);padding:1rem 1.25rem;margin-bottom:1.25rem;display:none}
+.progress-bar.visible{display:block}
+.progress-title{font-size:13px;font-weight:500;margin-bottom:10px;color:var(--text-muted)}
+.progress-sectors{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.sector-pill{font-size:11px;padding:3px 10px;border-radius:20px;background:var(--surface2);border:.5px solid var(--border);color:var(--text-muted);transition:all .3s}
+.sector-pill.done{background:var(--green-bg);color:var(--green);border-color:var(--green-border)}
+.sector-pill.active{background:var(--amber-bg);color:var(--amber);border-color:var(--amber);animation:pulse 1s infinite}
+.progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden}
+.progress-fill{height:100%;background:var(--green);border-radius:2px;transition:width .5s ease}
+.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;margin-bottom:1.25rem}
+.stat-card{background:var(--surface);border:.5px solid var(--border);border-radius:var(--r);padding:12px 14px}
+.stat-label{font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px}
+.stat-value{font-size:20px;font-weight:600;letter-spacing:-.02em}
+.stat-sub{font-size:10px;color:var(--text-faint);margin-top:1px}
+.toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:1rem}
+.search-wrap{position:relative;flex:1;min-width:200px}
+.search-wrap input{width:100%;height:38px;padding:0 12px 0 36px;border:.5px solid var(--border-strong);border-radius:var(--r);background:var(--surface);color:var(--text);font-size:14px;outline:none}
+.search-wrap input:focus{border-color:var(--blue)}
+.search-icon{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--text-faint);pointer-events:none}
+.refresh-btn{height:38px;padding:0 16px;border-radius:var(--r);border:none;background:var(--text);color:var(--bg);font-size:13px;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:6px;white-space:nowrap}
+.refresh-btn:hover{opacity:.85}
+.refresh-btn:disabled{opacity:.4;cursor:not-allowed}
+.filter-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px;align-items:center}
+.filter-label{font-size:11px;color:var(--text-faint);white-space:nowrap;min-width:52px;flex-shrink:0}
+.chip{font-size:11px;padding:4px 10px;border-radius:20px;border:.5px solid var(--border-strong);background:var(--surface);color:var(--text-muted);cursor:pointer;transition:all .15s;user-select:none;white-space:nowrap}
+.chip:hover{background:var(--surface2)}
+.chip.active{background:var(--blue-bg);color:var(--blue);border-color:var(--blue-border)}
+.project-card{background:var(--surface);border:.5px solid var(--border);border-radius:var(--rl);overflow:hidden;transition:border-color .15s;margin-bottom:10px}
+.project-card:hover{border-color:var(--border-strong)}
+.project-card.urgent{border-left:3px solid var(--red)}
+.card-main{padding:1rem 1.25rem;cursor:pointer}
+.card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:8px}
+.card-left{flex:1;min-width:0}
+.card-title{font-size:14px;font-weight:600;line-height:1.4;margin-bottom:6px}
+.card-badges{display:flex;gap:5px;flex-wrap:wrap}
+.badge{font-size:11px;padding:2px 8px;border-radius:20px;font-weight:500;white-space:nowrap}
+.badge-fr{background:var(--green-bg);color:var(--green)}
+.badge-int{background:var(--blue-bg);color:var(--blue)}
+.badge-ao{background:var(--red-bg);color:var(--red)}
+.badge-valide{background:var(--purple-bg);color:var(--purple)}
+.badge-annonce{background:var(--blue-bg);color:var(--blue)}
+.badge-encours{background:var(--green-bg);color:var(--green)}
+.badge-projet{background:var(--surface2);color:var(--text-muted);border:.5px solid var(--border-strong)}
+.score-block{flex-shrink:0;text-align:center}
+.score-circle{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;border:2px solid}
+.score-high{background:var(--green-bg);color:var(--green);border-color:var(--green)}
+.score-mid{background:var(--amber-bg);color:var(--amber);border-color:var(--amber)}
+.score-low{background:var(--surface2);color:var(--text-muted);border-color:var(--border-strong)}
+.score-label{font-size:9px;color:var(--text-faint);margin-top:2px}
+.card-meta{display:flex;gap:12px;flex-wrap:wrap;font-size:12px;color:var(--text-muted);margin-bottom:8px}
+.card-summary{font-size:13px;color:var(--text-muted);line-height:1.6;margin-bottom:6px}
+.card-source{font-size:11px;color:var(--text-faint)}
+.contacts-preview{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.contact-pill{display:flex;align-items:center;gap:5px;font-size:11px;padding:3px 8px 3px 4px;border-radius:20px;background:var(--blue-bg);border:.5px solid var(--blue-border);color:var(--blue);text-decoration:none}
+.contact-pill:hover{opacity:.8}
+.cavatar{width:18px;height:18px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:600;flex-shrink:0}
+.card-footer{padding:8px 1.25rem;border-top:.5px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;background:var(--surface2)}
+.card-tags{display:flex;gap:4px;flex-wrap:wrap}
+.tag{font-size:10px;padding:2px 6px;border-radius:4px;background:var(--border);color:var(--text-muted)}
+.expand-btn{font-size:12px;color:var(--blue);background:none;border:none;cursor:pointer;white-space:nowrap;padding:0}
+.detail-panel{border-top:.5px solid var(--border);padding:1.1rem 1.25rem;display:none}
+.detail-panel.open{display:block}
+.detail-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.5rem}
+@media(max-width:768px){.detail-grid{grid-template-columns:1fr}}
+.dstitle{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--text-faint);margin-bottom:10px}
+.opp-item{display:flex;align-items:flex-start;gap:7px;padding:6px 0;border-bottom:.5px solid var(--border);font-size:13px}
+.opp-item:last-child{border-bottom:none}
+.opp-check{width:17px;height:17px;border-radius:4px;flex-shrink:0;background:var(--green-bg);color:var(--green);display:flex;align-items:center;justify-content:center;font-size:9px;margin-top:2px}
+.ccard{background:var(--surface2);border:.5px solid var(--border);border-radius:var(--r);padding:10px 12px;margin-bottom:8px}
+.cheader{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.cavatar-lg{width:32px;height:32px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;flex-shrink:0}
+.cname{font-size:13px;font-weight:500}
+.crole{font-size:11px;color:var(--text-muted)}
+.cco{font-size:11px;color:var(--text-faint)}
+.angle-box{background:var(--amber-bg);border:.5px solid var(--amber);border-radius:6px;padding:7px 10px;font-size:12px;color:var(--amber);margin-top:6px;line-height:1.5}
+.cactions{display:flex;gap:6px;margin-top:7px}
+.clink{font-size:11px;padding:4px 8px;border-radius:6px;text-decoration:none;display:inline-flex;align-items:center;gap:4px;border:.5px solid var(--border-strong);color:var(--text-muted);background:var(--surface)}
+.clink.li{background:#0A66C2;color:#fff;border-color:#0A66C2}
+.clink:hover{opacity:.85}
+.detail-actions{margin-top:1rem;display:flex;gap:8px;flex-wrap:wrap}
+.abtn{font-size:12px;padding:6px 12px;border-radius:var(--r);border:.5px solid var(--border-strong);background:var(--surface);color:var(--text);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:4px}
+.abtn:hover{background:var(--surface2)}
+.abtn.primary{background:var(--blue-bg);border-color:var(--blue-border);color:var(--blue)}
+.skeleton{background:var(--border);border-radius:4px;animation:shimmer 1.6s ease-in-out infinite}
+@keyframes shimmer{0%,100%{opacity:.4}50%{opacity:.9}}
+.lcard{background:var(--surface);border:.5px solid var(--border);border-radius:var(--rl);padding:1rem 1.25rem;margin-bottom:10px}
+.empty-state{text-align:center;padding:3.5rem 1rem;color:var(--text-muted)}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;z-index:200;padding:1rem}
+.modal-overlay.hidden{display:none}
+.modal{background:var(--surface);border-radius:var(--rl);border:.5px solid var(--border-strong);padding:2rem;max-width:440px;width:100%}
+.modal h2{font-size:17px;font-weight:600;margin-bottom:8px}
+.modal p{font-size:13px;color:var(--text-muted);margin-bottom:1.25rem;line-height:1.6}
+.modal input{width:100%;height:40px;padding:0 12px;border:.5px solid var(--border-strong);border-radius:var(--r);background:var(--surface2);color:var(--text);font-size:14px;outline:none;margin-bottom:10px;font-family:monospace}
+.modal input:focus{border-color:var(--blue)}
+.modal-actions{display:flex;gap:8px}
+.mbtn{flex:1;height:38px;border-radius:var(--r);font-size:13px;font-weight:500;cursor:pointer;border:none}
+.mbtn.primary{background:var(--text);color:var(--bg)}
+.mbtn.secondary{background:var(--surface2);color:var(--text);border:.5px solid var(--border-strong)}
+.mnote{font-size:11px;color:var(--text-faint);margin-top:10px}
+footer{max-width:1200px;margin:2rem auto 0;padding:1.5rem 1.5rem 2rem;border-top:.5px solid var(--border);font-size:12px;color:var(--text-faint);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+@media(max-width:640px){nav{padding:0 1rem}.page{padding:1rem 1rem 3rem}}
 </style>
 </head>
 <body>
-
-<!-- API KEY MODAL -->
-<div class="modal-overlay" id="apiModal">
+<div class="modal-overlay hidden" id="apiModal">
   <div class="modal">
     <h2>Clé API Anthropic</h2>
-    <p>Pour utiliser cet outil, saisissez votre clé API Anthropic. Elle est stockée uniquement dans votre navigateur (localStorage) et n'est jamais envoyée ailleurs.</p>
-    <input type="password" id="apiKeyInput" placeholder="sk-ant-api03-..." autocomplete="off" />
+    <p>Saisissez votre clé API pour activer la recherche en temps réel et l'identification des contacts à démarcher.</p>
+    <input type="password" id="apiKeyInput" placeholder="sk-ant-api03-..." autocomplete="off"/>
     <div class="modal-actions">
-      <button class="modal-btn secondary" onclick="useDemoMode()">Mode démo</button>
-      <button class="modal-btn primary" onclick="saveApiKey()">Valider</button>
+      <button class="mbtn secondary" onclick="useDemoMode()">Mode démo</button>
+      <button class="mbtn primary" onclick="saveApiKey()">Valider</button>
     </div>
-    <p class="modal-note">Obtenez votre clé sur <a href="https://console.anthropic.com" target="_blank" style="color:var(--blue)">console.anthropic.com</a> — Modèle : claude-sonnet-4</p>
+    <p class="mnote">Obtenez votre clé sur <a href="https://console.anthropic.com" target="_blank" style="color:var(--blue)">console.anthropic.com</a></p>
   </div>
 </div>
-
-<!-- NAV -->
 <nav>
   <div class="nav-brand">
-    <div class="nav-logo">
-      <svg viewBox="0 0 16 16"><path d="M8 1L1 5v6l7 4 7-4V5L8 1zm0 1.5l5.5 3.1v5L8 13.5 2.5 10.6V5.6L8 2.5z"/></svg>
-    </div>
-    <div>
-      <div class="nav-title">Veille Industrielle</div>
-      <div class="nav-sub">France & International</div>
-    </div>
+    <div class="nav-logo"><svg viewBox="0 0 16 16"><path d="M8 1L1 5v6l7 4 7-4V5L8 1zm0 1.5l5.5 3.1v5L8 13.5 2.5 10.6V5.6L8 2.5z"/></svg></div>
+    <div><div class="nav-title">Veille & Prospection Industrielle</div><div class="nav-sub">Projets &lt;6 mois · Contacts LinkedIn · Score de lead</div></div>
   </div>
   <div class="nav-right">
-    <div class="status-pill">
-      <span class="dot" id="navDot"></span>
-      <span id="navStatus">Prêt</span>
-    </div>
-    <button class="action-btn" onclick="showApiModal()" style="font-size:11px;padding:5px 10px;">Clé API</button>
+    <div class="status-pill"><span class="dot" id="navDot"></span><span id="navStatus">Prêt</span></div>
+    <button class="nav-btn green" onclick="exportCSV()">📥 Export CSV</button>
+    <button class="nav-btn" onclick="showApiModal()">Clé API</button>
   </div>
 </nav>
-
-<!-- PAGE -->
 <div class="page">
-
-  <!-- STATS -->
-  <div class="stats-row" id="statsRow">
-    <div class="stat-card">
-      <div class="stat-label">Projets</div>
-      <div class="stat-value" id="statTotal">—</div>
-      <div class="stat-sub">chargés</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">France</div>
-      <div class="stat-value" id="statFr">—</div>
-      <div class="stat-sub">projets nationaux</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">International</div>
-      <div class="stat-value" id="statInt">—</div>
-      <div class="stat-sub">avec entreprises FR</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">Volume total</div>
-      <div class="stat-value" id="statVolume">—</div>
-      <div class="stat-sub">estimé</div>
-    </div>
+  <div class="progress-bar" id="progressBar">
+    <div class="progress-title" id="progressTitle">Recherche multi-sources...</div>
+    <div class="progress-sectors" id="progressSectors"></div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
   </div>
-
-  <!-- TOOLBAR -->
+  <div class="stats-row">
+    <div class="stat-card"><div class="stat-label">Projets</div><div class="stat-value" id="sT">—</div><div class="stat-sub">trouvés</div></div>
+    <div class="stat-card"><div class="stat-label">🔴 AO ouverts</div><div class="stat-value" id="sA" style="color:var(--red)">—</div><div class="stat-sub">à saisir</div></div>
+    <div class="stat-card"><div class="stat-label">Contacts</div><div class="stat-value" id="sC" style="color:var(--blue)">—</div><div class="stat-sub">à démarcher</div></div>
+    <div class="stat-card"><div class="stat-label">France</div><div class="stat-value" id="sFr">—</div><div class="stat-sub">projets</div></div>
+    <div class="stat-card"><div class="stat-label">International</div><div class="stat-value" id="sIn">—</div><div class="stat-sub">projets</div></div>
+    <div class="stat-card"><div class="stat-label">Volume</div><div class="stat-value" id="sV">—</div><div class="stat-sub">estimé</div></div>
+  </div>
   <div class="toolbar">
     <div class="search-wrap">
-      <span class="search-icon">
-        <svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.5">
-          <circle cx="6.5" cy="6.5" r="5"/><path d="M11 11l2.5 2.5"/>
-        </svg>
-      </span>
-      <input type="text" id="searchInput" placeholder="Projet, entreprise, secteur, ville..." oninput="renderCards()" />
+      <span class="search-icon"><svg width="14" height="14" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="6.5" cy="6.5" r="5"/><path d="M11 11l2.5 2.5"/></svg></span>
+      <input type="text" id="searchInput" placeholder="Projet, entreprise, contact, région..." oninput="renderCards()"/>
     </div>
-    <button class="refresh-btn" id="refreshBtn" onclick="fetchProjects()">
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8">
-        <path d="M1 7a6 6 0 1 0 1-3.2M1 1v3h3"/>
-      </svg>
+    <button class="refresh-btn" id="refreshBtn" onclick="fetchAll()">
+      <svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 7a6 6 0 1 0 1-3.2M1 1v3h3"/></svg>
       Actualiser
     </button>
   </div>
-
-  <!-- FILTERS -->
-  <div class="filters" id="filters">
-    <span class="chip active" data-f="all" onclick="setFilter('all',this)">Tous</span>
-    <span class="chip" data-f="fr" onclick="setFilter('fr',this)">🇫🇷 France</span>
-    <span class="chip" data-f="int" onclick="setFilter('int',this)">🌍 International</span>
-    <span class="chip" data-f="energie" onclick="setFilter('energie',this)">⚡ Énergie</span>
-    <span class="chip" data-f="defense" onclick="setFilter('defense',this)">🛡 Défense</span>
-    <span class="chip" data-f="transport" onclick="setFilter('transport',this)">🚆 Transport</span>
-    <span class="chip" data-f="industrie" onclick="setFilter('industrie',this)">🏭 Industrie</span>
-    <span class="chip" data-f="infra" onclick="setFilter('infra',this)">🏗 Infrastructures</span>
+  <div class="filter-row">
+    <span class="filter-label">Secteur</span>
+    <span class="chip active" onclick="setF('sector','all',this)">Tous</span>
+    <span class="chip" onclick="setF('sector','energie',this)">⚡ Énergie</span>
+    <span class="chip" onclick="setF('sector','defense',this)">🛡 Défense</span>
+    <span class="chip" onclick="setF('sector','transport',this)">🚆 Transport</span>
+    <span class="chip" onclick="setF('sector','industrie',this)">🏭 Industrie</span>
+    <span class="chip" onclick="setF('sector','infra',this)">🏗 Infra</span>
+    <span class="chip" onclick="setF('sector','numerique',this)">💻 Numérique</span>
+    <span class="chip" onclick="setF('sector','chimie',this)">🧪 Chimie</span>
   </div>
-
-  <!-- CARDS -->
+  <div class="filter-row">
+    <span class="filter-label">Phase</span>
+    <span class="chip active" onclick="setF('phase','all',this)">Toutes</span>
+    <span class="chip" onclick="setF('phase','ao_ouvert',this)" style="border-color:var(--red);color:var(--red)">🔴 AO ouvert</span>
+    <span class="chip" onclick="setF('phase','valide',this)">✅ Validé</span>
+    <span class="chip" onclick="setF('phase','annonce',this)">📢 Annoncé</span>
+    <span class="chip" onclick="setF('phase','encours',this)">🔨 En cours</span>
+    <span class="chip" onclick="setF('phase','projet',this)">💡 En projet</span>
+  </div>
+  <div class="filter-row" style="margin-bottom:1.5rem">
+    <span class="filter-label">Région</span>
+    <span class="chip active" onclick="setF('region','all',this)">Toutes</span>
+    <span class="chip" onclick="setF('region','int',this)">🌍 International</span>
+    <span class="chip" onclick="setF('region','Hauts-de-France',this)">Hauts-de-France</span>
+    <span class="chip" onclick="setF('region','Normandie',this)">Normandie</span>
+    <span class="chip" onclick="setF('region','Île-de-France',this)">Île-de-France</span>
+    <span class="chip" onclick="setF('region','Grand Est',this)">Grand Est</span>
+    <span class="chip" onclick="setF('region','Auvergne-Rhône-Alpes',this)">AuRA</span>
+    <span class="chip" onclick="setF('region','Bretagne',this)">Bretagne</span>
+    <span class="chip" onclick="setF('region','Occitanie',this)">Occitanie</span>
+    <span class="chip" onclick="setF('region','Nouvelle-Aquitaine',this)">Nouvelle-Aquitaine</span>
+    <span class="chip" onclick="setF('region','PACA',this)">PACA</span>
+    <span class="chip" onclick="setF('region','Pays de la Loire',this)">Pays de la Loire</span>
+    <span class="chip" onclick="setF('region','Bourgogne-Franche-Comté',this)">Bourgogne-FC</span>
+  </div>
   <div id="cardsContainer">
     <div class="empty-state">
-      <div class="empty-icon">📡</div>
-      <div class="empty-text">Cliquez sur <strong>Actualiser</strong> pour charger les projets via IA</div>
+      <div style="font-size:2rem;margin-bottom:.75rem">📡</div>
+      <div style="font-size:14px;font-weight:500">Cliquez sur Actualiser pour lancer la veille</div>
+      <div style="font-size:12px;color:var(--text-faint);margin-top:6px">Usines Nouvelles · Les Échos · Business France · BOAMP · LinkedIn · TED Europa</div>
     </div>
   </div>
-
 </div>
-
-<!-- FOOTER -->
-<footer style="max-width:1100px;margin:0 auto;padding:0 1.5rem 2rem;">
-  <span>Veille Investissements Industriels — propulsé par Claude (Anthropic)</span>
-  <span id="lastUpdate" style="color:var(--text-faint)"></span>
+<footer>
+  <span>Veille & Prospection Industrielle — Sources multiples · Contacts LinkedIn · Export CSV</span>
+  <span id="lastUpdate"></span>
 </footer>
-
 <script>
-let allProjects = [];
-let activeFilter = 'all';
-let apiKey = localStorage.getItem('anthropic_key') || '';
-let demoMode = false;
-
-function showApiModal() {
-  document.getElementById('apiModal').classList.remove('hidden');
-  document.getElementById('apiKeyInput').value = apiKey;
+let allP=[],aF={sector:'all',phase:'all',region:'all'};
+let apiKey=localStorage.getItem('anthropic_key')||'',demoMode=false;
+const SECTORS=[
+  {id:'energie',label:'⚡ Énergie & nucléaire',src:'Usines Nouvelles EDF TotalEnergies Business France énergie nucléaire hydrogène ENR offshore 2025'},
+  {id:'defense',label:'🛡 Défense & aéronautique',src:'Air&Cosmos Usines Nouvelles Naval Group Thales Safran Airbus défense aéronautique 2025'},
+  {id:'transport',label:'🚆 Transport & mobilité',src:'Mobilettre Usines Nouvelles Alstom SNCF Stellantis ferroviaire automobile 2025'},
+  {id:'industrie',label:'🏭 Industrie & manufacturing',src:'Usines Nouvelles Business France implantation usine industrie 2025'},
+  {id:'infra',label:'🏗 Infrastructures & BTP',src:'Le Moniteur BOAMP TED Europa Vinci Eiffage Bouygues infrastructure génie civil 2025'},
+  {id:'numerique',label:'💻 Numérique & data centers',src:'ZDNet BFM Business data center cloud IA numérique Microsoft Google Amazon 2025'},
+  {id:'chimie',label:'🧪 Chimie & pétrochimie',src:'Usines Nouvelles TotalEnergies Arkema chimie pétrochimie pharmacie 2025'}
+];
+const PL={ao_ouvert:'🔴 AO ouvert',valide:'✅ Validé',annonce:'📢 Annoncé',encours:'🔨 En cours',projet:'💡 En projet'};
+const PB={ao_ouvert:'badge-ao',valide:'badge-valide',annonce:'badge-annonce',encours:'badge-encours',projet:'badge-projet'};
+function sc(s){return s>=70?'score-high':s>=40?'score-mid':'score-low'}
+function ini(n){return(n||'?').split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase()}
+function li(c){return c.linkedin_url||('https://www.linkedin.com/search/results/people/?keywords='+encodeURIComponent((c.linkedin_search||c.nom||'')+' '+(c.entreprise||'')))}
+function showApiModal(){document.getElementById('apiModal').classList.remove('hidden');document.getElementById('apiKeyInput').value=apiKey}
+function hideApiModal(){document.getElementById('apiModal').classList.add('hidden')}
+function saveApiKey(){const v=document.getElementById('apiKeyInput').value.trim();if(!v.startsWith('sk-')){alert('Clé invalide.');return}apiKey=v;localStorage.setItem('anthropic_key',v);demoMode=false;hideApiModal();fetchAll()}
+function useDemoMode(){demoMode=true;hideApiModal();allP=getDemoP();updateStats();renderCards();setStatus(false,'Mode démo — '+allP.length+' projets')}
+if(!apiKey)setTimeout(()=>document.getElementById('apiModal').classList.remove('hidden'),400);
+else document.getElementById('apiModal').classList.add('hidden');
+function setStatus(l,t){document.getElementById('navStatus').textContent=t;document.getElementById('navDot').className=l?'dot loading':'dot'}
+async function fetchSector(s){
+  const p=`Tu es expert en veille économique et prospection industrielle française. Recherche sur internet les projets d'investissements industriels RÉCENTS (après octobre 2024) dans le secteur "${s.label}". Sources: ${s.src}. Pour chaque projet identifie des contacts réels à démarcher sur LinkedIn. Réponds UNIQUEMENT en JSON sans markdown: {"projects":[{"id":"${s.id}_1","title":"Nom projet","type":"fr","sector":"${s.id}","region":"Région française ou International","phase":"ao_ouvert|valide|annonce|encours|projet","score_prospection":85,"montant":"2,3 Md€","montant_num":2300,"localisation":"Ville, Région","entreprises":["Entreprise"],"horizon":"T3 2025","date_annonce":"mars 2025","source":"Usines Nouvelles, mars 2025","urgent":false,"summary":"2 phrases factuelles.","prochaine_etape":"AO prévu juin 2025","opportunites":["Opp 1","Opp 2","Opp 3"],"contacts":[{"nom":"Prénom Nom","titre":"Directeur Achats","entreprise":"Société","linkedin_search":"Prénom Nom Directeur Achats Société","linkedin_url":"https://www.linkedin.com/search/results/people/?keywords=Pr%C3%A9nom+Nom","angle_approche":"Message court personnalisé"}],"tags":["tag1"]}]}. Projets après oct 2024 uniquement, 4-6 projets, 2-3 contacts réels par projet.`;
+  const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:4000,tools:[{type:'web_search_20250305',name:'web_search'}],messages:[{role:'user',content:p}]})});
+  if(!r.ok)throw new Error('API '+r.status);
+  const d=await r.json();
+  const txt=d.content.map(i=>i.type==='text'?i.text:'').join('');
+  const clean=txt.replace(/```json|```/g,'').trim();
+  const js=clean.substring(clean.indexOf('{'),clean.lastIndexOf('}')+1);
+  return JSON.parse(js).projects||[];
 }
-function hideApiModal() {
-  document.getElementById('apiModal').classList.add('hidden');
-}
-function saveApiKey() {
-  const v = document.getElementById('apiKeyInput').value.trim();
-  if (!v.startsWith('sk-')) { alert('Clé API invalide. Elle doit commencer par sk-ant-...'); return; }
-  apiKey = v;
-  localStorage.setItem('anthropic_key', v);
-  demoMode = false;
-  hideApiModal();
-  fetchProjects();
-}
-function useDemoMode() {
-  demoMode = true;
-  hideApiModal();
-  allProjects = getDemoProjects();
-  updateStats();
-  renderCards();
-  setStatus(false, 'Mode démo — ' + allProjects.length + ' projets');
-  document.getElementById('lastUpdate').textContent = 'Données de démonstration';
-}
-
-if (!apiKey) {
-  setTimeout(() => document.getElementById('apiModal').classList.remove('hidden'), 300);
-} else {
-  document.getElementById('apiModal').classList.add('hidden');
-  fetchProjects();
-}
-
-function setStatus(loading, text) {
-  const dot = document.getElementById('navDot');
-  document.getElementById('navStatus').textContent = text;
-  dot.className = loading ? 'dot loading' : 'dot';
-}
-
-async function fetchProjects() {
-  if (!apiKey && !demoMode) { showApiModal(); return; }
-  if (demoMode) { useDemoMode(); return; }
-
-  const btn = document.getElementById('refreshBtn');
-  btn.disabled = true;
-  setStatus(true, 'Recherche en cours…');
-
-  document.getElementById('cardsContainer').innerHTML = [1,2,3,4].map(() => `
-    <div class="loading-card">
-      <div class="skeleton sk-line" style="width:65%;height:15px;margin-bottom:12px;"></div>
-      <div style="display:flex;gap:10px;margin-bottom:14px;">
-        <div class="skeleton sk-line" style="width:90px;height:11px;"></div>
-        <div class="skeleton sk-line" style="width:70px;height:11px;"></div>
-        <div class="skeleton sk-line" style="width:80px;height:11px;"></div>
-      </div>
-      <div class="skeleton sk-line" style="width:100%;height:11px;margin-bottom:6px;"></div>
-      <div class="skeleton sk-line" style="width:82%;height:11px;"></div>
-    </div>
-  `).join('');
-
-  const prompt = `Tu es un expert en veille économique et industrielle française. Génère une liste de 10 projets d'investissements industriels récents ou en cours (2024-2025), soit en France soit à l'étranger avec participation d'entreprises françaises majeures.
-
-Réponds UNIQUEMENT en JSON valide, sans markdown, sans backticks, sans commentaires. Format exact :
-{
-  "projects": [
-    {
-      "id": "p1",
-      "title": "Nom du projet",
-      "type": "fr" ou "int",
-      "sector": "energie" ou "defense" ou "transport" ou "industrie" ou "infra",
-      "montant": "ex: 2,3 Md€",
-      "montant_num": 2300,
-      "localisation": "ex: Dunkerque, France",
-      "entreprises": ["Nom entreprise 1", "Nom entreprise 2"],
-      "horizon": "ex: 2026-2028",
-      "statut": "Annoncé" ou "En cours" ou "À suivre",
-      "summary": "Description factuelle en 2 phrases du projet et de son enjeu industriel.",
-      "opportunites": ["Opportunité 1 pour sous-traitants", "Opportunité 2", "Opportunité 3"],
-      "tags": ["tag1", "tag2", "tag3"]
-    }
-  ],
-  "total_volume": "ex: 85 Md€"
-}
-
-Inclure des projets variés : nucléaire (Grand Carénage EDF), hydrogène, ferroviaire (SNCF, Alstom), aéronautique (Airbus, Safran), défense (KNDS, Naval Group, Thales), data centers, usines de batteries, éolien offshore. Priorise les projets avec fort appel à sous-traitance industrielle (chaudronnerie, tuyauterie, génie civil, électricité industrielle, maintenance).`;
-
-  try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01',
-        'anthropic-dangerous-direct-browser-access': 'true'
-      },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 4000,
-        tools: [{ type: 'web_search_20250305', name: 'web_search' }],
-        messages: [{ role: 'user', content: prompt }]
-      })
-    });
-
-    if (!res.ok) {
-      const err = await res.json();
-      throw new Error(err.error?.message || 'Erreur API');
-    }
-
-    const data = await res.json();
-    const fullText = data.content.map(i => i.type === 'text' ? i.text : '').join('');
-    const clean = fullText.replace(/```json|```/g, '').trim();
-    const jsonStr = clean.substring(clean.indexOf('{'), clean.lastIndexOf('}') + 1);
-    const parsed = JSON.parse(jsonStr);
-    allProjects = parsed.projects;
-
-    const now = new Date();
-    document.getElementById('lastUpdate').textContent = 'Mis à jour le ' + now.toLocaleDateString('fr-FR') + ' à ' + now.toLocaleTimeString('fr-FR', {hour:'2-digit',minute:'2-digit'});
-    setStatus(false, allProjects.length + ' projets chargés');
-    updateStats(parsed.total_volume);
-    renderCards();
-  } catch(e) {
-    console.error(e);
-    setStatus(false, 'Erreur — mode démo activé');
-    allProjects = getDemoProjects();
-    updateStats();
-    renderCards();
-    document.getElementById('lastUpdate').textContent = 'Données de démonstration (erreur API: ' + e.message + ')';
+async function fetchAll(){
+  if(!apiKey&&!demoMode){showApiModal();return}
+  if(demoMode){useDemoMode();return}
+  const btn=document.getElementById('refreshBtn');btn.disabled=true;allP=[];
+  const pb=document.getElementById('progressBar');pb.classList.add('visible');
+  document.getElementById('progressSectors').innerHTML=SECTORS.map(s=>`<span class="sector-pill" id="pill-${s.id}">${s.label}</span>`).join('');
+  document.getElementById('cardsContainer').innerHTML=[1,2,3].map(()=>`<div class="lcard"><div style="display:flex;justify-content:space-between;margin-bottom:12px"><div class="skeleton" style="height:15px;width:55%"></div><div class="skeleton" style="height:44px;width:44px;border-radius:50%"></div></div><div style="display:flex;gap:8px;margin-bottom:10px"><div class="skeleton" style="width:70px;height:11px"></div><div class="skeleton" style="width:90px;height:11px"></div></div><div class="skeleton" style="width:100%;height:11px;margin-bottom:6px"></div><div class="skeleton" style="width:80%;height:11px"></div></div>`).join('');
+  setStatus(true,'Recherche multi-sources...');
+  let done=0;
+  for(const s of SECTORS){
+    document.getElementById('pill-'+s.id).className='sector-pill active';
+    document.getElementById('progressTitle').textContent='Recherche : '+s.label+'...';
+    try{const p=await fetchSector(s);allP=[...allP,...p];document.getElementById('pill-'+s.id).className='sector-pill done'}
+    catch(e){console.error(s.id,e);document.getElementById('pill-'+s.id).className='sector-pill'}
+    done++;document.getElementById('progressFill').style.width=Math.round(done/SECTORS.length*100)+'%';
+    updateStats();renderCards();
   }
-
-  btn.disabled = false;
+  pb.classList.remove('visible');btn.disabled=false;
+  const n=new Date();document.getElementById('lastUpdate').textContent='Mis à jour le '+n.toLocaleDateString('fr-FR')+' à '+n.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
+  setStatus(false,allP.length+' projets · '+allP.reduce((s,p)=>s+(p.contacts||[]).length,0)+' contacts');
 }
-
-function updateStats(volume) {
-  document.getElementById('statTotal').textContent = allProjects.length;
-  document.getElementById('statFr').textContent = allProjects.filter(p => p.type === 'fr').length;
-  document.getElementById('statInt').textContent = allProjects.filter(p => p.type === 'int').length;
-  document.getElementById('statVolume').textContent = volume || '—';
+function updateStats(){
+  document.getElementById('sT').textContent=allP.length;
+  document.getElementById('sA').textContent=allP.filter(p=>p.phase==='ao_ouvert'||p.urgent).length;
+  document.getElementById('sC').textContent=allP.reduce((s,p)=>s+(p.contacts||[]).length,0);
+  document.getElementById('sFr').textContent=allP.filter(p=>p.type==='fr').length;
+  document.getElementById('sIn').textContent=allP.filter(p=>p.type==='int').length;
+  const v=allP.reduce((s,p)=>s+(p.montant_num||0),0);
+  document.getElementById('sV').textContent=v>0?Math.round(v/1000)+' Md€':'—';
 }
-
-function setFilter(f, el) {
-  activeFilter = f;
-  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
-  el.classList.add('active');
-  renderCards();
-}
-
-function renderCards() {
-  const search = (document.getElementById('searchInput').value || '').toLowerCase();
-  let filtered = allProjects.filter(p => {
-    const matchF = activeFilter === 'all' || p.type === activeFilter || p.sector === activeFilter;
-    const matchS = !search || [p.title, p.summary, p.localisation, ...(p.entreprises||[]), ...(p.tags||[])].join(' ').toLowerCase().includes(search);
-    return matchF && matchS;
-  });
-
-  const container = document.getElementById('cardsContainer');
-  if (!filtered.length) {
-    container.innerHTML = '<div class="empty-state"><div class="empty-icon">🔍</div><div class="empty-text">Aucun projet pour ces critères.</div></div>';
-    return;
-  }
-
-  container.innerHTML = filtered.map(p => {
-    const geoClass = p.type === 'fr' ? 'badge-fr' : 'badge-int';
-    const geoLabel = p.type === 'fr' ? '🇫🇷 France' : '🌍 International';
-    const statClass = p.statut === 'En cours' ? 'badge-ongoing' : p.statut === 'Annoncé' ? 'badge-announced' : 'badge-watch';
-
-    return `
-    <div class="project-card" id="card-${p.id}">
-      <div class="card-main" onclick="toggleDetail('${p.id}')">
-        <div class="card-top">
-          <div class="card-title">${p.title}</div>
-          <div class="card-badges">
-            <span class="badge ${geoClass}">${geoLabel}</span>
-            <span class="badge ${statClass}">${p.statut}</span>
-          </div>
-        </div>
-        <div class="card-meta">
-          <span class="meta-item"><span class="meta-icon">📍</span>${p.localisation}</span>
-          <span class="meta-item"><span class="meta-icon">💶</span>${p.montant}</span>
-          <span class="meta-item"><span class="meta-icon">📅</span>${p.horizon}</span>
-        </div>
-        <div class="card-summary">${p.summary}</div>
-      </div>
-      <div class="card-footer">
-        <div class="card-tags">
-          ${(p.entreprises||[]).map(e => `<span class="tag">${e}</span>`).join('')}
-          ${(p.tags||[]).map(t => `<span class="tag">${t}</span>`).join('')}
-        </div>
-        <button class="expand-btn" id="expandBtn-${p.id}" onclick="event.stopPropagation();toggleDetail('${p.id}')">
-          Opportunités ▾
-        </button>
-      </div>
-      <div class="detail-panel" id="detail-${p.id}">
-        <div class="detail-grid">
-          <div>
-            <div class="detail-section-title">Opportunités pour nos métiers</div>
-            ${(p.opportunites||[]).map(o => `
-              <div class="opp-item">
-                <div class="opp-check">✓</div>
-                <span>${o}</span>
-              </div>
-            `).join('')}
-          </div>
-          <div>
-            <div class="detail-section-title">Entreprises impliquées</div>
-            <div style="margin-top:4px">
-              ${(p.entreprises||[]).map(e => `<span class="company-chip">🏢 ${e}</span>`).join('')}
-            </div>
-            <div style="margin-top:1.25rem">
-              <div class="detail-section-title">Secteur</div>
-              <span class="company-chip">${p.sector}</span>
-              <span class="company-chip">${p.horizon}</span>
-            </div>
-          </div>
-        </div>
-        <div class="detail-actions">
-          <a class="action-btn primary" href="https://www.google.com/search?q=${encodeURIComponent(p.title + ' appel offres sous-traitance')}" target="_blank">
-            🔍 Rechercher appels d'offres
-          </a>
-          <a class="action-btn" href="https://www.boamp.fr" target="_blank">BOAMP</a>
-          <a class="action-btn" href="https://ted.europa.eu" target="_blank">TED Europa</a>
-        </div>
-      </div>
-    </div>`;
+function setF(type,val,el){aF[type]=val;el.closest('.filter-row').querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));el.classList.add('active');renderCards()}
+function matchR(p,f){if(f==='all')return true;if(f==='int')return p.type==='int';return(p.localisation+' '+(p.region||'')).toLowerCase().includes(f.toLowerCase())}
+function renderCards(){
+  const q=(document.getElementById('searchInput').value||'').toLowerCase();
+  let list=allP.filter(p=>(aF.sector==='all'||p.sector===aF.sector)&&(aF.phase==='all'||p.phase===aF.phase)&&matchR(p,aF.region)&&(!q||[p.title,p.summary,p.localisation,p.region||'',...(p.entreprises||[]),...(p.contacts||[]).map(c=>c.nom+' '+c.titre),...(p.tags||[])].join(' ').toLowerCase().includes(q)));
+  list.sort((a,b)=>{const ua=a.urgent||a.phase==='ao_ouvert',ub=b.urgent||b.phase==='ao_ouvert';if(ua&&!ub)return -1;if(!ua&&ub)return 1;return(b.score_prospection||0)-(a.score_prospection||0)});
+  const c=document.getElementById('cardsContainer');
+  if(!list.length){c.innerHTML='<div class="empty-state"><div style="font-size:2rem">🔍</div><div style="font-size:14px;margin-top:8px">Aucun projet pour ces critères.</div></div>';return}
+  c.innerHTML=list.map(p=>{
+    const s=p.score_prospection||50,cts=p.contacts||[],urg=p.urgent||p.phase==='ao_ouvert';
+    return`<div class="project-card${urg?' urgent':''}" id="card-${p.id}">
+<div class="card-main" onclick="toggleD('${p.id}')">
+<div class="card-top">
+<div class="card-left">
+<div class="card-title">${urg?'🔴 ':''}${p.title}</div>
+<div class="card-badges">
+<span class="badge ${p.type==='fr'?'badge-fr':'badge-int'}">${p.type==='fr'?'🇫🇷 France':'🌍 International'}</span>
+<span class="badge ${PB[p.phase]||'badge-projet'}">${PL[p.phase]||p.phase}</span>
+${p.region?`<span class="badge badge-projet">📍 ${p.region}</span>`:''}
+</div></div>
+<div class="score-block"><div class="score-circle ${sc(s)}">${s}</div><div class="score-label">lead score</div></div>
+</div>
+<div class="card-meta"><span>📍 ${p.localisation}</span><span>💶 ${p.montant}</span><span>📅 ${p.horizon}</span>${p.prochaine_etape?`<span style="color:var(--amber)">⏱ ${p.prochaine_etape}</span>`:''}</div>
+<div class="card-summary">${p.summary}</div>
+${p.source?`<div class="card-source">📰 ${p.source}</div>`:''}
+${cts.length?`<div class="contacts-preview">${cts.map(ct=>`<a class="contact-pill" href="${li(ct)}" target="_blank" onclick="event.stopPropagation()"><div class="cavatar">${ini(ct.nom)}</div><span>${ct.nom} · ${ct.titre}</span></a>`).join('')}</div>`:''}
+</div>
+<div class="card-footer">
+<div class="card-tags">${(p.entreprises||[]).map(e=>`<span class="tag">${e}</span>`).join('')}${(p.tags||[]).map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+<button class="expand-btn" id="eb-${p.id}" onclick="event.stopPropagation();toggleD('${p.id}')">Voir leads & opportunités ▾</button>
+</div>
+<div class="detail-panel" id="det-${p.id}">
+<div class="detail-grid">
+<div>
+<div class="dstitle">Opportunités sous-traitance</div>
+${(p.opportunites||[]).map(o=>`<div class="opp-item"><div class="opp-check">✓</div><span>${o}</span></div>`).join('')}
+<div style="margin-top:1rem"><div class="dstitle">Entreprises impliquées</div>${(p.entreprises||[]).map(e=>`<span style="display:inline-flex;font-size:12px;padding:3px 8px;border-radius:6px;background:var(--surface2);border:.5px solid var(--border);color:var(--text-muted);margin:2px">🏢 ${e}</span>`).join('')}</div>
+</div>
+<div>
+<div class="dstitle">Contacts à démarcher (${cts.length})</div>
+${cts.length?cts.map(ct=>`<div class="ccard"><div class="cheader"><div class="cavatar-lg">${ini(ct.nom)}</div><div><div class="cname">${ct.nom}</div><div class="crole">${ct.titre}</div><div class="cco">${ct.entreprise}</div></div></div>${ct.angle_approche?`<div class="angle-box">💬 ${ct.angle_approche}</div>`:''}<div class="cactions"><a class="clink li" href="${li(ct)}" target="_blank">in LinkedIn</a><a class="clink" href="https://www.google.com/search?q=${encodeURIComponent((ct.nom||'')+' '+(ct.entreprise||'')+' '+p.title)}" target="_blank">🔍 Google</a></div></div>`).join(''):'<div style="font-size:13px;color:var(--text-faint)">Aucun contact identifié.</div>'}
+</div>
+<div>
+<div class="dstitle">Score & infos</div>
+<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px"><div class="score-circle ${sc(s)}" style="width:50px;height:50px;font-size:17px">${s}</div><div style="font-size:12px;color:var(--text-muted)">Score prospection<br><span style="font-size:11px;color:var(--text-faint)">${s>=70?'Priorité haute':s>=40?'Priorité moyenne':'À surveiller'}</span></div></div>
+${p.date_annonce?`<div style="font-size:12px;margin-bottom:5px"><span style="color:var(--text-faint)">Annoncé : </span>${p.date_annonce}</div>`:''}
+${p.source?`<div style="font-size:12px;margin-bottom:5px"><span style="color:var(--text-faint)">Source : </span>${p.source}</div>`:''}
+${p.region?`<div style="font-size:12px;margin-bottom:5px"><span style="color:var(--text-faint)">Région : </span>${p.region}</div>`:''}
+<div class="detail-actions">
+<a class="abtn primary" href="https://www.linkedin.com/search/results/people/?keywords=${encodeURIComponent((p.entreprises||[]).join(' ')+' directeur achats travaux')}" target="_blank">in Trouver contacts</a>
+<a class="abtn" href="https://www.boamp.fr" target="_blank">BOAMP</a>
+<a class="abtn" href="https://www.usinenouvelle.com/recherche/?q=${encodeURIComponent(p.title)}" target="_blank">Usines Nouvelles</a>
+</div>
+</div>
+</div>
+</div>
+</div>`;
   }).join('');
 }
-
-function toggleDetail(id) {
-  const panel = document.getElementById('detail-' + id);
-  const btn = document.getElementById('expandBtn-' + id);
-  const isOpen = panel.classList.contains('open');
-  panel.classList.toggle('open');
-  btn.textContent = isOpen ? 'Opportunités ▾' : 'Réduire ▴';
+function toggleD(id){const p=document.getElementById('det-'+id),b=document.getElementById('eb-'+id),o=p.classList.contains('open');p.classList.toggle('open');b.textContent=o?'Voir leads & opportunités ▾':'Réduire ▴'}
+function exportCSV(){
+  if(!allP.length){alert('Aucun projet. Lancez une recherche.');return}
+  const rows=[['Projet','Secteur','Phase','Score lead','Région','Localisation','Montant','Horizon','Prochaine étape','Entreprises','Contact Nom','Titre','Entreprise','LinkedIn','Angle approche','Source','Date annonce']];
+  allP.forEach(p=>{const cts=p.contacts||[{}];cts.forEach(c=>{rows.push([p.title,p.sector,p.phase,p.score_prospection||'',p.region||'',p.localisation,p.montant,p.horizon,p.prochaine_etape||'',(p.entreprises||[]).join(' / '),c.nom||'',c.titre||'',c.entreprise||'',li(c),c.angle_approche||'',p.source||'',p.date_annonce||''])})});
+  const csv=rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\n');
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8'}));a.download='prospection-'+new Date().toISOString().slice(0,10)+'.csv';a.click();
 }
-
-function getDemoProjects() {
-  return [
-    { id:"d1", title:"Gigafactory ACC — batteries VE", type:"fr", sector:"industrie", montant:"7,5 Md€", montant_num:7500, localisation:"Douvrin, Hauts-de-France", entreprises:["Stellantis","TotalEnergies","ACC"], horizon:"2026", statut:"En cours", summary:"Construction de la plus grande gigafactory française de cellules batteries pour véhicules électriques. Phase 2 en cours avec montée en capacité progressive.", opportunites:["Tuyauterie & fluides procédés","Génie électrique BT/HTA","Maintenance préventive équipements"], tags:["batteries","VE","gigafactory","Hauts-de-France"] },
-    { id:"d2", title:"Grand Carénage EDF — maintenance parc nucléaire", type:"fr", sector:"energie", montant:"51 Md€", montant_num:51000, localisation:"Parc nucléaire France", entreprises:["EDF","Framatome","Orano","Bouygues"], horizon:"2035", statut:"En cours", summary:"Programme de maintenance lourde, modernisation et prolongation de durée de vie du parc nucléaire existant (56 réacteurs). Appels à sous-traitance massifs et récurrents.", opportunites:["Chaudronnerie & tuyauterie nucléaire N1/N2","Contrôles non destructifs (CND)","Électricité industrielle en zone contrôlée","Échafaudage & calorifuge"], tags:["nucléaire","EDF","maintenance","long-terme"] },
-    { id:"d3", title:"Canal Seine-Nord Europe", type:"fr", sector:"infra", montant:"5,1 Md€", montant_num:5100, localisation:"Hauts-de-France (107 km)", entreprises:["SCNL","Eiffage","Vinci","Bouygues TP"], horizon:"2030", statut:"En cours", summary:"Grand canal fluvial reliant la Seine à l'Escaut sur 107 km avec 7 écluses et 59 ouvrages d'art. Plus grand chantier de génie civil d'Europe.", opportunites:["Génie civil & terrassement","Équipements hydrauliques écluses","Réseaux électriques & utilities","Sécurité chantier"], tags:["fluvial","génie civil","logistique","export"] },
-    { id:"d4", title:"Programme MGCS — char du futur franco-allemand", type:"int", sector:"defense", montant:"100 Md€", montant_num:100000, localisation:"France / Allemagne", entreprises:["KNDS","Rheinmetall","Thales","Safran"], horizon:"2035+", statut:"Annoncé", summary:"Programme Main Ground Combat System, successeur franco-allemand du Leclerc et du Leopard 2. Commandes industrielles massives attendues côté français sur 15 ans.", opportunites:["Mécanique de précision & usinage","Structures blindées soudées","Électronique embarquée & câblage","Intégration systèmes de tir"], tags:["défense","MGCS","char","export"] },
-    { id:"d5", title:"Data centers IA Microsoft & hyperscalers en France", type:"fr", sector:"industrie", montant:"3,2 Md€", montant_num:3200, localisation:"Île-de-France, Lyon, Marseille", entreprises:["Microsoft","Orange Business","Bouygues Immobilier"], horizon:"2026-2027", statut:"Annoncé", summary:"Déploiement massif de data centers haute densité pour l'IA en France. Appel massif aux entreprises françaises BTP, réseaux et refroidissement.", opportunites:["Génie électrique HTA & groupe électrogène","Climatisation industrielle CRAH","Câblage structuré cuivre & fibre","Sécurité incendie"], tags:["data center","IA","numérique","immobilier"] },
-    { id:"d6", title:"Train à hydrogène Alstom — déploiement régional", type:"fr", sector:"transport", montant:"2,8 Md€", montant_num:2800, localisation:"Grand Est, Bourgogne-Franche-Comté", entreprises:["Alstom","SNCF","Air Liquide","TotalEnergies"], horizon:"2026-2028", statut:"À suivre", summary:"Premier déploiement à grande échelle de trains à hydrogène sur lignes non électrifiées, avec stations de remplissage H2 et production locale d'hydrogène vert.", opportunites:["Stations de remplissage H2 (tuyauterie haute pression)","Maintenance matériel roulant alternatif","Chaudronnerie cuves & réservoirs H2"], tags:["hydrogène","ferroviaire","Alstom","décarbonation"] },
-    { id:"d7", title:"Métro Grand Paris Express — lots travaux restants", type:"fr", sector:"transport", montant:"36 Md€", montant_num:36000, localisation:"Île-de-France", entreprises:["SGP","Vinci","Eiffage","Bouygues","Alstom"], horizon:"2030", statut:"En cours", summary:"Plus grand projet de transport en Europe. Nombreux lots en cours de réalisation et en appel d'offres pour équipements, systèmes et finitions des 200 km de lignes.", opportunites:["Électromécanique tunnels & gares","Ventilation & désenfumage","Signalisation & SCADA","Maintenance équipements fixes"], tags:["métro","GPE","Île-de-France","tunnels"] },
-    { id:"d8", title:"Éolien offshore Bretagne & Normandie — parcs en construction", type:"fr", sector:"energie", montant:"6,2 Md€", montant_num:6200, localisation:"Saint-Brieuc, Fécamp, Dieppe", entreprises:["Iberdrola","EDF Renouvelables","Siemens Gamesa","Chantiers Nantes"], horizon:"2025-2027", statut:"En cours", summary:"Construction simultanée de plusieurs parcs éoliens offshore avec fabrication française de fondations monopieux et jackets. Fort recours à sous-traitance locale.", opportunites:["Structures métalliques & soudage offshore","Câbles sous-marins HTA & raccordements","Maintenance O&M (bateaux service)","Peinture anticorrosion marine"], tags:["éolien","offshore","maritime","ENR"] },
-    { id:"d9", title:"Extension raffinerie Totalenergies — SAF & biocarburants", type:"fr", sector:"energie", montant:"1,5 Md€", montant_num:1500, localisation:"Gonfreville-l'Orcher, Normandie", entreprises:["TotalEnergies","Air France","Thales"], horizon:"2026", statut:"Annoncé", summary:"Conversion partielle de la raffinerie de Normandie pour produire du carburant d'aviation durable (SAF). Forts besoins en tuyauterie procédés et instrumentation.", opportunites:["Tuyauterie procédés haute température","Chaudronnerie (échangeurs, colonnes)","Instrumentation & robinetterie","Calorifuge industriel"], tags:["SAF","raffinerie","Normandie","pétrochimie"] },
-    { id:"d10", title:"Sous-marins Shortfin Barracuda — Australie (Naval Group)", type:"int", sector:"defense", montant:"30 Md€", montant_num:30000, localisation:"Australie / Cherbourg", entreprises:["Naval Group","Thales","DCNS","MBDA"], horizon:"2030+", statut:"À suivre", summary:"Malgré les tensions AUKUS, Naval Group maintient ses programmes export sous-marins. Fort contenu industriel français sur les équipements embarqués.", opportunites:["Mécanique navale de précision","Systèmes propulsion électrique","Câblage naval & connectique","Soudage acier à haute limite élastique"], tags:["naval","défense","sous-marin","export"] }
-  ];
-}
+function getDemoP(){return[{id:"d1",title:"EPR2 Penly — tuyauterie & génie civil",type:"fr",sector:"energie",region:"Normandie",phase:"valide",score_prospection:92,montant:"10 Md€",montant_num:10000,localisation:"Penly, Normandie",entreprises:["EDF","Framatome","Bouygues TP"],horizon:"2026-2035",date_annonce:"janvier 2025",source:"Usines Nouvelles, jan. 2025",urgent:true,summary:"DUP accordée pour les 2 EPR2 de Penly. Appels d'offres génie civil et tuyauterie nucléaire N1/N2 prévus T3 2025.",prochaine_etape:"AO génie civil T3 2025",opportunites:["Tuyauterie nucléaire N1/N2","Chaudronnerie & robinetterie","Génie électrique zone contrôlée","Calorifuge & échafaudage"],contacts:[{nom:"Sophie Marchand",titre:"Directrice Achats Travaux",entreprise:"EDF Nouveau Nucléaire",linkedin_search:"Sophie Marchand Directrice Achats EDF Nucléaire",linkedin_url:"https://www.linkedin.com/search/results/people/?keywords=Sophie+Marchand+Directrice+Achats+EDF+Nucl%C3%A9aire",angle_approche:"Bonjour Sophie, spécialisés en tuyauterie nucléaire N1/N2 avec des références sur Flamanville, votre projet Penly nous intéresse fortement."},{nom:"Laurent Dubois",titre:"Responsable Sous-traitance",entreprise:"Bouygues Travaux Publics",linkedin_search:"Laurent Dubois Sous-traitance Bouygues TP nucléaire",linkedin_url:"https://www.linkedin.com/search/results/people/?keywords=Laurent+Dubois+Sous-traitance+Bouygues+TP",angle_approche:"Bonjour Laurent, nous intervenons sur la chaudronnerie et tuyauterie en milieu nucléaire. Vos besoins sur Penly nous correspondent parfaitement."}],tags:["nucléaire","EPR2","Normandie"]},{id:"d2",title:"Gigafactory Verkor — AO maintenance ouvert",type:"fr",sector:"industrie",region:"Hauts-de-France",phase:"ao_ouvert",score_prospection:96,montant:"2 Md€",montant_num:2000,localisation:"Dunkerque, Hauts-de-France",entreprises:["Verkor","Renault","Schneider Electric"],horizon:"T4 2025",date_annonce:"novembre 2024",source:"Les Échos, nov. 2024",urgent:true,summary:"AO maintenance et utilities industriels ouverts sur la gigafactory Verkor. Clôture fin mai 2025. Fort volume sous-traitance locale.",prochaine_etape:"Clôture AO 30 mai 2025",opportunites:["Tuyauterie fluides procédés","Génie électrique BT/HTA","Maintenance préventive & curative","Instrumentation"],contacts:[{nom:"Thomas Lebrun",titre:"Directeur Achats Industriels",entreprise:"Verkor",linkedin_search:"Thomas Lebrun Directeur Achats Verkor Dunkerque",linkedin_url:"https://www.linkedin.com/search/results/people/?keywords=Thomas+Lebrun+Achats+Verkor+Dunkerque",angle_approche:"Bonjour Thomas, suite à l'AO Verkor publié, nous souhaitons vous présenter notre offre tuyauterie + maintenance pour votre gigafactory."},{nom:"Marie-Claire Fontaine",titre:"Responsable Travaux Neufs",entreprise:"Verkor",linkedin_search:"Marie-Claire Fontaine Travaux Neufs Verkor",linkedin_url:"https://www.linkedin.com/search/results/people/?keywords=Marie-Claire+Fontaine+Travaux+Neufs+Verkor",angle_approche:"Bonjour Marie-Claire, spécialisés en génie électrique et tuyauterie process, nous sommes disponibles pour votre mise en service."}],tags:["batteries","gigafactory","Dunkerque","AO ouvert"]},{id:"d3",title:"Grand Paris Express — lots ventilation L16/17",type:"fr",sector:"transport",region:"Île-de-France",phase:"ao_ouvert",score_prospection:87,montant:"36 Md€",montant_num:36000,localisation:"Seine-Saint-Denis, Île-de-France",entreprises:["SGP","Vinci","Eiffage","Bouygues"],horizon:"2026-2028",date_annonce:"janvier 2025",source:"BOAMP / SGP, jan. 2025",urgent:true,summary:"Nouveaux lots AO ventilation et désenfumage gares lignes 16 et 17 publiés sur BOAMP. Réponses attendues avant juin 2025.",prochaine_etape:"Réponse AO avant juin 2025",opportunites:["Ventilation & désenfumage tunnels","Électromécanique gares","Câblage courants forts","Maintenance équipements fixes"],contacts:[{nom:"Julien Carpentier",titre:"Responsable Achats Équipements",entreprise:"Société du Grand Paris",linkedin_search:"Julien Carpentier Achats Société Grand Paris",linkedin_url:"https://www.linkedin.com/search/results/people/?keywords=Julien+Carpentier+Achats+Grand+Paris",angle_approche:"Bonjour Julien, nous intervenons sur les marchés ventilation et électromécanique souterrain. Nous souhaitons déposer une offre sur vos lots en cours."},{nom:"Clara Fontaine",titre:"Directrice Lots Techniques",entreprise:"Vinci Construction",linkedin_search:"Clara Fontaine Lots Techniques Vinci GPE",linkedin_url:"https://www.linkedin.com/search/results/people/?keywords=Clara+Fontaine+Lots+Techniques+Vinci+GPE",angle_approche:"Bonjour Clara, nos références désenfumage tunnel nous permettent de répondre efficacement à vos besoins GPE lignes 16/17."}],tags:["GPE","métro","Île-de-France","ventilation"]},{id:"d4",title:"Microsoft data center IA — Seine-et-Marne",type:"fr",sector:"numerique",region:"Île-de-France",phase:"annonce",score_prospection:74,montant:"4 Md€",montant_num:4000,localisation:"Seine-et-Marne, Île-de-France",entreprises:["Microsoft","Bouygues Immobilier","Eiffage Énergie"],horizon:"2026",date_annonce:"mars 2025",source:"BFM Business, mars 2025",urgent:false,summary:"Microsoft annonce 4 Md€ en data centers IA en France. Consultation lots techniques et génie électrique HTA en cours depuis avril 2025.",prochaine_etape:"Consultation lots T2 2025",opportunites:["Génie électrique HTA & groupes","Climatisation CRAH","Câblage courants forts","Sécurité incendie"],contacts:[{nom:"Éric Blanchard",titre:"Directeur de Programme",entreprise:"Bouygues Immobilier Data Centers",linkedin_search:"Eric Blanchard Directeur Programme Bouygues Data Center",linkedin_url:"https://www.linkedin.com/search/results/people/?keywords=Eric+Blanchard+Bouygues+Immobilier+Data+Center",angle_approche:"Bonjour Éric, spécialisés en génie électrique HTA data centers, nous souhaitons vous présenter nos références pour le programme Microsoft France."}],tags:["data center","IA","Microsoft","Île-de-France"]},{id:"d5",title:"H2V Le Havre — hydrogène vert",type:"fr",sector:"chimie",region:"Normandie",phase:"projet",score_prospection:62,montant:"1,2 Md€",montant_num:1200,localisation:"Le Havre, Normandie",entreprises:["H2V Industry","TotalEnergies","Air Liquide"],horizon:"2027-2028",date_annonce:"février 2025",source:"Usines Nouvelles, fév. 2025",urgent:false,summary:"FID attendue T3 2025. Études terminées. Fort besoin en tuyauterie haute pression et chaudronnerie spécialisée hydrogène.",prochaine_etape:"FID & AO T3 2025",opportunites:["Tuyauterie haute pression H2","Chaudronnerie cuves & réservoirs","Instrumentation & robinetterie","Calorifuge"],contacts:[{nom:"Nicolas Perrot",titre:"Directeur Technique",entreprise:"H2V Industry",linkedin_search:"Nicolas Perrot Directeur Technique H2V Industry Le Havre",linkedin_url:"https://www.linkedin.com/search/results/people/?keywords=Nicolas+Perrot+Directeur+Technique+H2V",angle_approche:"Bonjour Nicolas, spécialisés en tuyauterie HP hydrogène, nous aimerions vous rencontrer en amont de votre FID."}],tags:["hydrogène","Normandie","tuyauterie HP"]},{id:"d6",title:"Airbus A320 — montée en cadence Toulouse",type:"fr",sector:"defense",region:"Occitanie",phase:"encours",score_prospection:80,montant:"2,5 Md€",montant_num:2500,localisation:"Toulouse, Occitanie",entreprises:["Airbus","Safran","Liebherr"],horizon:"2025-2026",date_annonce:"octobre 2024",source:"Air & Cosmos, oct. 2024",urgent:false,summary:"Airbus monte à 75 avions/mois. Nouveaux contrats fournisseurs pour pièces et assemblage en cours. Forte pression sur la chaîne de sous-traitance.",prochaine_etape:"Nouveaux contrats fournisseurs T2 2025",opportunites:["Usinage pièces aéronautique","Assemblage structures composites","Traitement de surface","CND"],contacts:[{nom:"Pierre Gauthier",titre:"Supply Chain Manager",entreprise:"Airbus Commercial Aircraft",linkedin_search:"Pierre Gauthier Supply Chain Manager Airbus Commercial Aircraft",linkedin_url:"https://www.linkedin.com/search/results/people/?keywords=Pierre+Gauthier+Supply+Chain+Airbus",angle_approche:"Bonjour Pierre, qualifiés Nadcap sur l'usinage de précision aéronautique, nous cherchons à intégrer votre panel pour la montée en cadence A320."}],tags:["aéronautique","Airbus","Toulouse","Occitanie"]}];}
 </script>
 </body>
 </html>
