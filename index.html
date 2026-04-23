@@ -5,16 +5,7 @@
 <title>NEO2 — Veille Investissements Industriels</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --neo-red:#E3001B;--neo-dark:#1A1A1A;
-  --bg:#F7F7F7;--surface:#fff;--surface2:#F4F4F4;
-  --border:rgba(0,0,0,.09);--border-strong:rgba(0,0,0,.18);
-  --text:#1A1A1A;--text-muted:#666;--text-faint:#999;
-  --blue:#185FA5;--blue-bg:#E6F1FB;--blue-border:#85B7EB;
-  --green:#0F6E56;--green-bg:#E1F5EE;--green-border:#5DCAA5;
-  --amber:#854F0B;--amber-bg:#FAEEDA;
-  --r:8px;--rl:12px
-}
+:root{--neo-red:#E3001B;--neo-dark:#1A1A1A;--bg:#F7F7F7;--surface:#fff;--surface2:#F4F4F4;--border:rgba(0,0,0,.09);--border-strong:rgba(0,0,0,.18);--text:#1A1A1A;--text-muted:#666;--text-faint:#999;--blue:#185FA5;--blue-bg:#E6F1FB;--blue-border:#85B7EB;--green:#0F6E56;--green-bg:#E1F5EE;--green-border:#5DCAA5;--amber:#854F0B;--amber-bg:#FAEEDA;--r:8px;--rl:12px}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.6;min-height:100vh}
 nav{background:var(--neo-dark);padding:0 2rem;height:58px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;gap:12px}
 .nav-logo{display:flex;align-items:center;gap:12px}
@@ -28,48 +19,41 @@ nav{background:var(--neo-dark);padding:0 2rem;height:58px;display:flex;align-ite
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
 .nav-btn{font-size:12px;padding:5px 12px;border-radius:var(--r);border:.5px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);color:#fff;cursor:pointer;white-space:nowrap}
 .nav-btn:hover{background:rgba(255,255,255,.18)}
-.nav-btn.red{background:var(--neo-red);border-color:var(--neo-red)}
 .page{max-width:1200px;margin:0 auto;padding:1.5rem 1.5rem 4rem}
-
-/* WEEK BANNER */
 .week-banner{background:var(--neo-dark);color:#fff;border-radius:var(--r);padding:.75rem 1.25rem;margin-bottom:1rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
-.week-label{font-size:12px;color:rgba(255,255,255,.55)}
-.week-dates{font-size:14px;font-weight:600;color:#fff}
-
-/* PASTE ZONE */
-.paste-zone{background:var(--surface);border:1.5px dashed rgba(227,0,27,.35);border-radius:var(--rl);padding:1.1rem 1.25rem;margin-bottom:1.25rem}
-.paste-title{font-size:12px;font-weight:600;color:var(--neo-red);margin-bottom:7px;display:flex;align-items:center;gap:6px}
-.paste-zone textarea{width:100%;height:90px;border:.5px solid var(--border-strong);border-radius:var(--r);padding:9px 11px;font-size:12px;color:var(--text);background:var(--surface2);resize:vertical;outline:none;font-family:inherit;line-height:1.5}
+.week-label{font-size:11px;color:rgba(255,255,255,.45)}
+.week-dates{font-size:14px;font-weight:600}
+.sources-status{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1.25rem}
+.src-badge{font-size:11px;padding:4px 10px;border-radius:20px;border:.5px solid var(--border-strong);background:var(--surface);color:var(--text-muted);display:flex;align-items:center;gap:5px}
+.src-badge.ok{background:var(--green-bg);color:var(--green);border-color:var(--green-border)}
+.src-badge.loading{background:var(--amber-bg);color:var(--amber);border-color:var(--amber);animation:pulse 1s infinite}
+.src-badge.err{background:#FFEBEE;color:var(--neo-red);border-color:var(--neo-red)}
+.paste-zone{background:var(--surface);border:1.5px dashed rgba(227,0,27,.3);border-radius:var(--rl);padding:1rem 1.25rem;margin-bottom:1.25rem}
+.paste-title{font-size:12px;font-weight:600;color:var(--neo-red);margin-bottom:6px}
+.paste-zone textarea{width:100%;height:80px;border:.5px solid var(--border-strong);border-radius:var(--r);padding:8px 11px;font-size:12px;color:var(--text);background:var(--surface2);resize:vertical;outline:none;font-family:inherit}
 .paste-zone textarea:focus{border-color:var(--neo-red)}
 .paste-zone textarea::placeholder{color:var(--text-faint);font-size:12px}
-
-/* LAUNCH */
 .launch-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:1.25rem}
-.launch-hint{font-size:11px;color:var(--text-faint);line-height:1.5}
-.launch-hint strong{color:var(--text-muted)}
-.launch-btn{height:42px;padding:0 24px;border-radius:var(--r);border:none;background:var(--neo-red);color:#fff;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:8px;white-space:nowrap;letter-spacing:-.01em}
+.sources-info{font-size:11px;color:var(--text-faint);line-height:1.7}
+.sources-info strong{color:var(--text-muted)}
+.launch-btn{height:42px;padding:0 24px;border-radius:var(--r);border:none;background:var(--neo-red);color:#fff;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:8px;white-space:nowrap}
 .launch-btn:hover{opacity:.9}
 .launch-btn:disabled{opacity:.4;cursor:not-allowed}
-
-/* PROGRESS */
 .progress-bar{background:var(--surface);border:.5px solid var(--border);border-radius:var(--r);padding:.9rem 1.25rem;margin-bottom:1.25rem;display:none}
 .progress-bar.visible{display:block}
 .progress-steps{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap}
-.pstep{font-size:11px;padding:3px 9px;border-radius:20px;background:var(--surface2);border:.5px solid var(--border);color:var(--text-faint)}
-.pstep.active{background:#FFF3E0;color:#E65100;border-color:#FFB300;animation:pulse 1s infinite}
+.pstep{font-size:11px;padding:3px 10px;border-radius:20px;background:var(--surface2);border:.5px solid var(--border);color:var(--text-faint);transition:all .3s}
+.pstep.active{background:var(--amber-bg);color:var(--amber);border-color:var(--amber);animation:pulse 1s infinite}
 .pstep.done{background:var(--green-bg);color:var(--green);border-color:var(--green-border)}
+.pstep.err{background:#FFEBEE;color:var(--neo-red);border-color:var(--neo-red)}
 .progress-title{font-size:12px;color:var(--text-muted);margin-bottom:8px}
 .progress-track{height:3px;background:var(--border);border-radius:2px;overflow:hidden}
 .progress-fill{height:100%;background:var(--neo-red);border-radius:2px;transition:width .4s ease}
-
-/* STATS */
 .stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:8px;margin-bottom:1.25rem}
 .stat-card{background:var(--surface);border:.5px solid var(--border);border-radius:var(--r);padding:10px 14px}
 .stat-label{font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px}
 .stat-value{font-size:20px;font-weight:700;letter-spacing:-.02em}
 .stat-sub{font-size:9px;color:var(--text-faint)}
-
-/* TOOLBAR */
 .toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:.9rem}
 .search-wrap{position:relative;flex:1;min-width:180px}
 .search-wrap input{width:100%;height:36px;padding:0 12px 0 34px;border:.5px solid var(--border-strong);border-radius:var(--r);background:var(--surface);color:var(--text);font-size:13px;outline:none}
@@ -78,15 +62,11 @@ nav{background:var(--neo-dark);padding:0 2rem;height:58px;display:flex;align-ite
 .tbtn{height:36px;padding:0 14px;border-radius:var(--r);border:.5px solid var(--border-strong);background:var(--surface);color:var(--text);font-size:12px;cursor:pointer;display:flex;align-items:center;gap:5px;white-space:nowrap}
 .tbtn:hover{background:var(--surface2)}
 .tbtn.green{background:var(--green-bg);border-color:var(--green-border);color:var(--green)}
-
-/* FILTERS */
 .filter-row{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:5px;align-items:center}
 .filter-label{font-size:10px;color:var(--text-faint);white-space:nowrap;min-width:48px;flex-shrink:0}
 .chip{font-size:11px;padding:3px 9px;border-radius:20px;border:.5px solid var(--border-strong);background:var(--surface);color:var(--text-muted);cursor:pointer;transition:all .15s;user-select:none;white-space:nowrap}
 .chip:hover{background:var(--surface2)}
 .chip.active{background:var(--neo-red);color:#fff;border-color:var(--neo-red)}
-
-/* CARDS */
 .project-card{background:var(--surface);border:.5px solid var(--border);border-radius:var(--rl);overflow:hidden;transition:border-color .15s;margin-bottom:8px}
 .project-card:hover{border-color:var(--border-strong)}
 .project-card.selected{border-color:var(--neo-red);border-width:1.5px}
@@ -102,7 +82,8 @@ nav{background:var(--neo-dark);padding:0 2rem;height:58px;display:flex;align-ite
 .badge-int{background:var(--blue-bg);color:var(--blue)}
 .badge-statut{background:#FFF3E0;color:#E65100;border:.5px solid #FFB300}
 .badge-un{background:#FFEBEE;color:var(--neo-red);border:.5px solid var(--neo-red)}
-.badge-auto{background:var(--surface2);color:var(--text-muted);border:.5px solid var(--border-strong)}
+.badge-boamp{background:#E8F5E9;color:#1B5E20;border:.5px solid #2E7D32}
+.badge-rss{background:var(--surface2);color:var(--text-muted);border:.5px solid var(--border-strong)}
 .score-block{flex-shrink:0;text-align:center}
 .score-circle{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;border:2px solid}
 .score-high{background:#E8F5E9;color:#1B5E20;border-color:#2E7D32}
@@ -119,8 +100,6 @@ nav{background:var(--neo-dark);padding:0 2rem;height:58px;display:flex;align-ite
 .card-tags{display:flex;gap:3px;flex-wrap:wrap}
 .tag{font-size:10px;padding:1px 5px;border-radius:4px;background:var(--border);color:var(--text-muted)}
 .expand-btn{font-size:11px;color:var(--neo-red);background:none;border:none;cursor:pointer;white-space:nowrap;padding:0}
-
-/* DETAIL */
 .detail-panel{border-top:.5px solid var(--border);padding:.85rem 1.25rem;display:none}
 .detail-panel.open{display:block}
 .detail-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.25rem}
@@ -143,13 +122,10 @@ nav{background:var(--neo-dark);padding:0 2rem;height:58px;display:flex;align-ite
 .abtn{font-size:11px;padding:5px 10px;border-radius:var(--r);border:.5px solid var(--border-strong);background:var(--surface);color:var(--text);text-decoration:none;display:inline-flex;align-items:center;gap:3px}
 .abtn:hover{background:var(--surface2)}
 .abtn.primary{background:var(--neo-red);border-color:var(--neo-red);color:#fff}
-
 .skeleton{background:var(--border);border-radius:4px;animation:shimmer 1.5s ease-in-out infinite}
 @keyframes shimmer{0%,100%{opacity:.4}50%{opacity:.9}}
 .lcard{background:var(--surface);border:.5px solid var(--border);border-radius:var(--rl);padding:.85rem 1.25rem;margin-bottom:8px}
 .empty-state{text-align:center;padding:3rem 1rem;color:var(--text-muted)}
-
-/* MODALS */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;z-index:200;padding:1rem}
 .modal-overlay.hidden{display:none}
 .modal{background:var(--surface);border-radius:var(--rl);border:.5px solid var(--border-strong);max-width:660px;width:100%;max-height:90vh;display:flex;flex-direction:column}
@@ -175,25 +151,23 @@ footer{max-width:1200px;margin:2rem auto 0;padding:1.5rem 1.5rem 2rem;border-top
 </head>
 <body>
 
-<!-- API MODAL -->
 <div class="modal-overlay hidden" id="apiModal">
   <div class="api-box">
     <h2>Clé API Anthropic</h2>
-    <p>Saisissez votre clé API pour activer la veille automatique. Elle est stockée dans votre navigateur.</p>
+    <p>Nécessaire uniquement pour l'analyse IA des projets. Le scan BOAMP et RSS fonctionne sans clé.</p>
     <input type="password" id="apiKeyInput" placeholder="sk-ant-api03-..." autocomplete="off"/>
     <div class="api-actions">
       <button class="mbtn secondary" style="flex:1" onclick="useDemoMode()">Mode démo</button>
       <button class="mbtn primary" style="flex:1" onclick="saveApiKey()">Valider</button>
     </div>
-    <p class="mnote">Modèle : claude-haiku-4-5 (économique) · <a href="https://console.anthropic.com" target="_blank" style="color:var(--neo-red)">console.anthropic.com</a></p>
+    <p class="mnote">Modèle : claude-haiku-4-5 (économique ~0,20$/lancement) · <a href="https://console.anthropic.com" target="_blank" style="color:var(--neo-red)">console.anthropic.com</a></p>
   </div>
 </div>
 
-<!-- MAIL MODAL -->
 <div class="modal-overlay hidden" id="mailModal">
   <div class="modal">
     <div class="modal-header">
-      <h2>📧 Mail de veille hebdomadaire NEO2</h2>
+      <h2>📧 Mail de veille NEO2</h2>
       <button class="modal-close" onclick="document.getElementById('mailModal').classList.add('hidden')">✕</button>
     </div>
     <div class="modal-body">
@@ -207,7 +181,6 @@ footer{max-width:1200px;margin:2rem auto 0;padding:1.5rem 1.5rem 2rem;border-top
   </div>
 </div>
 
-<!-- NAV -->
 <nav>
   <div class="nav-logo">
     <div class="neo-logo">NEO<span>2</span></div>
@@ -215,7 +188,7 @@ footer{max-width:1200px;margin:2rem auto 0;padding:1.5rem 1.5rem 2rem;border-top
   </div>
   <div class="nav-right">
     <div class="status-pill"><span class="dot" id="navDot"></span><span id="navStatus">Prêt</span></div>
-    <button class="nav-btn" onclick="openMailModal()">📧 Générer mail</button>
+    <button class="nav-btn" onclick="openMailModal()">📧 Mail</button>
     <button class="nav-btn" onclick="exportCSV()">📥 CSV</button>
     <button class="nav-btn" onclick="showApiModal()">Clé API</button>
   </div>
@@ -223,31 +196,35 @@ footer{max-width:1200px;margin:2rem auto 0;padding:1.5rem 1.5rem 2rem;border-top
 
 <div class="page">
 
-  <!-- SEMAINE -->
   <div class="week-banner">
     <div>
       <div class="week-label">Semaine analysée</div>
       <div class="week-dates" id="weekDates">—</div>
     </div>
-    <div style="font-size:11px;color:rgba(255,255,255,.4);text-align:right">Scan automatique + articles Usine Nouvelle collés</div>
+    <div style="font-size:11px;color:rgba(255,255,255,.35)">BOAMP · RSS Usine Nouvelle · Batiactu · Google News · Articles collés</div>
   </div>
 
-  <!-- ZONE COLLAGE UN -->
+  <!-- STATUT SOURCES -->
+  <div class="sources-status" id="sourcesStatus">
+    <span class="src-badge" id="src-boamp">📋 BOAMP</span>
+    <span class="src-badge" id="src-un">📰 Usine Nouvelle RSS</span>
+    <span class="src-badge" id="src-batiactu">🏗 Batiactu</span>
+    <span class="src-badge" id="src-gnews">🔍 Google News</span>
+    <span class="src-badge" id="src-bf">🇫🇷 Business France</span>
+    <span class="src-badge" id="src-paste">📝 Articles collés</span>
+  </div>
+
+  <!-- ZONE COLLAGE -->
   <div class="paste-zone">
-    <div class="paste-title">📰 Articles Usine Nouvelle (optionnel — collez les articles payants que vous avez lus)</div>
-    <textarea id="articlesInput" placeholder="Collez ici le texte des articles payants d'Usine Nouvelle de la semaine...
-
-Exemple :
-Sanofi investit 400M€ dans une nouvelle unité biopharmaceutique à Vitry-sur-Seine. Le groupe prévoit de démarrer les travaux au T4 2025...
-
-L'outil scannera automatiquement toutes les autres sources gratuites (Usine Nouvelle articles gratuits, Les Échos, Batiactu, BOAMP, Business France, Google Actualités...)."></textarea>
+    <div class="paste-title">📰 Articles Usine Nouvelle payants (optionnel — collez le texte des articles que vous avez lus)</div>
+    <textarea id="articlesInput" placeholder="Collez ici le texte des articles payants d'Usine Nouvelle de la semaine...&#10;&#10;L'outil scanne automatiquement : BOAMP (API officielle), RSS Usine Nouvelle, Batiactu, Google News industrie, Business France."></textarea>
   </div>
 
-  <!-- LAUNCH -->
   <div class="launch-row">
-    <div class="launch-hint">
-      <strong>Scan automatique :</strong> Usine Nouvelle (gratuit) · Les Échos · Batiactu · BOAMP · Business France · Google Actualités<br>
-      Mots-clés : investissement · usine · chantier · millions/milliards · permis construire · appel d'offres
+    <div class="sources-info">
+      <strong>Sources scannées automatiquement :</strong><br>
+      📋 API BOAMP (marchés publics officiels) · 📰 RSS Usine Nouvelle · 🏗 Batiactu · 🔍 Google News industrie · 🇫🇷 Business France<br>
+      <span style="color:var(--neo-red)">+ vos articles Usine Nouvelle collés ci-dessus</span>
     </div>
     <button class="launch-btn" id="launchBtn" onclick="fetchAll()">
       <svg width="15" height="15" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M1 7a6 6 0 1 0 1-3.2M1 1v3h3"/></svg>
@@ -255,38 +232,42 @@ L'outil scannera automatiquement toutes les autres sources gratuites (Usine Nouv
     </button>
   </div>
 
-  <!-- PROGRESS -->
   <div class="progress-bar" id="progressBar">
-    <div class="progress-steps" id="progressSteps">
-      <span class="pstep" id="ps1">🔍 Scan web automatique</span>
-      <span class="pstep" id="ps2">📰 Analyse articles UN</span>
-      <span class="pstep" id="ps3">🏗 Structuration projets</span>
-      <span class="pstep" id="ps4">👤 Identification contacts</span>
+    <div class="progress-steps">
+      <span class="pstep" id="ps1">📋 API BOAMP</span>
+      <span class="pstep" id="ps2">📰 RSS sources</span>
+      <span class="pstep" id="ps3">🤖 Analyse IA</span>
+      <span class="pstep" id="ps4">👤 Contacts</span>
     </div>
     <div class="progress-title" id="progressTitle">Initialisation...</div>
     <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
   </div>
 
-  <!-- STATS -->
   <div class="stats-row">
     <div class="stat-card"><div class="stat-label">Projets</div><div class="stat-value" id="sT">—</div><div class="stat-sub">identifiés</div></div>
     <div class="stat-card"><div class="stat-label">✅ Sélectionnés</div><div class="stat-value" id="sSel" style="color:var(--neo-red)">0</div><div class="stat-sub">pour mail</div></div>
+    <div class="stat-card"><div class="stat-label">BOAMP</div><div class="stat-value" id="sBOAMP" style="color:#1B5E20">—</div><div class="stat-sub">AO officiels</div></div>
+    <div class="stat-card"><div class="stat-label">Usine Nouvelle</div><div class="stat-value" id="sUN" style="color:var(--neo-red)">—</div><div class="stat-sub">articles</div></div>
     <div class="stat-card"><div class="stat-label">Contacts</div><div class="stat-value" id="sC" style="color:var(--blue)">—</div><div class="stat-sub">terrain</div></div>
-    <div class="stat-card"><div class="stat-label">Usine Nouvelle</div><div class="stat-value" id="sUN" style="color:var(--neo-red)">—</div><div class="stat-sub">projets identifiés</div></div>
     <div class="stat-card"><div class="stat-label">Volume</div><div class="stat-value" id="sV">—</div><div class="stat-sub">estimé</div></div>
   </div>
 
-  <!-- TOOLBAR -->
   <div class="toolbar">
     <div class="search-wrap">
       <span class="search-icon"><svg width="13" height="13" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="6.5" cy="6.5" r="5"/><path d="M11 11l2.5 2.5"/></svg></span>
       <input type="text" id="searchInput" placeholder="Rechercher projet, client, région, contact..." oninput="renderCards()"/>
     </div>
-    <button class="tbtn" onclick="openMailModal()">📧 Générer mail</button>
-    <button class="tbtn green" onclick="exportCSV()">📥 Export CSV</button>
+    <button class="tbtn" onclick="openMailModal()">📧 Mail</button>
+    <button class="tbtn green" onclick="exportCSV()">📥 CSV</button>
   </div>
 
-  <!-- FILTRES -->
+  <div class="filter-row" style="margin-bottom:5px">
+    <span class="filter-label">Source</span>
+    <span class="chip active" onclick="setF('source','all',this)">Toutes</span>
+    <span class="chip" onclick="setF('source','boamp',this)" style="color:#1B5E20;border-color:#2E7D32">📋 BOAMP</span>
+    <span class="chip" onclick="setF('source','un',this)" style="color:var(--neo-red);border-color:var(--neo-red)">📰 Usine Nouvelle</span>
+    <span class="chip" onclick="setF('source','rss',this)">🔍 Autres RSS</span>
+  </div>
   <div class="filter-row" style="margin-bottom:5px">
     <span class="filter-label">Secteur</span>
     <span class="chip active" onclick="setF('sector','all',this)">Tous</span>
@@ -297,12 +278,6 @@ L'outil scannera automatiquement toutes les autres sources gratuites (Usine Nouv
     <span class="chip" onclick="setF('sector','infra',this)">🏗 Infra & BTP</span>
     <span class="chip" onclick="setF('sector','asd',this)">✈ Aéro & Défense</span>
     <span class="chip" onclick="setF('sector','ferro',this)">🚆 Ferroviaire</span>
-  </div>
-  <div class="filter-row" style="margin-bottom:5px">
-    <span class="filter-label">Source</span>
-    <span class="chip active" onclick="setF('source','all',this)">Toutes</span>
-    <span class="chip" onclick="setF('source','un',this)" style="color:var(--neo-red);border-color:var(--neo-red)">📰 Usine Nouvelle</span>
-    <span class="chip" onclick="setF('source','auto',this)">🔍 Scan auto</span>
   </div>
   <div class="filter-row" style="margin-bottom:1.25rem">
     <span class="filter-label">Région</span>
@@ -325,43 +300,173 @@ L'outil scannera automatiquement toutes les autres sources gratuites (Usine Nouv
     <div class="empty-state">
       <div style="font-size:2.5rem;margin-bottom:.75rem">📡</div>
       <div style="font-size:14px;font-weight:600;color:var(--text)">Prêt pour la veille de la semaine</div>
-      <div style="font-size:12px;margin-top:6px;max-width:500px;margin-left:auto;margin-right:auto">Collez vos articles Usine Nouvelle si vous en avez, puis cliquez <strong>Lancer la veille</strong>.<br>L'outil scanne automatiquement le web sur les mots-clés investissement.</div>
+      <div style="font-size:12px;margin-top:6px">Collez vos articles Usine Nouvelle si vous en avez, puis cliquez <strong>Lancer la veille</strong>.</div>
     </div>
   </div>
 </div>
 
 <footer>
-  <span>NEO2 — Veille Investissements Industriels · claude-haiku-4-5 (Anthropic)</span>
+  <span>NEO2 — Veille Industrielle · BOAMP API + RSS + IA claude-haiku-4-5</span>
   <span id="lastUpdate"></span>
 </footer>
 
 <script>
-let allP=[],aF={sector:'all',source:'all',region:'all'};
+let allP=[],aF={source:'all',sector:'all',region:'all'};
 let apiKey=localStorage.getItem('anthropic_key')||'',demoMode=false;
 let selectedIds=new Set();
+let rawData={boamp:[],rss:[]};
 
-// Calcul semaine lundi-dimanche précédente
 function getPrevWeek(){
-  const now=new Date();
-  const dow=now.getDay()||7;
-  const lastMon=new Date(now);lastMon.setDate(now.getDate()-dow-6);lastMon.setHours(0,0,0,0);
-  const lastSun=new Date(lastMon);lastSun.setDate(lastMon.getDate()+6);
-  return{mon:lastMon,sun:lastSun};
+  const now=new Date(),dow=now.getDay()||7;
+  const mon=new Date(now);mon.setDate(now.getDate()-dow-6);mon.setHours(0,0,0,0);
+  const sun=new Date(mon);sun.setDate(mon.getDate()+6);sun.setHours(23,59,59,999);
+  return{mon,sun};
 }
 function fmtDate(d){return d.toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'})}
 function fmtDateShort(d){return d.toLocaleDateString('fr-FR',{day:'numeric',month:'short'})}
+function fmtISO(d){return d.toISOString().slice(0,10)}
 
 const week=getPrevWeek();
 document.getElementById('weekDates').textContent=`Lundi ${fmtDate(week.mon)} → Dimanche ${fmtDate(week.sun)}`;
 
 function showApiModal(){document.getElementById('apiModal').classList.remove('hidden');document.getElementById('apiKeyInput').value=apiKey}
 function saveApiKey(){const v=document.getElementById('apiKeyInput').value.trim();if(!v.startsWith('sk-')){alert('Clé invalide.');return}apiKey=v;localStorage.setItem('anthropic_key',v);demoMode=false;document.getElementById('apiModal').classList.add('hidden')}
-function useDemoMode(){demoMode=true;document.getElementById('apiModal').classList.add('hidden');allP=getDemoP();selectedIds=new Set();updateStats();renderCards();setStatus(false,'Mode démo — '+allP.length+' projets')}
+function useDemoMode(){demoMode=true;document.getElementById('apiModal').classList.add('hidden');allP=getDemoP();selectedIds=new Set();updateStats();renderCards();setStatus(false,'Mode démo')}
 if(!apiKey)setTimeout(()=>document.getElementById('apiModal').classList.remove('hidden'),400);
 else document.getElementById('apiModal').classList.add('hidden');
 function setStatus(l,t){document.getElementById('navStatus').textContent=t;document.getElementById('navDot').className=l?'dot loading':'dot'}
-function setStep(n){[1,2,3,4].forEach(i=>{const el=document.getElementById('ps'+i);el.className='pstep'+(i<n?' done':i===n?' active':'')});document.getElementById('progressFill').style.width=Math.round(n/4*100)+'%'}
+function setSrc(id,state){document.getElementById('src-'+id).className='src-badge '+(state==='ok'?'ok':state==='err'?'err':state==='loading'?'loading':'')}
+function setStep(n,state='active'){
+  for(let i=1;i<=4;i++){
+    const el=document.getElementById('ps'+i);
+    if(i<n)el.className='pstep done';
+    else if(i===n)el.className='pstep '+(state==='err'?'err':'active');
+    else el.className='pstep';
+  }
+  document.getElementById('progressFill').style.width=Math.round((n-1)/4*100)+'%';
+}
 
+// ─── BOAMP API ───────────────────────────────────────────────
+const BOAMP_KEYWORDS=['industrie','energie','environnement','traitement eau','pharma','chimie','agro','naval','infrastructure','aéronautique','ferroviaire','nucléaire','hydrogène'];
+
+async function fetchBOAMP(){
+  setSrc('boamp','loading');
+  setStep(1);
+  document.getElementById('progressTitle').textContent='Interrogation API BOAMP (marchés publics officiels)...';
+  const results=[];
+  try{
+    const monISO=fmtISO(week.mon);
+    const sunISO=fmtISO(week.sun);
+    // BOAMP OpenDataSoft API - free, no key required
+    const url=`https://boamp-datadila.opendatasoft.com/api/explore/v2.1/catalog/datasets/boamp/records?where=dateparution>="${monISO}" AND dateparution<="${sunISO}"&limit=100&order_by=dateparution DESC`;
+    const r=await fetch(url,{headers:{'Accept':'application/json'}});
+    if(!r.ok)throw new Error('BOAMP '+r.status);
+    const d=await r.json();
+    const records=d.results||[];
+    // Filter relevant to NEO2 sectors
+    for(const rec of records){
+      const objet=(rec.objet||rec.intitule||'').toLowerCase();
+      const isRelevant=BOAMP_KEYWORDS.some(k=>objet.includes(k));
+      if(isRelevant){
+        results.push({
+          id:'boamp_'+rec.idweb,
+          title:rec.objet||rec.intitule||'Marché public',
+          source:'BOAMP',
+          source_type:'boamp',
+          date:rec.dateparution||monISO,
+          client:rec.nomacheteur||rec.acheteur||'',
+          localisation:rec.cp?rec.cp+' '+rec.ville:'France',
+          montant_raw:rec.montant||'',
+          texte:rec.objet+' '+(rec.descriptif||'')+' '+(rec.nomacheteur||'')
+        });
+      }
+    }
+    setSrc('boamp','ok');
+    document.getElementById('sBOAMP').textContent=results.length;
+  }catch(e){
+    console.error('BOAMP',e);
+    setSrc('boamp','err');
+  }
+  return results;
+}
+
+// ─── RSS FEEDS ───────────────────────────────────────────────
+const RSS_FEEDS=[
+  {id:'un',name:'Usine Nouvelle',url:'https://api.allorigins.win/get?url='+encodeURIComponent('https://www.usinenouvelle.com/rss/toute-l-actu.rss'),srcBadge:'src-un'},
+  {id:'batiactu',name:'Batiactu',url:'https://api.allorigins.win/get?url='+encodeURIComponent('https://www.batiactu.com/rss/flux.xml'),srcBadge:'src-batiactu'},
+  {id:'gnews_industrie',name:'Google News',url:'https://api.allorigins.win/get?url='+encodeURIComponent('https://news.google.com/rss/search?q=investissement+usine+industrie+France+millions&hl=fr&gl=FR&ceid=FR:fr'),srcBadge:'src-gnews'},
+  {id:'gnews_chantier',name:'Google News chantier',url:'https://api.allorigins.win/get?url='+encodeURIComponent('https://news.google.com/rss/search?q=chantier+construction+usine+France+2025&hl=fr&gl=FR&ceid=FR:fr'),srcBadge:'src-gnews'},
+  {id:'gnews_ao',name:'Google News AO',url:'https://api.allorigins.win/get?url='+encodeURIComponent('https://news.google.com/rss/search?q=appel+offres+industrie+énergie+environnement+France&hl=fr&gl=FR&ceid=FR:fr'),srcBadge:'src-gnews'},
+  {id:'bf',name:'Business France',url:'https://api.allorigins.win/get?url='+encodeURIComponent('https://www.businessfrance.fr/rss-investissements'),srcBadge:'src-bf'},
+];
+
+function parseRSS(xmlStr){
+  try{
+    const parser=new DOMParser();
+    const doc=parser.parseFromString(xmlStr,'text/xml');
+    const items=doc.querySelectorAll('item');
+    return Array.from(items).map(item=>({
+      title:item.querySelector('title')?.textContent||'',
+      description:item.querySelector('description')?.textContent||'',
+      link:item.querySelector('link')?.textContent||'',
+      pubDate:item.querySelector('pubDate')?.textContent||''
+    }));
+  }catch{return[]}
+}
+
+function isInWeek(dateStr){
+  if(!dateStr)return false;
+  try{
+    const d=new Date(dateStr);
+    return d>=week.mon&&d<=week.sun;
+  }catch{return false}
+}
+
+async function fetchRSS(){
+  setSrc('un','loading');setSrc('batiactu','loading');setSrc('gnews','loading');setSrc('bf','loading');
+  setStep(2);
+  document.getElementById('progressTitle').textContent='Lecture des flux RSS (Usine Nouvelle, Batiactu, Google News...)...';
+  const allItems=[];
+  const seenTitles=new Set();
+
+  for(const feed of RSS_FEEDS){
+    try{
+      const r=await fetch(feed.url,{signal:AbortSignal.timeout(8000)});
+      if(!r.ok)throw new Error(feed.name+' '+r.status);
+      const data=await r.json();
+      const xmlStr=data.contents||'';
+      const items=parseRSS(xmlStr);
+      // Filter by date and deduplicate
+      for(const item of items){
+        const inWeek=isInWeek(item.pubDate);
+        const title=(item.title||'').trim();
+        if(title&&!seenTitles.has(title)){
+          seenTitles.add(title);
+          // For week filtering: include if in week OR if date unknown (let AI decide)
+          const text=(item.title+' '+item.description).toLowerCase();
+          const isRelevant=['investissement','millions','milliards','chantier','usine','construction','industrie','énergie','nucléaire','eau','pharma','chimie','naval','ferroviaire','aéro'].some(k=>text.includes(k));
+          if(isRelevant){
+            allItems.push({
+              title:item.title,
+              description:item.description.replace(/<[^>]*>/g,'').substring(0,200),
+              pubDate:item.pubDate,
+              source:feed.name,
+              source_id:feed.id,
+              inWeek
+            });
+          }
+        }
+      }
+      setSrc(feed.srcBadge,'ok');
+    }catch(e){
+      console.warn(feed.name,e.message);
+      setSrc(feed.srcBadge,'err');
+    }
+  }
+  return allItems;
+}
+
+// ─── MAIN FETCH ───────────────────────────────────────────────
 async function fetchAll(){
   if(!apiKey&&!demoMode){showApiModal();return}
   if(demoMode){useDemoMode();return}
@@ -369,118 +474,113 @@ async function fetchAll(){
   const btn=document.getElementById('launchBtn');
   btn.disabled=true;allP=[];selectedIds=new Set();
   const pb=document.getElementById('progressBar');pb.classList.add('visible');
-  setStatus(true,'Scan en cours...');
+  setStatus(true,'Scan des sources...');
   document.getElementById('cardsContainer').innerHTML=[1,2,3,4,5].map(()=>`<div class="lcard"><div style="display:flex;justify-content:space-between;margin-bottom:10px"><div><div class="skeleton" style="height:13px;width:55%;margin-bottom:6px"></div><div style="display:flex;gap:5px"><div class="skeleton" style="width:60px;height:10px"></div><div class="skeleton" style="width:80px;height:10px"></div></div></div><div class="skeleton" style="height:40px;width:40px;border-radius:50%"></div></div><div class="skeleton" style="width:100%;height:10px;margin-bottom:4px"></div><div class="skeleton" style="width:75%;height:10px"></div></div>`).join('');
+
+  // 1. BOAMP
+  const boampData=await fetchBOAMP();
+  rawData.boamp=boampData;
+
+  // 2. RSS
+  const rssData=await fetchRSS();
+  rawData.rss=rssData;
+
+  // Update source badges
+  if(articles)setSrc('paste','ok');
+
+  // 3. AI Analysis
+  setStep(3);
+  document.getElementById('progressTitle').textContent='Analyse IA — structuration des projets et identification contacts...';
+  document.getElementById('progressFill').style.width='60%';
 
   const monStr=fmtDate(week.mon);
   const sunStr=fmtDate(week.sun);
 
-  setStep(1);
-  document.getElementById('progressTitle').textContent='Scan web : Google Actualités, Usine Nouvelle, BOAMP, Les Échos...';
+  // Build context for AI
+  const boampContext=boampData.slice(0,30).map(b=>`[BOAMP] ${b.date} | ${b.title} | Client: ${b.client} | ${b.localisation}`).join('\n');
+  const rssWeek=rssData.filter(r=>r.inWeek).slice(0,40);
+  const rssOther=rssData.filter(r=>!r.inWeek).slice(0,20);
+  const rssContext=[...rssWeek,...rssOther].map(r=>`[${r.source}${r.inWeek?' ✓semaine':''}] ${r.pubDate?new Date(r.pubDate).toLocaleDateString('fr-FR'):''} | ${r.title} | ${r.description}`).join('\n');
 
-  const prompt=`Tu es expert en veille industrielle pour NEO2, cabinet de conseil en ingénierie de process et infrastructure (300+ ingénieurs, secteurs : Énergie, Environnement, Pharma/Chimie/Agro, Naval, Infra, ASD, Ferro).
+  const prompt=`Tu es expert en veille industrielle pour NEO2 (cabinet de conseil ingénierie process et infrastructure).
 
-PÉRIODE : Du ${monStr} au ${sunStr} UNIQUEMENT. Exclure tout projet antérieur.
+DONNÉES RÉELLES COLLECTÉES cette semaine (${monStr} → ${sunStr}) :
 
-═══════════════════════════════════════
-ÉTAPE 1 — SCAN WEB AUTOMATIQUE
-═══════════════════════════════════════
-Fais des recherches web avec ces requêtes (une par une) pour trouver des annonces publiées entre le ${monStr} et le ${sunStr} :
+═══ BOAMP — APPELS D'OFFRES OFFICIELS (${boampData.length} trouvés) ═══
+${boampContext||'Aucun résultat BOAMP cette semaine'}
 
-1. "investissement industriel usine France" site:usinenouvelle.com after:${week.mon.toISOString().slice(0,10)}
-2. "investissement millions chantier construction France industrie" site:usinenouvelle.com
-3. "investissement milliards usine France 2025" site:lesechos.fr
-4. "permis construire usine industrie France" site:batiactu.com
-5. "appel offres industrie énergie environnement" site:boamp.fr
-6. "investissement industriel France annonce" site:businessfrance.fr
-7. investissement usine chantier "millions d'euros" France industrie pharma chimie agro énergie nucléaire eau 2025
-8. "nouveau site" OR "nouvelle usine" OR "extension usine" investissement France 2025
+═══ FLUX RSS — ARTICLES DE PRESSE (${rssData.length} articles dont ${rssWeek.length} de cette semaine) ═══
+${rssContext||'Aucun article RSS récupéré'}
 
-${articles?`
-═══════════════════════════════════════
-ÉTAPE 2 — ARTICLES USINE NOUVELLE (payants, fournis par l'utilisateur)
-═══════════════════════════════════════
-Analyse ces articles en priorité absolue et extrais tous les projets :
----
-${articles.substring(0,4000)}
----
-Marque ces projets avec "source_un": true
-`:''}
+${articles?`═══ ARTICLES USINE NOUVELLE PAYANTS (fournis par l'utilisateur) ═══
+${articles.substring(0,3000)}`:''}
 
-═══════════════════════════════════════
-RÈGLES DE SORTIE
-═══════════════════════════════════════
-- Vise 15 à 30 projets distincts
-- Secteurs NEO2 par priorité : energie > environnement > industrie (pharma/chimie/agro/cosmetique) > naval > infra > asd > ferro
-- Contacts : UNIQUEMENT Chef de projet, Directeur de site, Responsable ingénierie, Responsable travaux neufs — jamais PDG/DG
-- Note les sous-traitants déjà nommés si mentionnés dans les articles
-- Si un projet est mentionné dans plusieurs sources, garde la version la plus complète
+═══ MISSION ═══
+À partir de ces données RÉELLES uniquement :
+1. Identifie tous les projets d'investissement industriel pertinents pour NEO2
+2. Pour les articles RSS hors semaine (sans ✓semaine), inclus-les UNIQUEMENT si la date de publication est entre ${monStr} et ${sunStr}
+3. Priorité : énergie > environnement > industrie (pharma/chimie/agro) > naval > infra > asd > ferro
+4. Contacts : Chef de projet, Directeur de site, Responsable ingénierie, Responsable travaux — jamais PDG
+5. N'invente aucun projet qui n'est pas dans les données ci-dessus
 
-Réponds UNIQUEMENT en JSON valide sans markdown ni backticks :
+Réponds UNIQUEMENT en JSON valide sans markdown :
 {"projects":[{
 "id":"p1",
-"title":"Nom court du projet",
+"title":"Nom court",
 "type":"fr",
 "sector":"energie|environnement|industrie|naval|infra|asd|ferro",
-"region":"Région française exacte",
+"region":"Région française",
 "score_prospection":80,
 "montant":"120 M€",
 "montant_num":120,
 "localisation":"Ville, Région",
-"client":"Nom exact du client/donneur d'ordre",
-"entreprises":["Constructeur/MOE principal"],
-"sous_traitants":["ST nommé si mentionné"],
-"statut":"Texte libre court : Vient d'être annoncé / Permis accordé / Démarrage construction T3 2025 / AO ouvert jusqu'au XX / Mise en service prévue XXXX",
-"date_annonce":"ex: 14 avril 2025",
-"source":"Nom media exact, date",
-"source_un":false,
-"summary":"1-2 phrases factuelles. Montant, localisation, calendrier.",
-"opportunites":["Opportunité sous-traitance NEO2 précise 1","Opportunité 2","Opportunité 3"],
+"client":"Nom client",
+"entreprises":["MOE"],
+"sous_traitants":["ST si mentionné"],
+"statut":"Vient d'être annoncé / Permis accordé / AO ouvert / Démarrage T3 2025",
+"date_annonce":"14 avril 2025",
+"source":"BOAMP / Usine Nouvelle / Batiactu / etc.",
+"source_type":"boamp|un|rss",
+"summary":"1-2 phrases factuelles tirées des données.",
+"opportunites":["Opportunité NEO2 1","Opportunité 2","Opportunité 3"],
 "contacts":[{
 "nom":"Prénom Nom",
-"titre":"Chef de projet / Directeur de site / Responsable ingénierie / Responsable travaux neufs",
-"entreprise":"Société exacte",
-"linkedin_url":"https://www.linkedin.com/search/results/people/?keywords=Pr%C3%A9nom+Nom+Titre+Soci%C3%A9t%C3%A9",
-"angle":"Message d'accroche de 2 phrases, spécifique au projet et au rôle"
+"titre":"Chef de projet",
+"entreprise":"Société",
+"linkedin_url":"https://www.linkedin.com/search/results/people/?keywords=Pr%C3%A9nom+Nom+Soci%C3%A9t%C3%A9",
+"angle":"2 phrases personnalisées"
 }],
-"tags":["tag1","tag2"]
+"tags":["tag1"]
 }]}`;
 
   try{
-    setStep(2);
-    document.getElementById('progressTitle').textContent='Analyse des articles et structuration...';
-
     const r=await fetch('https://api.anthropic.com/v1/messages',{
       method:'POST',
       headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
-      body:JSON.stringify({
-        model:'claude-haiku-4-5-20251001',
-        max_tokens:8000,
-        tools:[{type:'web_search_20250305',name:'web_search'}],
-        messages:[{role:'user',content:prompt}]
-      })
+      body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:8000,messages:[{role:'user',content:prompt}]})
     });
-
-    setStep(3);
-    document.getElementById('progressTitle').textContent='Extraction et classement des projets...';
-
-    if(!r.ok){const e=await r.json();throw new Error(e.error?.message||'Erreur API '+r.status)}
+    setStep(4);
+    document.getElementById('progressFill').style.width='90%';
+    document.getElementById('progressTitle').textContent='Finalisation...';
+    if(!r.ok){const e=await r.json();throw new Error(e.error?.message||'API '+r.status)}
     const d=await r.json();
     const txt=d.content.map(i=>i.type==='text'?i.text:'').join('');
     const clean=txt.replace(/```json|```/g,'').trim();
-    const start=clean.indexOf('{');const end=clean.lastIndexOf('}');
-    if(start===-1||end===-1)throw new Error('JSON introuvable dans la réponse');
-    allP=JSON.parse(clean.substring(start,end+1)).projects||[];
-    allP.sort((a,b)=>(b.source_un?2:0)-(a.source_un?2:0)||(b.score_prospection||0)-(a.score_prospection||0));
-
-    setStep(4);
-    document.getElementById('progressTitle').textContent='Finalisation...';
+    const s=clean.indexOf('{'),e2=clean.lastIndexOf('}');
+    if(s===-1||e2===-1)throw new Error('JSON invalide');
+    allP=JSON.parse(clean.substring(s,e2+1)).projects||[];
+    allP.sort((a,b)=>{
+      const wa=(a.source_type==='boamp'?3:a.source_type==='un'?2:1);
+      const wb=(b.source_type==='boamp'?3:b.source_type==='un'?2:1);
+      return wb-wa||(b.score_prospection||0)-(a.score_prospection||0);
+    });
   }catch(e){
     console.error(e);
-    setStatus(false,'Erreur : '+e.message);
-    allP=getDemoP();
+    setStatus(false,'Erreur IA: '+e.message);
+    if(!allP.length)allP=getDemoP();
   }
 
+  document.getElementById('progressFill').style.width='100%';
   pb.classList.remove('visible');
   btn.disabled=false;
   updateStats();renderCards();
@@ -492,8 +592,9 @@ Réponds UNIQUEMENT en JSON valide sans markdown ni backticks :
 function updateStats(){
   document.getElementById('sT').textContent=allP.length;
   document.getElementById('sSel').textContent=selectedIds.size;
+  document.getElementById('sBOAMP').textContent=allP.filter(p=>p.source_type==='boamp').length;
+  document.getElementById('sUN').textContent=allP.filter(p=>p.source_type==='un').length;
   document.getElementById('sC').textContent=allP.reduce((s,p)=>s+(p.contacts||[]).length,0);
-  document.getElementById('sUN').textContent=allP.filter(p=>p.source_un).length;
   const v=allP.reduce((s,p)=>s+(p.montant_num||0),0);
   document.getElementById('sV').textContent=v>0?Math.round(v/1000)+' Md€':'—';
 }
@@ -502,7 +603,13 @@ function setF(type,val,el){aF[type]=val;el.closest('.filter-row').querySelectorA
 function ini(n){return(n||'?').split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase()}
 function scClass(s){return s>=70?'score-high':s>=40?'score-mid':'score-low'}
 function matchR(p,f){if(f==='all')return true;if(f==='int')return p.type==='int';return(p.localisation+' '+(p.region||'')).toLowerCase().includes(f.toLowerCase())}
-function matchSrc(p,f){if(f==='all')return true;if(f==='un')return!!p.source_un;if(f==='auto')return!p.source_un;return true}
+function matchSrc(p,f){if(f==='all')return true;if(f==='boamp')return p.source_type==='boamp';if(f==='un')return p.source_type==='un';if(f==='rss')return p.source_type==='rss';return true}
+
+function srcBadge(p){
+  if(p.source_type==='boamp')return'<span class="badge badge-boamp">📋 BOAMP</span>';
+  if(p.source_type==='un')return'<span class="badge badge-un">📰 Usine Nouvelle</span>';
+  return'<span class="badge badge-rss">🔍 '+( p.source||'RSS')+'</span>';
+}
 
 function toggleSelect(id,cb){
   if(cb.checked)selectedIds.add(id);else selectedIds.delete(id);
@@ -512,16 +619,12 @@ function toggleSelect(id,cb){
 
 function renderCards(){
   const q=(document.getElementById('searchInput').value||'').toLowerCase();
-  let list=allP.filter(p=>
-    (aF.sector==='all'||p.sector===aF.sector)&&
-    matchR(p,aF.region)&&matchSrc(p,aF.source)&&
-    (!q||[p.title,p.summary||'',p.localisation||'',p.region||'',p.client||'',...(p.entreprises||[]),...(p.contacts||[]).map(c=>c.nom+' '+c.titre),...(p.tags||[])].join(' ').toLowerCase().includes(q))
-  );
+  let list=allP.filter(p=>(aF.sector==='all'||p.sector===aF.sector)&&matchR(p,aF.region)&&matchSrc(p,aF.source)&&(!q||[p.title,p.summary||'',p.localisation||'',p.region||'',p.client||'',...(p.entreprises||[]),...(p.contacts||[]).map(c=>c.nom+' '+c.titre),...(p.tags||[])].join(' ').toLowerCase().includes(q)));
   const c=document.getElementById('cardsContainer');
   if(!list.length){c.innerHTML='<div class="empty-state"><div style="font-size:2rem">🔍</div><div style="font-size:13px;margin-top:8px">Aucun projet pour ces critères.</div></div>';return}
+  const liUrl=ct=>`${ct.linkedin_url||'https://www.linkedin.com/search/results/people/?keywords='+encodeURIComponent((ct.nom||'')+' '+(ct.titre||'')+' '+(ct.entreprise||''))}`;
   c.innerHTML=list.map(p=>{
     const s=p.score_prospection||50,cts=p.contacts||[],sel=selectedIds.has(p.id);
-    const liUrl=ct=>`${ct.linkedin_url||'https://www.linkedin.com/search/results/people/?keywords='+encodeURIComponent((ct.nom||'')+' '+(ct.titre||'')+' '+(ct.entreprise||p.client||''))}`;
     return`<div class="project-card${sel?' selected':''}" id="card-${p.id}">
 <div class="card-main" onclick="toggleD('${p.id}')">
 <div class="card-top">
@@ -531,8 +634,8 @@ function renderCards(){
 <div class="card-title">${p.title}</div>
 </div>
 <div class="card-badges">
-<span class="badge ${p.type==='fr'?'badge-fr':'badge-int'}">${p.type==='fr'?'🇫🇷':'🌍'} ${p.type==='fr'?'France':'International'}</span>
-${p.source_un?'<span class="badge badge-un">📰 Usine Nouvelle</span>':'<span class="badge badge-auto">🔍 Scan auto</span>'}
+<span class="badge ${p.type==='fr'?'badge-fr':'badge-int'}">${p.type==='fr'?'🇫🇷 France':'🌍 International'}</span>
+${srcBadge(p)}
 ${p.statut?`<span class="badge badge-statut">📌 ${p.statut}</span>`:''}
 ${p.region?`<span class="badge" style="background:var(--surface2);color:var(--text-muted);border:.5px solid var(--border-strong)">📍 ${p.region}</span>`:''}
 </div>
@@ -562,11 +665,11 @@ ${(p.tags||[]).map(t=>`<span class="tag">${t}</span>`).join('')}
 <div>
 <div class="dstitle">Opportunités NEO2</div>
 ${(p.opportunites||[]).map(o=>`<div class="opp-item"><div class="opp-check">✓</div><span>${o}</span></div>`).join('')}
-${(p.sous_traitants||[]).length?`<div style="margin-top:.75rem"><div class="dstitle">Sous-traitants déjà nommés</div>${p.sous_traitants.map(e=>`<span style="display:inline-flex;font-size:11px;padding:2px 7px;border-radius:5px;background:var(--green-bg);color:var(--green);margin:2px">🔧 ${e}</span>`).join('')}</div>`:''}
+${(p.sous_traitants||[]).length?`<div style="margin-top:.75rem"><div class="dstitle">Sous-traitants nommés</div>${p.sous_traitants.map(e=>`<span style="display:inline-flex;font-size:11px;padding:2px 7px;border-radius:5px;background:var(--green-bg);color:var(--green);margin:2px">🔧 ${e}</span>`).join('')}</div>`:''}
 </div>
 <div>
 <div class="dstitle">Contacts terrain</div>
-${cts.length?cts.map(ct=>`<div class="ccard"><div class="cheader"><div class="cavatar-lg">${ini(ct.nom)}</div><div><div class="cname">${ct.nom}</div><div class="crole">${ct.titre}</div><div class="cco">${ct.entreprise||p.client||''}</div></div></div>${ct.angle?`<div class="angle-box">💬 ${ct.angle}</div>`:''}<div class="cactions"><a class="clink li" href="${liUrl(ct)}" target="_blank">in LinkedIn</a><a class="clink" href="https://www.google.com/search?q=${encodeURIComponent((ct.nom||'')+' '+(ct.entreprise||p.client||''))}" target="_blank">🔍 Google</a></div></div>`).join(''):'<div style="font-size:12px;color:var(--text-faint)">Aucun contact identifié.</div>'}
+${cts.length?cts.map(ct=>`<div class="ccard"><div class="cheader"><div class="cavatar-lg">${ini(ct.nom)}</div><div><div class="cname">${ct.nom}</div><div class="crole">${ct.titre}</div><div class="cco">${ct.entreprise||p.client||''}</div></div></div>${ct.angle?`<div class="angle-box">💬 ${ct.angle}</div>`:''}<div class="cactions"><a class="clink li" href="${liUrl(ct)}" target="_blank">in LinkedIn</a><a class="clink" href="https://www.google.com/search?q=${encodeURIComponent((ct.nom||'')+' '+(ct.entreprise||p.client||''))}" target="_blank">🔍</a></div></div>`).join(''):'<div style="font-size:12px;color:var(--text-faint)">Aucun contact identifié.</div>'}
 </div>
 <div>
 <div class="dstitle">Infos & actions</div>
@@ -576,9 +679,9 @@ ${p.statut?`<div style="font-size:11px;margin-bottom:3px"><span style="color:var
 ${p.date_annonce?`<div style="font-size:11px;margin-bottom:3px"><span style="color:var(--text-faint)">Annoncé : </span>${p.date_annonce}</div>`:''}
 ${p.source?`<div style="font-size:11px;margin-bottom:8px"><span style="color:var(--text-faint)">Source : </span>${p.source}</div>`:''}
 <div class="detail-actions">
-<a class="abtn primary" href="https://www.linkedin.com/search/results/people/?keywords=${encodeURIComponent((p.client||'')+' chef projet directeur site ingénierie travaux')}" target="_blank">in Contacts</a>
+<a class="abtn primary" href="https://www.linkedin.com/search/results/people/?keywords=${encodeURIComponent((p.client||'')+' chef projet directeur site ingénierie')}" target="_blank">in Contacts</a>
+${p.source_type==='boamp'?`<a class="abtn" href="https://www.boamp.fr/avis/detail/${(p.id||'').replace('boamp_','')}" target="_blank">BOAMP</a>`:''}
 <a class="abtn" href="https://www.usinenouvelle.com/recherche/?q=${encodeURIComponent(p.title)}" target="_blank">Usine Nouvelle</a>
-<a class="abtn" href="https://www.boamp.fr" target="_blank">BOAMP</a>
 </div>
 </div>
 </div>
@@ -594,54 +697,48 @@ function openMailModal(){
   if(!sel.length){alert('Cochez au moins un projet pour générer le mail.');return}
   const sNames={energie:'⚡ Énergie & Nucléaire',environnement:'🌿 Environnement & Eau',industrie:'🏭 Industrie de Process',naval:'⚓ Naval & Lourd',infra:'🏗 Infrastructures & BTP',asd:'✈ Aéronautique & Défense',ferro:'🚆 Ferroviaire'};
   const bySec={};sel.forEach(p=>{if(!bySec[p.sector])bySec[p.sector]=[];bySec[p.sector].push(p)});
-  let mail=`Objet : NEO2 | Veille Investissements Industriels — Semaine du ${fmtDateShort(week.mon)} au ${fmtDateShort(week.sun)}\n\n`;
-  mail+=`Bonjour,\n\nVoici la sélection des projets d'investissements industriels annoncés cette semaine, susceptibles de générer des opportunités pour les métiers de NEO2.\n\n`;
-  mail+=`${'═'.repeat(55)}\n`;
-  mail+=`  NEO2 — VEILLE INVESTISSEMENTS INDUSTRIELS\n`;
-  mail+=`  Semaine du ${fmtDate(week.mon)} au ${fmtDate(week.sun)}\n`;
-  mail+=`${'═'.repeat(55)}\n\n`;
+  let mail=`Objet : NEO2 | Veille Investissements — ${fmtDateShort(week.mon)} au ${fmtDateShort(week.sun)}\n\n`;
+  mail+=`Bonjour,\n\nVoici la sélection des projets d'investissements industriels de la semaine, identifiés via BOAMP, Usine Nouvelle, Batiactu et Google News.\n\n`;
+  mail+=`${'═'.repeat(55)}\n  NEO2 — VEILLE INVESTISSEMENTS INDUSTRIELS\n  ${fmtDate(week.mon)} → ${fmtDate(week.sun)}\n${'═'.repeat(55)}\n\n`;
   Object.entries(bySec).forEach(([sec,projs])=>{
-    mail+=`${sNames[sec]||sec.toUpperCase()}\n${'─'.repeat(45)}\n`;
+    mail+=`${sNames[sec]||sec}\n${'─'.repeat(45)}\n`;
     projs.forEach((p,i)=>{
-      mail+=`\n${i+1}. ${p.title}${p.source_un?' [Usine Nouvelle]':''}\n`;
+      const srcLabel=p.source_type==='boamp'?'[BOAMP]':p.source_type==='un'?'[Usine Nouvelle]':'['+p.source+']';
+      mail+=`\n${i+1}. ${p.title} ${srcLabel}\n`;
       mail+=`   Client : ${p.client||((p.entreprises||[])[0]||'—')}\n`;
       mail+=`   Localisation : ${p.localisation||'—'} | Montant : ${p.montant||'—'}\n`;
       if(p.statut)mail+=`   Statut : ${p.statut}\n`;
       mail+=`   ${p.summary||''}\n`;
-      if((p.opportunites||[]).length)mail+=`   Opportunités NEO2 : ${p.opportunites.slice(0,2).join(' · ')}\n`;
-      if((p.contacts||[]).length){const ct=p.contacts[0];mail+=`   Contact : ${ct.nom} — ${ct.titre} (${ct.entreprise||p.client||''})\n`;}
-      mail+=`   Source : ${p.source||'—'}\n`;
+      if((p.opportunites||[]).length)mail+=`   NEO2 : ${p.opportunites.slice(0,2).join(' · ')}\n`;
+      if((p.contacts||[]).length){const ct=p.contacts[0];mail+=`   Contact : ${ct.nom} — ${ct.titre}\n`;}
+      mail+=`   Source : ${p.source||'—'} | ${p.date_annonce||''}\n`;
     });
     mail+='\n';
   });
-  mail+=`${'═'.repeat(55)}\n`;
-  mail+=`${sel.length} projet${sel.length>1?'s':''} sélectionné${sel.length>1?'s':''} | NEO2 Veille Industrielle\n`;
-  mail+=`Contacts : www.neo2.eu\n`;
+  mail+=`${'═'.repeat(55)}\n${sel.length} projet${sel.length>1?'s':''} | NEO2 Veille · www.neo2.eu\n`;
   document.getElementById('mailContent').value=mail;
   document.getElementById('mailModal').classList.remove('hidden');
 }
 
 function copyMail(){
   navigator.clipboard.writeText(document.getElementById('mailContent').value)
-    .then(()=>alert('✅ Mail copié ! Collez-le dans Outlook (Ctrl+V).'))
-    .catch(()=>{document.getElementById('mailContent').select();document.execCommand('copy');alert('✅ Mail copié !')});
+    .then(()=>alert('✅ Copié ! Collez dans Outlook (Ctrl+V).'))
+    .catch(()=>{document.getElementById('mailContent').select();document.execCommand('copy')});
 }
 
 function exportCSV(){
-  if(!allP.length){alert('Aucun projet à exporter.');return}
-  const rows=[['Projet','Secteur','Région','Client','Statut','Localisation','Montant','Date annonce','Source','Usine Nouvelle','Sous-traitants','Opportunités','Contact Nom','Titre','Entreprise','LinkedIn','Angle','Score lead']];
-  allP.forEach(p=>{const cts=p.contacts||[{}];cts.forEach(c=>{rows.push([p.title,p.sector,p.region||'',p.client||'',p.statut||'',p.localisation||'',p.montant||'',p.date_annonce||'',p.source||'',p.source_un?'Oui':'Non',(p.sous_traitants||[]).join(' / '),(p.opportunites||[]).join(' | '),c.nom||'',c.titre||'',c.entreprise||p.client||'',c.linkedin_url||'',c.angle||'',p.score_prospection||''])})});
+  if(!allP.length){alert('Aucun projet.');return}
+  const rows=[['Projet','Source','Secteur','Région','Client','Statut','Localisation','Montant','Date','Sous-traitants','Opportunités','Contact','Titre','Entreprise','LinkedIn','Angle','Score']];
+  allP.forEach(p=>{const cts=p.contacts||[{}];cts.forEach(c=>{rows.push([p.title,p.source||'',p.sector,p.region||'',p.client||'',p.statut||'',p.localisation||'',p.montant||'',p.date_annonce||'',(p.sous_traitants||[]).join('/'),(p.opportunites||[]).join('|'),c.nom||'',c.titre||'',c.entreprise||p.client||'',c.linkedin_url||'',c.angle||'',p.score_prospection||''])})});
   const csv=rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\n');
   const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8'}));
-  a.download=`NEO2-veille-${week.mon.toISOString().slice(0,10)}.csv`;a.click();
+  a.download=`NEO2-veille-${fmtISO(week.mon)}.csv`;a.click();
 }
 
 function getDemoP(){return[
-  {id:"d1",title:"Extension STEP Pierre-Bénite — Grand Lyon",type:"fr",sector:"environnement",region:"Auvergne-Rhône-Alpes",score_prospection:88,montant:"85 M€",montant_num:85,localisation:"Lyon, AuRA",client:"Métropole de Lyon / Veolia",entreprises:["Veolia Water"],sous_traitants:["OTV","Degrémont"],statut:"Permis déposé — démarrage T1 2026",date_annonce:"14 avril 2025",source:"Usine Nouvelle, 14 avr. 2025",source_un:true,summary:"Extension de la STEP de Pierre-Bénite à 1,2M équivalents-habitants. Permis déposé semaine dernière, démarrage travaux prévu T1 2026.",opportunites:["Tuyauterie inox procédés traitement eau","Génie électrique BT/HTA","Chaudronnerie cuves & décanteurs"],contacts:[{nom:"Frédéric Morel",titre:"Directeur de projet travaux neufs",entreprise:"Veolia Water Technologies",linkedin_url:"https://www.linkedin.com/search/results/people/?keywords=Fr%C3%A9d%C3%A9ric+Morel+Directeur+Projet+Veolia+Water",angle:"Bonjour Frédéric, nous sommes spécialisés en tuyauterie inox pour STEP. Votre projet Pierre-Bénite correspond exactement à nos métiers, et nous aimerions vous présenter nos références."}],tags:["eau","STEP","Lyon"]},
-  {id:"d2",title:"Nouvelle unité biopharma Sanofi — Vitry",type:"fr",sector:"industrie",region:"Île-de-France",score_prospection:94,montant:"400 M€",montant_num:400,localisation:"Vitry-sur-Seine, IDF",client:"Sanofi",entreprises:["Sanofi"],sous_traitants:[],statut:"Annoncé — études ingénierie en cours",date_annonce:"10 avril 2025",source:"Les Échos, 10 avr. 2025",source_un:false,summary:"Sanofi annonce 400M€ pour une nouvelle unité biopharmaceutique à Vitry dans le cadre de la réindustrialisation. Appels d'offres construction attendus fin 2025.",opportunites:["Tuyauterie inox pharma GMP","Génie électrique salles propres","Chaudronnerie cuves GMP"],contacts:[{nom:"Hélène Marceau",titre:"Responsable travaux neufs",entreprise:"Sanofi Global Manufacturing",linkedin_url:"https://www.linkedin.com/search/results/people/?keywords=H%C3%A9l%C3%A8ne+Marceau+Travaux+Neufs+Sanofi",angle:"Bonjour Hélène, NEO2 intervient sur les travaux neufs pharma GMP (tuyauterie inox, génie électrique salles propres). Votre futur projet Vitry nous intéresse et nous avons des références similaires chez AstraZeneca et Pfizer."}],tags:["pharma","Sanofi","GMP"]},
-  {id:"d3",title:"EPR2 Penly — ouverture consultations sous-traitance",type:"fr",sector:"energie",region:"Normandie",score_prospection:96,montant:"10 Md€",montant_num:10000,localisation:"Penly, Normandie",client:"EDF / Framatome",entreprises:["EDF","Framatome"],sous_traitants:["Spie","Endel","Ortec"],statut:"Consultations sous-traitance ouvertes",date_annonce:"11 avril 2025",source:"Usine Nouvelle, 11 avr. 2025",source_un:true,summary:"EDF ouvre les premières consultations sous-traitants spécialisés pour les travaux nucléaires EPR2 de Penly. Démarrage terrain prévu 2026, fort volume attendu.",opportunites:["Tuyauterie nucléaire N1/N2","Génie électrique zone contrôlée","Calorifuge & échafaudage","Chaudronnerie & robinetterie"],contacts:[{nom:"Marc Lefevre",titre:"Responsable sous-traitance chantier",entreprise:"Framatome",linkedin_url:"https://www.linkedin.com/search/results/people/?keywords=Marc+Lefevre+Framatome+sous-traitance+nucl%C3%A9aire",angle:"Bonjour Marc, NEO2 est spécialisé en tuyauterie nucléaire N1/N2 avec des références sur Flamanville et Civaux. Nous souhaitons répondre à vos consultations pour Penly."}],tags:["nucléaire","EPR2","Normandie"]},
-  {id:"d4",title:"Nouvelle ligne Lactalis — Laval",type:"fr",sector:"industrie",region:"Pays de la Loire",score_prospection:82,montant:"120 M€",montant_num:120,localisation:"Laval, Pays de la Loire",client:"Lactalis",entreprises:["Lactalis"],sous_traitants:[],statut:"Permis accordé — AO lots techniques en cours",date_annonce:"9 avril 2025",source:"Le Maine Libre, 9 avr. 2025",source_un:false,summary:"Lactalis obtient son permis pour une nouvelle ligne de transformation laitière à Laval (120 M€). Appels d'offres pour les lots techniques en cours.",opportunites:["Tuyauterie alimentaire inox","Génie électrique agroalimentaire","Froid industriel & utilités"],contacts:[{nom:"Paul Renaud",titre:"Responsable travaux neufs",entreprise:"Lactalis Groupe",linkedin_url:"https://www.linkedin.com/search/results/people/?keywords=Paul+Renaud+Travaux+Neufs+Lactalis",angle:"Bonjour Paul, NEO2 intervient en tuyauterie inox et génie électrique sur les sites agroalimentaires. Vos AO en cours pour Laval nous intéressent directement."}],tags:["agro","Lactalis","inox"]},
-  {id:"d5",title:"TotalEnergies Donges — AO tuyauterie procédés",type:"fr",sector:"energie",region:"Pays de la Loire",score_prospection:91,montant:"200 M€",montant_num:200,localisation:"Donges, Loire-Atlantique",client:"TotalEnergies",entreprises:["TotalEnergies"],sous_traitants:["Spie","Cofely"],statut:"AO ouvert — réponse avant 30 mai 2025",date_annonce:"7 avril 2025",source:"Usine Nouvelle, 7 avr. 2025",source_un:true,summary:"TotalEnergies lance un AO pour l'extension de la raffinerie de Donges avec de nouveaux équipements de traitement. Réponse avant le 30 mai 2025.",opportunites:["Tuyauterie procédés haute pression","Chaudronnerie échangeurs & colonnes","Instrumentation & robinetterie"],contacts:[{nom:"Stéphane Aubert",titre:"Directeur de projet raffinage",entreprise:"TotalEnergies Raffinage",linkedin_url:"https://www.linkedin.com/search/results/people/?keywords=St%C3%A9phane+Aubert+TotalEnergies+Raffinage+Donges",angle:"Bonjour Stéphane, NEO2 répond à votre AO Donges. Nous sommes spécialisés en tuyauterie procédés et chaudronnerie sur sites raffinerie avec des références chez Exxon et Esso."}],tags:["raffinerie","TotalEnergies","Donges"]}
+  {id:"d1",title:"AO — Extension STEP Pierre-Bénite",type:"fr",sector:"environnement",region:"Auvergne-Rhône-Alpes",score_prospection:88,montant:"85 M€",montant_num:85,localisation:"Lyon, AuRA",client:"Métropole de Lyon",entreprises:["Veolia Water"],sous_traitants:["OTV"],statut:"AO publié sur BOAMP",date_annonce:"14 avril 2025",source:"BOAMP",source_type:"boamp",summary:"Appel d'offres publié au BOAMP pour l'extension de la station d'épuration de Pierre-Bénite. Travaux de tuyauterie et génie électrique.",opportunites:["Tuyauterie inox procédés eau","Génie électrique BT/HTA","Chaudronnerie cuves"],contacts:[{nom:"Frédéric Morel",titre:"Directeur de projet travaux neufs",entreprise:"Veolia Water Technologies",linkedin_url:"https://www.linkedin.com/search/results/people/?keywords=Fr%C3%A9d%C3%A9ric+Morel+Veolia+Water",angle:"Bonjour Frédéric, nous avons vu votre AO BOAMP pour Pierre-Bénite. NEO2 est spécialisé en tuyauterie inox pour STEP et nous aimerions candidater."}],tags:["eau","STEP","BOAMP"]},
+  {id:"d2",title:"Sanofi — nouvelle unité biopharma Vitry",type:"fr",sector:"industrie",region:"Île-de-France",score_prospection:94,montant:"400 M€",montant_num:400,localisation:"Vitry-sur-Seine, IDF",client:"Sanofi",entreprises:["Sanofi"],sous_traitants:[],statut:"Annoncé cette semaine",date_annonce:"10 avril 2025",source:"Usine Nouvelle",source_type:"un",summary:"Sanofi annonce 400M€ pour une nouvelle unité biopharmaceutique à Vitry. Source : article Usine Nouvelle payant.",opportunites:["Tuyauterie inox pharma GMP","Génie électrique salles propres","Chaudronnerie cuves GMP"],contacts:[{nom:"Hélène Marceau",titre:"Responsable travaux neufs",entreprise:"Sanofi Global Manufacturing",linkedin_url:"https://www.linkedin.com/search/results/people/?keywords=H%C3%A9l%C3%A8ne+Marceau+Travaux+Neufs+Sanofi",angle:"Bonjour Hélène, nous avons lu l'annonce Usine Nouvelle sur votre projet Vitry. NEO2 intervient sur les travaux neufs pharma GMP."}],tags:["pharma","Sanofi","GMP"]},
+  {id:"d3",title:"TotalEnergies Donges — AO tuyauterie",type:"fr",sector:"energie",region:"Pays de la Loire",score_prospection:91,montant:"200 M€",montant_num:200,localisation:"Donges, Loire-Atlantique",client:"TotalEnergies",entreprises:["TotalEnergies"],sous_traitants:["Spie"],statut:"AO BOAMP — clôture 30 mai",date_annonce:"7 avril 2025",source:"BOAMP",source_type:"boamp",summary:"Appel d'offres BOAMP pour l'extension de la raffinerie de Donges. Lots tuyauterie et chaudronnerie. Réponse avant le 30 mai.",opportunites:["Tuyauterie procédés haute pression","Chaudronnerie échangeurs","Instrumentation"],contacts:[{nom:"Stéphane Aubert",titre:"Directeur de projet raffinage",entreprise:"TotalEnergies Raffinage",linkedin_url:"https://www.linkedin.com/search/results/people/?keywords=St%C3%A9phane+Aubert+TotalEnergies+Raffinage",angle:"Bonjour Stéphane, nous répondons à votre AO BOAMP Donges. NEO2 a des références raffinerie chez Exxon et Esso."}],tags:["raffinerie","TotalEnergies","BOAMP"]}
 ];}
 </script>
 </body>
