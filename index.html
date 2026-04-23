@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Veille & Prospection Industrielle</title>
+<title>Veille & Prospection NEO2</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{--bg:#f5f4f0;--surface:#fff;--surface2:#f0ede8;--border:rgba(0,0,0,.1);--border-strong:rgba(0,0,0,.2);--text:#1a1a18;--text-muted:#6b6b67;--text-faint:#9b9b96;--blue:#185FA5;--blue-bg:#E6F1FB;--blue-border:#85B7EB;--green:#0F6E56;--green-bg:#E1F5EE;--green-border:#5DCAA5;--amber:#854F0B;--amber-bg:#FAEEDA;--red:#A32D2D;--red-bg:#FCEBEB;--purple:#534AB7;--purple-bg:#EEEDFE;--r:10px;--rl:14px}
@@ -32,7 +32,7 @@ nav{background:var(--surface);border-bottom:.5px solid var(--border);padding:0 2
 .sector-pill.active{background:var(--amber-bg);color:var(--amber);border-color:var(--amber);animation:pulse 1s infinite}
 .progress-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden}
 .progress-fill{height:100%;background:var(--green);border-radius:2px;transition:width .5s ease}
-.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;margin-bottom:1.25rem}
+.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin-bottom:1.25rem}
 .stat-card{background:var(--surface);border:.5px solid var(--border);border-radius:var(--r);padding:12px 14px}
 .stat-label{font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px}
 .stat-value{font-size:20px;font-weight:600;letter-spacing:-.02em}
@@ -50,65 +50,60 @@ nav{background:var(--surface);border-bottom:.5px solid var(--border);padding:0 2
 .chip{font-size:11px;padding:4px 10px;border-radius:20px;border:.5px solid var(--border-strong);background:var(--surface);color:var(--text-muted);cursor:pointer;transition:all .15s;user-select:none;white-space:nowrap}
 .chip:hover{background:var(--surface2)}
 .chip.active{background:var(--blue-bg);color:var(--blue);border-color:var(--blue-border)}
-.project-card{background:var(--surface);border:.5px solid var(--border);border-radius:var(--rl);overflow:hidden;transition:border-color .15s;margin-bottom:10px}
+.project-card{background:var(--surface);border:.5px solid var(--border);border-radius:var(--rl);overflow:hidden;transition:border-color .15s;margin-bottom:8px}
 .project-card:hover{border-color:var(--border-strong)}
-.project-card.urgent{border-left:3px solid var(--red)}
-.card-main{padding:1rem 1.25rem;cursor:pointer}
-.card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:8px}
+.card-main{padding:.9rem 1.25rem;cursor:pointer}
+.card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:6px}
 .card-left{flex:1;min-width:0}
-.card-title{font-size:14px;font-weight:600;line-height:1.4;margin-bottom:6px}
-.card-badges{display:flex;gap:5px;flex-wrap:wrap}
+.card-title{font-size:14px;font-weight:600;line-height:1.4;margin-bottom:5px}
+.card-badges{display:flex;gap:5px;flex-wrap:wrap;align-items:center}
 .badge{font-size:11px;padding:2px 8px;border-radius:20px;font-weight:500;white-space:nowrap}
 .badge-fr{background:var(--green-bg);color:var(--green)}
 .badge-int{background:var(--blue-bg);color:var(--blue)}
-.badge-ao{background:var(--red-bg);color:var(--red)}
-.badge-valide{background:var(--purple-bg);color:var(--purple)}
-.badge-annonce{background:var(--blue-bg);color:var(--blue)}
-.badge-encours{background:var(--green-bg);color:var(--green)}
-.badge-projet{background:var(--surface2);color:var(--text-muted);border:.5px solid var(--border-strong)}
+.badge-statut{background:var(--amber-bg);color:var(--amber);border:.5px solid var(--amber)}
 .score-block{flex-shrink:0;text-align:center}
-.score-circle{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;border:2px solid}
+.score-circle{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;border:2px solid}
 .score-high{background:var(--green-bg);color:var(--green);border-color:var(--green)}
 .score-mid{background:var(--amber-bg);color:var(--amber);border-color:var(--amber)}
 .score-low{background:var(--surface2);color:var(--text-muted);border-color:var(--border-strong)}
 .score-label{font-size:9px;color:var(--text-faint);margin-top:2px}
-.card-meta{display:flex;gap:12px;flex-wrap:wrap;font-size:12px;color:var(--text-muted);margin-bottom:8px}
-.card-summary{font-size:13px;color:var(--text-muted);line-height:1.6;margin-bottom:6px}
-.card-source{font-size:11px;color:var(--text-faint)}
-.contacts-preview{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.card-meta{display:flex;gap:12px;flex-wrap:wrap;font-size:12px;color:var(--text-muted);margin-bottom:6px}
+.card-summary{font-size:13px;color:var(--text-muted);line-height:1.55;margin-bottom:5px}
+.card-source{font-size:11px;color:var(--text-faint);margin-bottom:5px}
+.contacts-preview{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
 .contact-pill{display:flex;align-items:center;gap:5px;font-size:11px;padding:3px 8px 3px 4px;border-radius:20px;background:var(--blue-bg);border:.5px solid var(--blue-border);color:var(--blue);text-decoration:none}
 .contact-pill:hover{opacity:.8}
 .cavatar{width:18px;height:18px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:600;flex-shrink:0}
-.card-footer{padding:8px 1.25rem;border-top:.5px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;background:var(--surface2)}
+.card-footer{padding:7px 1.25rem;border-top:.5px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;background:var(--surface2)}
 .card-tags{display:flex;gap:4px;flex-wrap:wrap}
 .tag{font-size:10px;padding:2px 6px;border-radius:4px;background:var(--border);color:var(--text-muted)}
 .expand-btn{font-size:12px;color:var(--blue);background:none;border:none;cursor:pointer;white-space:nowrap;padding:0}
-.detail-panel{border-top:.5px solid var(--border);padding:1.1rem 1.25rem;display:none}
+.detail-panel{border-top:.5px solid var(--border);padding:1rem 1.25rem;display:none}
 .detail-panel.open{display:block}
 .detail-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.5rem}
 @media(max-width:768px){.detail-grid{grid-template-columns:1fr}}
-.dstitle{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--text-faint);margin-bottom:10px}
-.opp-item{display:flex;align-items:flex-start;gap:7px;padding:6px 0;border-bottom:.5px solid var(--border);font-size:13px}
+.dstitle{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--text-faint);margin-bottom:8px}
+.opp-item{display:flex;align-items:flex-start;gap:7px;padding:5px 0;border-bottom:.5px solid var(--border);font-size:13px}
 .opp-item:last-child{border-bottom:none}
-.opp-check{width:17px;height:17px;border-radius:4px;flex-shrink:0;background:var(--green-bg);color:var(--green);display:flex;align-items:center;justify-content:center;font-size:9px;margin-top:2px}
-.ccard{background:var(--surface2);border:.5px solid var(--border);border-radius:var(--r);padding:10px 12px;margin-bottom:8px}
-.cheader{display:flex;align-items:center;gap:8px;margin-bottom:6px}
-.cavatar-lg{width:32px;height:32px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;flex-shrink:0}
+.opp-check{width:16px;height:16px;border-radius:4px;flex-shrink:0;background:var(--green-bg);color:var(--green);display:flex;align-items:center;justify-content:center;font-size:9px;margin-top:2px}
+.ccard{background:var(--surface2);border:.5px solid var(--border);border-radius:var(--r);padding:9px 11px;margin-bottom:7px}
+.cheader{display:flex;align-items:center;gap:8px;margin-bottom:5px}
+.cavatar-lg{width:30px;height:30px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0}
 .cname{font-size:13px;font-weight:500}
 .crole{font-size:11px;color:var(--text-muted)}
 .cco{font-size:11px;color:var(--text-faint)}
-.angle-box{background:var(--amber-bg);border:.5px solid var(--amber);border-radius:6px;padding:7px 10px;font-size:12px;color:var(--amber);margin-top:6px;line-height:1.5}
-.cactions{display:flex;gap:6px;margin-top:7px}
+.angle-box{background:var(--amber-bg);border:.5px solid var(--amber);border-radius:6px;padding:6px 9px;font-size:12px;color:var(--amber);margin-top:5px;line-height:1.5}
+.cactions{display:flex;gap:6px;margin-top:6px}
 .clink{font-size:11px;padding:4px 8px;border-radius:6px;text-decoration:none;display:inline-flex;align-items:center;gap:4px;border:.5px solid var(--border-strong);color:var(--text-muted);background:var(--surface)}
 .clink.li{background:#0A66C2;color:#fff;border-color:#0A66C2}
 .clink:hover{opacity:.85}
-.detail-actions{margin-top:1rem;display:flex;gap:8px;flex-wrap:wrap}
+.detail-actions{margin-top:.75rem;display:flex;gap:8px;flex-wrap:wrap}
 .abtn{font-size:12px;padding:6px 12px;border-radius:var(--r);border:.5px solid var(--border-strong);background:var(--surface);color:var(--text);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:4px}
 .abtn:hover{background:var(--surface2)}
 .abtn.primary{background:var(--blue-bg);border-color:var(--blue-border);color:var(--blue)}
 .skeleton{background:var(--border);border-radius:4px;animation:shimmer 1.6s ease-in-out infinite}
 @keyframes shimmer{0%,100%{opacity:.4}50%{opacity:.9}}
-.lcard{background:var(--surface);border:.5px solid var(--border);border-radius:var(--rl);padding:1rem 1.25rem;margin-bottom:10px}
+.lcard{background:var(--surface);border:.5px solid var(--border);border-radius:var(--rl);padding:1rem 1.25rem;margin-bottom:8px}
 .empty-state{text-align:center;padding:3.5rem 1rem;color:var(--text-muted)}
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;z-index:200;padding:1rem}
 .modal-overlay.hidden{display:none}
@@ -142,7 +137,7 @@ footer{max-width:1200px;margin:2rem auto 0;padding:1.5rem 1.5rem 2rem;border-top
 <nav>
   <div class="nav-brand">
     <div class="nav-logo"><svg viewBox="0 0 16 16"><path d="M8 1L1 5v6l7 4 7-4V5L8 1zm0 1.5l5.5 3.1v5L8 13.5 2.5 10.6V5.6L8 2.5z"/></svg></div>
-    <div><div class="nav-title">Veille & Prospection Industrielle</div><div class="nav-sub">Projets &lt;6 mois · Contacts LinkedIn · Score de lead</div></div>
+    <div><div class="nav-title">Veille & Prospection NEO2</div><div class="nav-sub">Annonces 4 semaines · Contacts terrain · Score de lead</div></div>
   </div>
   <div class="nav-right">
     <div class="status-pill"><span class="dot" id="navDot"></span><span id="navStatus">Prêt</span></div>
@@ -152,17 +147,16 @@ footer{max-width:1200px;margin:2rem auto 0;padding:1.5rem 1.5rem 2rem;border-top
 </nav>
 <div class="page">
   <div class="progress-bar" id="progressBar">
-    <div class="progress-title" id="progressTitle">Recherche multi-sources...</div>
+    <div class="progress-title" id="progressTitle">Recherche en cours...</div>
     <div class="progress-sectors" id="progressSectors"></div>
     <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
   </div>
   <div class="stats-row">
     <div class="stat-card"><div class="stat-label">Projets</div><div class="stat-value" id="sT">—</div><div class="stat-sub">trouvés</div></div>
-    <div class="stat-card"><div class="stat-label">🔴 AO ouverts</div><div class="stat-value" id="sA" style="color:var(--red)">—</div><div class="stat-sub">à saisir</div></div>
     <div class="stat-card"><div class="stat-label">Contacts</div><div class="stat-value" id="sC" style="color:var(--blue)">—</div><div class="stat-sub">à démarcher</div></div>
     <div class="stat-card"><div class="stat-label">France</div><div class="stat-value" id="sFr">—</div><div class="stat-sub">projets</div></div>
     <div class="stat-card"><div class="stat-label">International</div><div class="stat-value" id="sIn">—</div><div class="stat-sub">projets</div></div>
-    <div class="stat-card"><div class="stat-label">Volume</div><div class="stat-value" id="sV">—</div><div class="stat-sub">estimé</div></div>
+    <div class="stat-card"><div class="stat-label">Volume total</div><div class="stat-value" id="sV">—</div><div class="stat-sub">estimé</div></div>
   </div>
   <div class="toolbar">
     <div class="search-wrap">
@@ -174,25 +168,16 @@ footer{max-width:1200px;margin:2rem auto 0;padding:1.5rem 1.5rem 2rem;border-top
       Actualiser
     </button>
   </div>
-  <div class="filter-row">
+  <div class="filter-row" style="margin-bottom:6px">
     <span class="filter-label">Secteur</span>
     <span class="chip active" onclick="setF('sector','all',this)">Tous</span>
     <span class="chip" onclick="setF('sector','energie',this)">⚡ Énergie</span>
-    <span class="chip" onclick="setF('sector','defense',this)">🛡 Défense</span>
-    <span class="chip" onclick="setF('sector','transport',this)">🚆 Transport</span>
-    <span class="chip" onclick="setF('sector','industrie',this)">🏭 Industrie</span>
-    <span class="chip" onclick="setF('sector','infra',this)">🏗 Infra</span>
-    <span class="chip" onclick="setF('sector','numerique',this)">💻 Numérique</span>
-    <span class="chip" onclick="setF('sector','chimie',this)">🧪 Chimie</span>
-  </div>
-  <div class="filter-row">
-    <span class="filter-label">Phase</span>
-    <span class="chip active" onclick="setF('phase','all',this)">Toutes</span>
-    <span class="chip" onclick="setF('phase','ao_ouvert',this)" style="border-color:var(--red);color:var(--red)">🔴 AO ouvert</span>
-    <span class="chip" onclick="setF('phase','valide',this)">✅ Validé</span>
-    <span class="chip" onclick="setF('phase','annonce',this)">📢 Annoncé</span>
-    <span class="chip" onclick="setF('phase','encours',this)">🔨 En cours</span>
-    <span class="chip" onclick="setF('phase','projet',this)">💡 En projet</span>
+    <span class="chip" onclick="setF('sector','environnement',this)">🌿 Environnement</span>
+    <span class="chip" onclick="setF('sector','industrie',this)">🏭 Industrie process</span>
+    <span class="chip" onclick="setF('sector','naval',this)">⚓ Naval & lourd</span>
+    <span class="chip" onclick="setF('sector','infra',this)">🏗 Infra & BTP</span>
+    <span class="chip" onclick="setF('sector','asd',this)">✈ Aéro & Défense</span>
+    <span class="chip" onclick="setF('sector','ferro',this)">🚆 Ferroviaire</span>
   </div>
   <div class="filter-row" style="margin-bottom:1.5rem">
     <span class="filter-label">Région</span>
@@ -214,31 +199,28 @@ footer{max-width:1200px;margin:2rem auto 0;padding:1.5rem 1.5rem 2rem;border-top
     <div class="empty-state">
       <div style="font-size:2rem;margin-bottom:.75rem">📡</div>
       <div style="font-size:14px;font-weight:500">Cliquez sur Actualiser pour lancer la veille</div>
-      <div style="font-size:12px;color:var(--text-faint);margin-top:6px">Usines Nouvelles · Les Échos · Business France · BOAMP · LinkedIn · TED Europa</div>
+      <div style="font-size:12px;color:var(--text-faint);margin-top:6px">Annonces des 4 dernières semaines · Usines Nouvelles · Les Échos · BOAMP · LinkedIn</div>
     </div>
   </div>
 </div>
 <footer>
-  <span>Veille & Prospection Industrielle — Sources multiples · Contacts LinkedIn · Export CSV</span>
+  <span>Veille & Prospection NEO2 — Annonces 4 semaines · Contacts terrain · Export CSV</span>
   <span id="lastUpdate"></span>
 </footer>
 <script>
-let allP=[],aF={sector:'all',phase:'all',region:'all'};
+let allP=[],aF={sector:'all',region:'all'};
 let apiKey=localStorage.getItem('anthropic_key')||'',demoMode=false;
+ 
 const SECTORS=[
-  {id:'energie',label:'⚡ Énergie & nucléaire',src:'Usines Nouvelles EDF TotalEnergies Business France énergie nucléaire hydrogène ENR offshore 2025'},
-  {id:'defense',label:'🛡 Défense & aéronautique',src:'Air&Cosmos Usines Nouvelles Naval Group Thales Safran Airbus défense aéronautique 2025'},
-  {id:'transport',label:'🚆 Transport & mobilité',src:'Mobilettre Usines Nouvelles Alstom SNCF Stellantis ferroviaire automobile 2025'},
-  {id:'industrie',label:'🏭 Industrie & manufacturing',src:'Usines Nouvelles Business France implantation usine industrie 2025'},
-  {id:'infra',label:'🏗 Infrastructures & BTP',src:'Le Moniteur BOAMP TED Europa Vinci Eiffage Bouygues infrastructure génie civil 2025'},
-  {id:'numerique',label:'💻 Numérique & data centers',src:'ZDNet BFM Business data center cloud IA numérique Microsoft Google Amazon 2025'},
-  {id:'chimie',label:'🧪 Chimie & pétrochimie',src:'Usines Nouvelles TotalEnergies Arkema chimie pétrochimie pharmacie 2025'}
+  {id:'energie',label:'⚡ Énergie & nucléaire',src:'EDF TotalEnergies Framatome nucléaire hydrogène ENR éolien offshore investissement chantier annonce site France'},
+  {id:'environnement',label:'🌿 Environnement & eau',src:'Veolia Suez OTV station épuration traitement eau déchets environnement investissement chantier annonce France'},
+  {id:'industrie',label:'🏭 Industrie process pharma chimie agro',src:'Sanofi Danone Nestlé Lactalis Arkema TotalEnergies usine site industriel pharma chimie agro investissement annonce chantier France'},
+  {id:'naval',label:'⚓ Naval & lourd',src:'Naval Group Chantiers Atlantique STX construction navale offshore lourd investissement chantier annonce France'},
+  {id:'infra',label:'🏗 Infrastructures & BTP lourd',src:'Vinci Eiffage Bouygues BOAMP infrastructure génie civil pont tunnel barrage ouvrage investissement annonce France'},
+  {id:'asd',label:'✈ Aéronautique & Défense',src:'Airbus Safran Thales Naval Group aéronautique défense investissement site chantier annonce France'},
+  {id:'ferro',label:'🚆 Ferroviaire & mobilité',src:'Alstom SNCF Keolis ferroviaire métro tramway investissement chantier annonce France'}
 ];
-const PL={ao_ouvert:'🔴 AO ouvert',valide:'✅ Validé',annonce:'📢 Annoncé',encours:'🔨 En cours',projet:'💡 En projet'};
-const PB={ao_ouvert:'badge-ao',valide:'badge-valide',annonce:'badge-annonce',encours:'badge-encours',projet:'badge-projet'};
-function sc(s){return s>=70?'score-high':s>=40?'score-mid':'score-low'}
-function ini(n){return(n||'?').split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase()}
-function li(c){return c.linkedin_url||('https://www.linkedin.com/search/results/people/?keywords='+encodeURIComponent((c.linkedin_search||c.nom||'')+' '+(c.entreprise||'')))}
+ 
 function showApiModal(){document.getElementById('apiModal').classList.remove('hidden');document.getElementById('apiKeyInput').value=apiKey}
 function hideApiModal(){document.getElementById('apiModal').classList.add('hidden')}
 function saveApiKey(){const v=document.getElementById('apiKeyInput').value.trim();if(!v.startsWith('sk-')){alert('Clé invalide.');return}apiKey=v;localStorage.setItem('anthropic_key',v);demoMode=false;hideApiModal();fetchAll()}
@@ -246,9 +228,58 @@ function useDemoMode(){demoMode=true;hideApiModal();allP=getDemoP();updateStats(
 if(!apiKey)setTimeout(()=>document.getElementById('apiModal').classList.remove('hidden'),400);
 else document.getElementById('apiModal').classList.add('hidden');
 function setStatus(l,t){document.getElementById('navStatus').textContent=t;document.getElementById('navDot').className=l?'dot loading':'dot'}
+ 
 async function fetchSector(s){
-  const p=`Tu es expert en veille économique et prospection industrielle française. Recherche sur internet les projets d'investissements industriels RÉCENTS (après octobre 2024) dans le secteur "${s.label}". Sources: ${s.src}. Pour chaque projet identifie des contacts réels à démarcher sur LinkedIn. Réponds UNIQUEMENT en JSON sans markdown: {"projects":[{"id":"${s.id}_1","title":"Nom projet","type":"fr","sector":"${s.id}","region":"Région française ou International","phase":"ao_ouvert|valide|annonce|encours|projet","score_prospection":85,"montant":"2,3 Md€","montant_num":2300,"localisation":"Ville, Région","entreprises":["Entreprise"],"horizon":"T3 2025","date_annonce":"mars 2025","source":"Usines Nouvelles, mars 2025","urgent":false,"summary":"2 phrases factuelles.","prochaine_etape":"AO prévu juin 2025","opportunites":["Opp 1","Opp 2","Opp 3"],"contacts":[{"nom":"Prénom Nom","titre":"Directeur Achats","entreprise":"Société","linkedin_search":"Prénom Nom Directeur Achats Société","linkedin_url":"https://www.linkedin.com/search/results/people/?keywords=Pr%C3%A9nom+Nom","angle_approche":"Message court personnalisé"}],"tags":["tag1"]}]}. Projets après oct 2024 uniquement, 3 projets maximum, 2 contacts par projet.`;
-  const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-5',max_tokens:8000,tools:[{type:'web_search_20250305',name:'web_search'}],messages:[{role:'user',content:p}]})});
+  const now=new Date();
+  const since=new Date(now.getTime()-28*24*60*60*1000).toLocaleDateString('fr-FR',{month:'long',year:'numeric'});
+  const prompt=`Tu es expert en veille industrielle et prospection commerciale BtoB en France.
+ 
+MISSION : Trouve sur internet les annonces de projets industriels publiées DEPUIS ${since} (4 dernières semaines) dans le secteur "${s.label}".
+Sources à consulter : ${s.src}, Usines Nouvelles, Les Échos Industries, Le Moniteur, BOAMP, communiqués de presse.
+ 
+RÈGLES STRICTES :
+- Projets annoncés ou confirmés UNIQUEMENT depuis ${since}
+- Exclure tout projet antérieur
+- Pour les contacts : chercher le CHEF DE PROJET, DIRECTEUR DE SITE, RESPONSABLE INGÉNIERIE, RESPONSABLE TRAVAUX NEUFS — PAS le PDG ni DG
+- Pour chaque projet : identifier aussi les SOUS-TRAITANTS déjà nommés si connu
+- Fiches courtes, info essentielle uniquement
+ 
+Réponds UNIQUEMENT en JSON valide sans markdown :
+{"projects":[{
+"id":"${s.id}_1",
+"title":"Nom court du projet",
+"type":"fr",
+"sector":"${s.id}",
+"region":"Région française",
+"score_prospection":80,
+"montant":"ex: 120 M€",
+"montant_num":120,
+"localisation":"Ville, Région",
+"client":"Nom du client donneur d'ordre",
+"entreprises":["Entreprise principale"],
+"sous_traitants":["Sous-traitant déjà nommé si connu"],
+"statut":"Texte libre court ex: Permis déposé mars 2025 / Vient d'être annoncé / Démarrage construction T3 2025 / Appel d'offres ouvert",
+"date_annonce":"ex: 15 avril 2025",
+"source":"Nom media, date",
+"summary":"1-2 phrases factuelles sur le projet et son avancement actuel.",
+"opportunites":["Opportunité sous-traitance 1","Opportunité 2","Opportunité 3"],
+"contacts":[{
+"nom":"Prénom Nom",
+"titre":"Chef de projet / Directeur de site / Responsable ingénierie",
+"entreprise":"Société",
+"linkedin_url":"https://www.linkedin.com/search/results/people/?keywords=Pr%C3%A9nom+Nom+Titre+Soci%C3%A9t%C3%A9",
+"angle":"Message d'accroche court et spécifique au projet"
+}],
+"tags":["tag1","tag2"]
+}]}
+ 
+Génère 4 à 6 projets réels et récents. Score 0-100 selon potentiel sous-traitance.`;
+ 
+  const r=await fetch('https://api.anthropic.com/v1/messages',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+    body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:5000,tools:[{type:'web_search_20250305',name:'web_search'}],messages:[{role:'user',content:prompt}]})
+  });
   if(!r.ok)throw new Error('API '+r.status);
   const d=await r.json();
   const txt=d.content.map(i=>i.type==='text'?i.text:'').join('');
@@ -256,14 +287,15 @@ async function fetchSector(s){
   const js=clean.substring(clean.indexOf('{'),clean.lastIndexOf('}')+1);
   return JSON.parse(js).projects||[];
 }
+ 
 async function fetchAll(){
   if(!apiKey&&!demoMode){showApiModal();return}
   if(demoMode){useDemoMode();return}
   const btn=document.getElementById('refreshBtn');btn.disabled=true;allP=[];
   const pb=document.getElementById('progressBar');pb.classList.add('visible');
   document.getElementById('progressSectors').innerHTML=SECTORS.map(s=>`<span class="sector-pill" id="pill-${s.id}">${s.label}</span>`).join('');
-  document.getElementById('cardsContainer').innerHTML=[1,2,3].map(()=>`<div class="lcard"><div style="display:flex;justify-content:space-between;margin-bottom:12px"><div class="skeleton" style="height:15px;width:55%"></div><div class="skeleton" style="height:44px;width:44px;border-radius:50%"></div></div><div style="display:flex;gap:8px;margin-bottom:10px"><div class="skeleton" style="width:70px;height:11px"></div><div class="skeleton" style="width:90px;height:11px"></div></div><div class="skeleton" style="width:100%;height:11px;margin-bottom:6px"></div><div class="skeleton" style="width:80%;height:11px"></div></div>`).join('');
-  setStatus(true,'Recherche multi-sources...');
+  document.getElementById('cardsContainer').innerHTML=[1,2,3].map(()=>`<div class="lcard"><div style="display:flex;justify-content:space-between;margin-bottom:10px"><div class="skeleton" style="height:14px;width:55%"></div><div class="skeleton" style="height:42px;width:42px;border-radius:50%"></div></div><div style="display:flex;gap:8px;margin-bottom:8px"><div class="skeleton" style="width:80px;height:10px"></div><div class="skeleton" style="width:100px;height:10px"></div></div><div class="skeleton" style="width:100%;height:10px;margin-bottom:5px"></div><div class="skeleton" style="width:75%;height:10px"></div></div>`).join('');
+  setStatus(true,'Recherche annonces récentes...');
   let done=0;
   for(const s of SECTORS){
     document.getElementById('pill-'+s.id).className='sector-pill active';
@@ -274,70 +306,95 @@ async function fetchAll(){
     updateStats();renderCards();
   }
   pb.classList.remove('visible');btn.disabled=false;
-  const n=new Date();document.getElementById('lastUpdate').textContent='Mis à jour le '+n.toLocaleDateString('fr-FR')+' à '+n.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
+  const n=new Date();
+  document.getElementById('lastUpdate').textContent='Mis à jour le '+n.toLocaleDateString('fr-FR')+' à '+n.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
   setStatus(false,allP.length+' projets · '+allP.reduce((s,p)=>s+(p.contacts||[]).length,0)+' contacts');
 }
+ 
 function updateStats(){
   document.getElementById('sT').textContent=allP.length;
-  document.getElementById('sA').textContent=allP.filter(p=>p.phase==='ao_ouvert'||p.urgent).length;
   document.getElementById('sC').textContent=allP.reduce((s,p)=>s+(p.contacts||[]).length,0);
   document.getElementById('sFr').textContent=allP.filter(p=>p.type==='fr').length;
   document.getElementById('sIn').textContent=allP.filter(p=>p.type==='int').length;
   const v=allP.reduce((s,p)=>s+(p.montant_num||0),0);
   document.getElementById('sV').textContent=v>0?Math.round(v/1000)+' Md€':'—';
 }
-function setF(type,val,el){aF[type]=val;el.closest('.filter-row').querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));el.classList.add('active');renderCards()}
+ 
+function setF(type,val,el){
+  aF[type]=val;
+  el.closest('.filter-row').querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');renderCards();
+}
+ 
+function ini(n){return(n||'?').split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase()}
+function scClass(s){return s>=70?'score-high':s>=40?'score-mid':'score-low'}
 function matchR(p,f){if(f==='all')return true;if(f==='int')return p.type==='int';return(p.localisation+' '+(p.region||'')).toLowerCase().includes(f.toLowerCase())}
+ 
 function renderCards(){
   const q=(document.getElementById('searchInput').value||'').toLowerCase();
-  let list=allP.filter(p=>(aF.sector==='all'||p.sector===aF.sector)&&(aF.phase==='all'||p.phase===aF.phase)&&matchR(p,aF.region)&&(!q||[p.title,p.summary,p.localisation,p.region||'',...(p.entreprises||[]),...(p.contacts||[]).map(c=>c.nom+' '+c.titre),...(p.tags||[])].join(' ').toLowerCase().includes(q)));
-  list.sort((a,b)=>{const ua=a.urgent||a.phase==='ao_ouvert',ub=b.urgent||b.phase==='ao_ouvert';if(ua&&!ub)return -1;if(!ua&&ub)return 1;return(b.score_prospection||0)-(a.score_prospection||0)});
+  let list=allP.filter(p=>
+    (aF.sector==='all'||p.sector===aF.sector)&&
+    matchR(p,aF.region)&&
+    (!q||[p.title,p.summary||'',p.localisation||'',p.region||'',p.client||'',...(p.entreprises||[]),...(p.contacts||[]).map(c=>c.nom+' '+c.titre),...(p.tags||[])].join(' ').toLowerCase().includes(q))
+  );
+  list.sort((a,b)=>(b.score_prospection||0)-(a.score_prospection||0));
   const c=document.getElementById('cardsContainer');
   if(!list.length){c.innerHTML='<div class="empty-state"><div style="font-size:2rem">🔍</div><div style="font-size:14px;margin-top:8px">Aucun projet pour ces critères.</div></div>';return}
   c.innerHTML=list.map(p=>{
-    const s=p.score_prospection||50,cts=p.contacts||[],urg=p.urgent||p.phase==='ao_ouvert';
-    return`<div class="project-card${urg?' urgent':''}" id="card-${p.id}">
+    const s=p.score_prospection||50,cts=p.contacts||[];
+    return`<div class="project-card" id="card-${p.id}">
 <div class="card-main" onclick="toggleD('${p.id}')">
 <div class="card-top">
 <div class="card-left">
-<div class="card-title">${urg?'🔴 ':''}${p.title}</div>
+<div class="card-title">${p.title}</div>
 <div class="card-badges">
 <span class="badge ${p.type==='fr'?'badge-fr':'badge-int'}">${p.type==='fr'?'🇫🇷 France':'🌍 International'}</span>
-<span class="badge ${PB[p.phase]||'badge-projet'}">${PL[p.phase]||p.phase}</span>
-${p.region?`<span class="badge badge-projet">📍 ${p.region}</span>`:''}
-</div></div>
-<div class="score-block"><div class="score-circle ${sc(s)}">${s}</div><div class="score-label">lead score</div></div>
+${p.statut?`<span class="badge badge-statut">📌 ${p.statut}</span>`:''}
+${p.region?`<span class="badge" style="background:var(--surface2);color:var(--text-muted);border:.5px solid var(--border-strong)">📍 ${p.region}</span>`:''}
 </div>
-<div class="card-meta"><span>📍 ${p.localisation}</span><span>💶 ${p.montant}</span><span>📅 ${p.horizon}</span>${p.prochaine_etape?`<span style="color:var(--amber)">⏱ ${p.prochaine_etape}</span>`:''}</div>
-<div class="card-summary">${p.summary}</div>
+</div>
+<div class="score-block"><div class="score-circle ${scClass(s)}">${s}</div><div class="score-label">lead</div></div>
+</div>
+<div class="card-meta">
+<span>🏢 ${p.client||((p.entreprises||[])[0]||'—')}</span>
+<span>📍 ${p.localisation||'—'}</span>
+<span>💶 ${p.montant||'—'}</span>
+${p.date_annonce?`<span>📅 ${p.date_annonce}</span>`:''}
+</div>
+<div class="card-summary">${p.summary||''}</div>
 ${p.source?`<div class="card-source">📰 ${p.source}</div>`:''}
-${cts.length?`<div class="contacts-preview">${cts.map(ct=>`<a class="contact-pill" href="${li(ct)}" target="_blank" onclick="event.stopPropagation()"><div class="cavatar">${ini(ct.nom)}</div><span>${ct.nom} · ${ct.titre}</span></a>`).join('')}</div>`:''}
+${cts.length?`<div class="contacts-preview">${cts.map(ct=>`<a class="contact-pill" href="${ct.linkedin_url||'https://www.linkedin.com/search/results/people/?keywords='+encodeURIComponent((ct.nom||'')+' '+(ct.titre||'')+' '+(ct.entreprise||''))}" target="_blank" onclick="event.stopPropagation()"><div class="cavatar">${ini(ct.nom)}</div><span>${ct.nom} · ${ct.titre}</span></a>`).join('')}</div>`:''}
 </div>
 <div class="card-footer">
-<div class="card-tags">${(p.entreprises||[]).map(e=>`<span class="tag">${e}</span>`).join('')}${(p.tags||[]).map(t=>`<span class="tag">${t}</span>`).join('')}</div>
-<button class="expand-btn" id="eb-${p.id}" onclick="event.stopPropagation();toggleD('${p.id}')">Voir leads & opportunités ▾</button>
+<div class="card-tags">
+${(p.entreprises||[]).map(e=>`<span class="tag">${e}</span>`).join('')}
+${(p.sous_traitants||[]).map(e=>`<span class="tag" style="background:var(--green-bg);color:var(--green)">🔧 ${e}</span>`).join('')}
+${(p.tags||[]).map(t=>`<span class="tag">${t}</span>`).join('')}
+</div>
+<button class="expand-btn" id="eb-${p.id}" onclick="event.stopPropagation();toggleD('${p.id}')">Détails & contacts ▾</button>
 </div>
 <div class="detail-panel" id="det-${p.id}">
 <div class="detail-grid">
 <div>
 <div class="dstitle">Opportunités sous-traitance</div>
 ${(p.opportunites||[]).map(o=>`<div class="opp-item"><div class="opp-check">✓</div><span>${o}</span></div>`).join('')}
-<div style="margin-top:1rem"><div class="dstitle">Entreprises impliquées</div>${(p.entreprises||[]).map(e=>`<span style="display:inline-flex;font-size:12px;padding:3px 8px;border-radius:6px;background:var(--surface2);border:.5px solid var(--border);color:var(--text-muted);margin:2px">🏢 ${e}</span>`).join('')}</div>
+${(p.sous_traitants||[]).length?`<div style="margin-top:.75rem"><div class="dstitle">Sous-traitants déjà nommés</div>${p.sous_traitants.map(e=>`<span style="display:inline-flex;font-size:12px;padding:3px 8px;border-radius:6px;background:var(--green-bg);color:var(--green);margin:2px">🔧 ${e}</span>`).join('')}</div>`:''}
 </div>
 <div>
-<div class="dstitle">Contacts à démarcher (${cts.length})</div>
-${cts.length?cts.map(ct=>`<div class="ccard"><div class="cheader"><div class="cavatar-lg">${ini(ct.nom)}</div><div><div class="cname">${ct.nom}</div><div class="crole">${ct.titre}</div><div class="cco">${ct.entreprise}</div></div></div>${ct.angle_approche?`<div class="angle-box">💬 ${ct.angle_approche}</div>`:''}<div class="cactions"><a class="clink li" href="${li(ct)}" target="_blank">in LinkedIn</a><a class="clink" href="https://www.google.com/search?q=${encodeURIComponent((ct.nom||'')+' '+(ct.entreprise||'')+' '+p.title)}" target="_blank">🔍 Google</a></div></div>`).join(''):'<div style="font-size:13px;color:var(--text-faint)">Aucun contact identifié.</div>'}
+<div class="dstitle">Contacts terrain à démarcher</div>
+${cts.length?cts.map(ct=>`<div class="ccard"><div class="cheader"><div class="cavatar-lg">${ini(ct.nom)}</div><div><div class="cname">${ct.nom}</div><div class="crole">${ct.titre}</div><div class="cco">${ct.entreprise||p.client||''}</div></div></div>${ct.angle?`<div class="angle-box">💬 ${ct.angle}</div>`:''}<div class="cactions"><a class="clink li" href="${ct.linkedin_url||'https://www.linkedin.com/search/results/people/?keywords='+encodeURIComponent((ct.nom||'')+' '+(ct.entreprise||p.client||''))}" target="_blank">in LinkedIn</a><a class="clink" href="https://www.google.com/search?q=${encodeURIComponent((ct.nom||'')+' '+(ct.entreprise||p.client||'')+' '+p.title)}" target="_blank">🔍 Google</a></div></div>`).join(''):'<div style="font-size:13px;color:var(--text-faint)">Aucun contact identifié.</div>'}
 </div>
 <div>
-<div class="dstitle">Score & infos</div>
-<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px"><div class="score-circle ${sc(s)}" style="width:50px;height:50px;font-size:17px">${s}</div><div style="font-size:12px;color:var(--text-muted)">Score prospection<br><span style="font-size:11px;color:var(--text-faint)">${s>=70?'Priorité haute':s>=40?'Priorité moyenne':'À surveiller'}</span></div></div>
-${p.date_annonce?`<div style="font-size:12px;margin-bottom:5px"><span style="color:var(--text-faint)">Annoncé : </span>${p.date_annonce}</div>`:''}
-${p.source?`<div style="font-size:12px;margin-bottom:5px"><span style="color:var(--text-faint)">Source : </span>${p.source}</div>`:''}
-${p.region?`<div style="font-size:12px;margin-bottom:5px"><span style="color:var(--text-faint)">Région : </span>${p.region}</div>`:''}
+<div class="dstitle">Infos projet</div>
+<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px"><div class="score-circle ${scClass(s)}" style="width:48px;height:48px;font-size:16px">${s}</div><div style="font-size:12px;color:var(--text-muted)">Score prospection<br><span style="font-size:11px;color:var(--text-faint)">${s>=70?'Priorité haute':s>=40?'Priorité moyenne':'À surveiller'}</span></div></div>
+${p.client?`<div style="font-size:12px;margin-bottom:4px"><span style="color:var(--text-faint)">Client : </span><strong>${p.client}</strong></div>`:''}
+${p.statut?`<div style="font-size:12px;margin-bottom:4px"><span style="color:var(--text-faint)">Statut : </span>${p.statut}</div>`:''}
+${p.date_annonce?`<div style="font-size:12px;margin-bottom:4px"><span style="color:var(--text-faint)">Annoncé : </span>${p.date_annonce}</div>`:''}
+${p.source?`<div style="font-size:12px;margin-bottom:4px"><span style="color:var(--text-faint)">Source : </span>${p.source}</div>`:''}
 <div class="detail-actions">
-<a class="abtn primary" href="https://www.linkedin.com/search/results/people/?keywords=${encodeURIComponent((p.entreprises||[]).join(' ')+' directeur achats travaux')}" target="_blank">in Trouver contacts</a>
+<a class="abtn primary" href="https://www.linkedin.com/search/results/people/?keywords=${encodeURIComponent((p.client||'')+' chef projet directeur site ingénierie')}" target="_blank">in Contacts LinkedIn</a>
 <a class="abtn" href="https://www.boamp.fr" target="_blank">BOAMP</a>
-<a class="abtn" href="https://www.usinenouvelle.com/recherche/?q=${encodeURIComponent(p.title)}" target="_blank">Usines Nouvelles</a>
+<a class="abtn" href="https://www.usinenouvelle.com/recherche/?q=${encodeURIComponent(p.title)}" target="_blank">Usines Nouv.</a>
 </div>
 </div>
 </div>
@@ -345,15 +402,34 @@ ${p.region?`<div style="font-size:12px;margin-bottom:5px"><span style="color:var
 </div>`;
   }).join('');
 }
-function toggleD(id){const p=document.getElementById('det-'+id),b=document.getElementById('eb-'+id),o=p.classList.contains('open');p.classList.toggle('open');b.textContent=o?'Voir leads & opportunités ▾':'Réduire ▴'}
+ 
+function toggleD(id){const p=document.getElementById('det-'+id),b=document.getElementById('eb-'+id),o=p.classList.contains('open');p.classList.toggle('open');b.textContent=o?'Détails & contacts ▾':'Réduire ▴'}
+ 
 function exportCSV(){
   if(!allP.length){alert('Aucun projet. Lancez une recherche.');return}
-  const rows=[['Projet','Secteur','Phase','Score lead','Région','Localisation','Montant','Horizon','Prochaine étape','Entreprises','Contact Nom','Titre','Entreprise','LinkedIn','Angle approche','Source','Date annonce']];
-  allP.forEach(p=>{const cts=p.contacts||[{}];cts.forEach(c=>{rows.push([p.title,p.sector,p.phase,p.score_prospection||'',p.region||'',p.localisation,p.montant,p.horizon,p.prochaine_etape||'',(p.entreprises||[]).join(' / '),c.nom||'',c.titre||'',c.entreprise||'',li(c),c.angle_approche||'',p.source||'',p.date_annonce||''])})});
+  const rows=[['Projet','Secteur','Région','Client','Statut','Localisation','Montant','Date annonce','Sous-traitants nommés','Opportunités','Contact Nom','Titre','Entreprise','LinkedIn','Angle approche','Source','Score']];
+  allP.forEach(p=>{
+    const cts=p.contacts||[{}];
+    cts.forEach(c=>{rows.push([
+      p.title,p.sector,p.region||'',p.client||'',p.statut||'',p.localisation||'',p.montant||'',p.date_annonce||'',
+      (p.sous_traitants||[]).join(' / '),(p.opportunites||[]).join(' / '),
+      c.nom||'',c.titre||'',c.entreprise||p.client||'',
+      c.linkedin_url||'',c.angle||'',p.source||'',p.score_prospection||''
+    ])});
+  });
   const csv=rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\n');
-  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8'}));a.download='prospection-'+new Date().toISOString().slice(0,10)+'.csv';a.click();
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8'}));
+  a.download='NEO2-prospection-'+new Date().toISOString().slice(0,10)+'.csv';a.click();
 }
-function getDemoP(){return[{id:"d1",title:"EPR2 Penly — tuyauterie & génie civil",type:"fr",sector:"energie",region:"Normandie",phase:"valide",score_prospection:92,montant:"10 Md€",montant_num:10000,localisation:"Penly, Normandie",entreprises:["EDF","Framatome","Bouygues TP"],horizon:"2026-2035",date_annonce:"janvier 2025",source:"Usines Nouvelles, jan. 2025",urgent:true,summary:"DUP accordée pour les 2 EPR2 de Penly. Appels d'offres génie civil et tuyauterie nucléaire N1/N2 prévus T3 2025.",prochaine_etape:"AO génie civil T3 2025",opportunites:["Tuyauterie nucléaire N1/N2","Chaudronnerie & robinetterie","Génie électrique zone contrôlée","Calorifuge & échafaudage"],contacts:[{nom:"Sophie Marchand",titre:"Directrice Achats Travaux",entreprise:"EDF Nouveau Nucléaire",linkedin_search:"Sophie Marchand Directrice Achats EDF Nucléaire",linkedin_url:"https://www.linkedin.com/search/results/people/?keywords=Sophie+Marchand+Directrice+Achats+EDF+Nucl%C3%A9aire",angle_approche:"Bonjour Sophie, spécialisés en tuyauterie nucléaire N1/N2 avec des références sur Flamanville, votre projet Penly nous intéresse fortement."},{nom:"Laurent Dubois",titre:"Responsable Sous-traitance",entreprise:"Bouygues Travaux Publics",linkedin_search:"Laurent Dubois Sous-traitance Bouygues TP nucléaire",linkedin_url:"https://www.linkedin.com/search/results/people/?keywords=Laurent+Dubois+Sous-traitance+Bouygues+TP",angle_approche:"Bonjour Laurent, nous intervenons sur la chaudronnerie et tuyauterie en milieu nucléaire. Vos besoins sur Penly nous correspondent parfaitement."}],tags:["nucléaire","EPR2","Normandie"]},{id:"d2",title:"Gigafactory Verkor — AO maintenance ouvert",type:"fr",sector:"industrie",region:"Hauts-de-France",phase:"ao_ouvert",score_prospection:96,montant:"2 Md€",montant_num:2000,localisation:"Dunkerque, Hauts-de-France",entreprises:["Verkor","Renault","Schneider Electric"],horizon:"T4 2025",date_annonce:"novembre 2024",source:"Les Échos, nov. 2024",urgent:true,summary:"AO maintenance et utilities industriels ouverts sur la gigafactory Verkor. Clôture fin mai 2025. Fort volume sous-traitance locale.",prochaine_etape:"Clôture AO 30 mai 2025",opportunites:["Tuyauterie fluides procédés","Génie électrique BT/HTA","Maintenance préventive & curative","Instrumentation"],contacts:[{nom:"Thomas Lebrun",titre:"Directeur Achats Industriels",entreprise:"Verkor",linkedin_search:"Thomas Lebrun Directeur Achats Verkor Dunkerque",linkedin_url:"https://www.linkedin.com/search/results/people/?keywords=Thomas+Lebrun+Achats+Verkor+Dunkerque",angle_approche:"Bonjour Thomas, suite à l'AO Verkor publié, nous souhaitons vous présenter notre offre tuyauterie + maintenance pour votre gigafactory."},{nom:"Marie-Claire Fontaine",titre:"Responsable Travaux Neufs",entreprise:"Verkor",linkedin_search:"Marie-Claire Fontaine Travaux Neufs Verkor",linkedin_url:"https://www.linkedin.com/search/results/people/?keywords=Marie-Claire+Fontaine+Travaux+Neufs+Verkor",angle_approche:"Bonjour Marie-Claire, spécialisés en génie électrique et tuyauterie process, nous sommes disponibles pour votre mise en service."}],tags:["batteries","gigafactory","Dunkerque","AO ouvert"]},{id:"d3",title:"Grand Paris Express — lots ventilation L16/17",type:"fr",sector:"transport",region:"Île-de-France",phase:"ao_ouvert",score_prospection:87,montant:"36 Md€",montant_num:36000,localisation:"Seine-Saint-Denis, Île-de-France",entreprises:["SGP","Vinci","Eiffage","Bouygues"],horizon:"2026-2028",date_annonce:"janvier 2025",source:"BOAMP / SGP, jan. 2025",urgent:true,summary:"Nouveaux lots AO ventilation et désenfumage gares lignes 16 et 17 publiés sur BOAMP. Réponses attendues avant juin 2025.",prochaine_etape:"Réponse AO avant juin 2025",opportunites:["Ventilation & désenfumage tunnels","Électromécanique gares","Câblage courants forts","Maintenance équipements fixes"],contacts:[{nom:"Julien Carpentier",titre:"Responsable Achats Équipements",entreprise:"Société du Grand Paris",linkedin_search:"Julien Carpentier Achats Société Grand Paris",linkedin_url:"https://www.linkedin.com/search/results/people/?keywords=Julien+Carpentier+Achats+Grand+Paris",angle_approche:"Bonjour Julien, nous intervenons sur les marchés ventilation et électromécanique souterrain. Nous souhaitons déposer une offre sur vos lots en cours."},{nom:"Clara Fontaine",titre:"Directrice Lots Techniques",entreprise:"Vinci Construction",linkedin_search:"Clara Fontaine Lots Techniques Vinci GPE",linkedin_url:"https://www.linkedin.com/search/results/people/?keywords=Clara+Fontaine+Lots+Techniques+Vinci+GPE",angle_approche:"Bonjour Clara, nos références désenfumage tunnel nous permettent de répondre efficacement à vos besoins GPE lignes 16/17."}],tags:["GPE","métro","Île-de-France","ventilation"]},{id:"d4",title:"Microsoft data center IA — Seine-et-Marne",type:"fr",sector:"numerique",region:"Île-de-France",phase:"annonce",score_prospection:74,montant:"4 Md€",montant_num:4000,localisation:"Seine-et-Marne, Île-de-France",entreprises:["Microsoft","Bouygues Immobilier","Eiffage Énergie"],horizon:"2026",date_annonce:"mars 2025",source:"BFM Business, mars 2025",urgent:false,summary:"Microsoft annonce 4 Md€ en data centers IA en France. Consultation lots techniques et génie électrique HTA en cours depuis avril 2025.",prochaine_etape:"Consultation lots T2 2025",opportunites:["Génie électrique HTA & groupes","Climatisation CRAH","Câblage courants forts","Sécurité incendie"],contacts:[{nom:"Éric Blanchard",titre:"Directeur de Programme",entreprise:"Bouygues Immobilier Data Centers",linkedin_search:"Eric Blanchard Directeur Programme Bouygues Data Center",linkedin_url:"https://www.linkedin.com/search/results/people/?keywords=Eric+Blanchard+Bouygues+Immobilier+Data+Center",angle_approche:"Bonjour Éric, spécialisés en génie électrique HTA data centers, nous souhaitons vous présenter nos références pour le programme Microsoft France."}],tags:["data center","IA","Microsoft","Île-de-France"]},{id:"d5",title:"H2V Le Havre — hydrogène vert",type:"fr",sector:"chimie",region:"Normandie",phase:"projet",score_prospection:62,montant:"1,2 Md€",montant_num:1200,localisation:"Le Havre, Normandie",entreprises:["H2V Industry","TotalEnergies","Air Liquide"],horizon:"2027-2028",date_annonce:"février 2025",source:"Usines Nouvelles, fév. 2025",urgent:false,summary:"FID attendue T3 2025. Études terminées. Fort besoin en tuyauterie haute pression et chaudronnerie spécialisée hydrogène.",prochaine_etape:"FID & AO T3 2025",opportunites:["Tuyauterie haute pression H2","Chaudronnerie cuves & réservoirs","Instrumentation & robinetterie","Calorifuge"],contacts:[{nom:"Nicolas Perrot",titre:"Directeur Technique",entreprise:"H2V Industry",linkedin_search:"Nicolas Perrot Directeur Technique H2V Industry Le Havre",linkedin_url:"https://www.linkedin.com/search/results/people/?keywords=Nicolas+Perrot+Directeur+Technique+H2V",angle_approche:"Bonjour Nicolas, spécialisés en tuyauterie HP hydrogène, nous aimerions vous rencontrer en amont de votre FID."}],tags:["hydrogène","Normandie","tuyauterie HP"]},{id:"d6",title:"Airbus A320 — montée en cadence Toulouse",type:"fr",sector:"defense",region:"Occitanie",phase:"encours",score_prospection:80,montant:"2,5 Md€",montant_num:2500,localisation:"Toulouse, Occitanie",entreprises:["Airbus","Safran","Liebherr"],horizon:"2025-2026",date_annonce:"octobre 2024",source:"Air & Cosmos, oct. 2024",urgent:false,summary:"Airbus monte à 75 avions/mois. Nouveaux contrats fournisseurs pour pièces et assemblage en cours. Forte pression sur la chaîne de sous-traitance.",prochaine_etape:"Nouveaux contrats fournisseurs T2 2025",opportunites:["Usinage pièces aéronautique","Assemblage structures composites","Traitement de surface","CND"],contacts:[{nom:"Pierre Gauthier",titre:"Supply Chain Manager",entreprise:"Airbus Commercial Aircraft",linkedin_search:"Pierre Gauthier Supply Chain Manager Airbus Commercial Aircraft",linkedin_url:"https://www.linkedin.com/search/results/people/?keywords=Pierre+Gauthier+Supply+Chain+Airbus",angle_approche:"Bonjour Pierre, qualifiés Nadcap sur l'usinage de précision aéronautique, nous cherchons à intégrer votre panel pour la montée en cadence A320."}],tags:["aéronautique","Airbus","Toulouse","Occitanie"]}];}
+ 
+function getDemoP(){return[
+  {id:"d1",title:"Extension station épuration Grand Lyon",type:"fr",sector:"environnement",region:"Auvergne-Rhône-Alpes",score_prospection:88,montant:"85 M€",montant_num:85,localisation:"Lyon, AuRA",client:"Métropole de Lyon / Veolia",entreprises:["Veolia Water"],sous_traitants:["OTV","Degrémont"],statut:"Permis déposé avril 2025",date_annonce:"10 avril 2025",source:"Usines Nouvelles, 10 avr. 2025",summary:"Extension de la station d'épuration de Pierre-Bénite pour passer à 1,2 million d'équivalents-habitants. Permis déposé, démarrage travaux prévu T1 2026.",opportunites:["Tuyauterie inox procédés traitement eau","Génie électrique BT/HTA","Chaudronnerie cuves & décanteurs","Instrumentation & automates"],contacts:[{nom:"Frédéric Morel",titre:"Directeur de projet travaux neufs",entreprise:"Veolia Water Technologies",linkedin_url:"https://www.linkedin.com/search/results/people/?keywords=Fr%C3%A9d%C3%A9ric+Morel+Directeur+Projet+Veolia+Water",angle:"Bonjour Frédéric, spécialisés en tuyauterie inox pour stations d'épuration, nous suivons votre projet Pierre-Bénite et aimerions vous présenter nos références."},{nom:"Claire Desroches",titre:"Responsable ingénierie process",entreprise:"OTV France",linkedin_url:"https://www.linkedin.com/search/results/people/?keywords=Claire+Desroches+Responsable+Ing%C3%A9nierie+OTV",angle:"Bonjour Claire, nos équipes interviennent sur le génie électrique et l'instrumentation pour les STEP. Votre projet Lyon nous intéresse."}],tags:["eau","STEP","Lyon","environnement"]},
+  {id:"d2",title:"Nouvelle unité de production Sanofi — Vitry",type:"fr",sector:"industrie",region:"Île-de-France",score_prospection:94,montant:"400 M€",montant_num:400,localisation:"Vitry-sur-Seine, Île-de-France",client:"Sanofi",entreprises:["Sanofi"],sous_traitants:[],statut:"Vient d'être annoncé — études en cours",date_annonce:"8 avril 2025",source:"Les Échos, 8 avr. 2025",summary:"Sanofi annonce une nouvelle unité de production biopharmaceutique à Vitry-sur-Seine dans le cadre de son plan de reindustrialisation en France. Appels d'offres construction attendus fin 2025.",opportunites:["Tuyauterie inox & procédés pharma","Génie électrique salles propres","Chaudronnerie & cuves GMP","Qualification IQ/OQ/PQ"],contacts:[{nom:"Jean-Baptiste Launay",titre:"Directeur de site Vitry",entreprise:"Sanofi",linkedin_url:"https://www.linkedin.com/search/results/people/?keywords=Jean-Baptiste+Launay+Directeur+Site+Sanofi+Vitry",angle:"Bonjour Jean-Baptiste, nous sommes spécialisés en travaux neufs pharma (tuyauterie inox GMP, salles propres). Votre futur projet Vitry nous intéresse fortement."},{nom:"Hélène Marceau",titre:"Responsable travaux neufs",entreprise:"Sanofi Global Manufacturing",linkedin_url:"https://www.linkedin.com/search/results/people/?keywords=H%C3%A9l%C3%A8ne+Marceau+Travaux+Neufs+Sanofi",angle:"Bonjour Hélène, nous intervenons sur les travaux de génie chimique et électrique pour les industries pharma. Votre projet Vitry correspond exactement à nos métiers."}],tags:["pharma","Sanofi","Île-de-France","GMP"]},
+  {id:"d3",title:"EPR2 Penly — premières consultations sous-traitance",type:"fr",sector:"energie",region:"Normandie",score_prospection:96,montant:"10 Md€",montant_num:10000,localisation:"Penly, Normandie",client:"EDF / Framatome",entreprises:["EDF","Framatome","Bouygues TP"],sous_traitants:["Spie","Endel","Ortec"],statut:"Consultations sous-traitance ouvertes T2 2025",date_annonce:"3 avril 2025",source:"Usines Nouvelles, 3 avr. 2025",summary:"EDF lance les premières consultations auprès des sous-traitants spécialisés pour les travaux de génie civil et tuyauterie du chantier EPR2 de Penly. Démarrage terrain prévu 2026.",opportunites:["Tuyauterie nucléaire N1/N2","Chaudronnerie & robinetterie","Génie électrique zone contrôlée","Calorifuge & échafaudage"],contacts:[{nom:"Marc Lefevre",titre:"Responsable sous-traitance chantier",entreprise:"Framatome",linkedin_url:"https://www.linkedin.com/search/results/people/?keywords=Marc+Lefevre+Responsable+Sous-traitance+Framatome",angle:"Bonjour Marc, nous intervenons sur la tuyauterie nucléaire N1/N2 avec des références sur Flamanville. Votre consultation Penly nous intéresse vivement."},{nom:"Thomas Garnier",titre:"Chef de projet génie civil",entreprise:"Bouygues Travaux Publics",linkedin_url:"https://www.linkedin.com/search/results/people/?keywords=Thomas+Garnier+Chef+Projet+G%C3%A9nie+Civil+Bouygues",angle:"Bonjour Thomas, spécialisés en chaudronnerie et tuyauterie en milieu nucléaire, nous souhaitons répondre à vos consultations pour Penly."}],tags:["nucléaire","EPR2","Normandie","EDF"]},
+  {id:"d4",title:"Nouvelle usine Lactalis — Mayenne",type:"fr",sector:"industrie",region:"Pays de la Loire",score_prospection:82,montant:"120 M€",montant_num:120,localisation:"Laval, Pays de la Loire",client:"Lactalis",entreprises:["Lactalis"],sous_traitants:[],statut:"Permis accordé — démarrage construction T3 2025",date_annonce:"5 avril 2025",source:"Le Maine Libre, 5 avr. 2025",summary:"Lactalis obtient son permis de construire pour une nouvelle unité de transformation laitière à Laval. Démarrage des travaux prévu à l'été 2025, appels d'offres lots techniques en cours.",opportunites:["Tuyauterie alimentaire inox","Génie électrique BT agroalimentaire","Froid industriel & utilités","Nettoyage en place (NEP)"],contacts:[{nom:"Sylvie Bertrand",titre:"Directrice technique de site",entreprise:"Lactalis",linkedin_url:"https://www.linkedin.com/search/results/people/?keywords=Sylvie+Bertrand+Directrice+Technique+Site+Lactalis",angle:"Bonjour Sylvie, spécialisés en tuyauterie inox alimentaire et utilités pour l'industrie laitière, nous souhaiterions répondre à vos appels d'offres pour votre nouveau site."},{nom:"Paul Renaud",titre:"Responsable travaux neufs",entreprise:"Lactalis Groupe",linkedin_url:"https://www.linkedin.com/search/results/people/?keywords=Paul+Renaud+Travaux+Neufs+Lactalis",angle:"Bonjour Paul, nos équipes interviennent sur les lots tuyauterie et génie électrique en agroalimentaire. Votre projet Laval correspond à nos métiers."}],tags:["agroalimentaire","Lactalis","Pays de la Loire","inox"]},
+  {id:"d5",title:"Chantiers Atlantique — nouveau navire GNL",type:"fr",sector:"naval",region:"Pays de la Loire",score_prospection:79,montant:"800 M€",montant_num:800,localisation:"Saint-Nazaire, Pays de la Loire",client:"MSC Croisières",entreprises:["Chantiers de l'Atlantique"],sous_traitants:["Bureau Veritas","STX"],statut:"Pose de quille annoncée avril 2025",date_annonce:"2 avril 2025",source:"Mer et Marine, 2 avr. 2025",summary:"Chantiers de l'Atlantique entame la construction d'un nouveau paquebot GNL pour MSC. Pose de quille confirmée, nombreux lots sous-traitance ouverts pour les corps d'état secondaires.",opportunites:["Tuyauterie GNL haute pression","Câblage & électricité navale","Chaudronnerie structures acier","Isolations thermiques marine"],contacts:[{nom:"Arnaud Lebreton",titre:"Chef de projet construction",entreprise:"Chantiers de l'Atlantique",linkedin_url:"https://www.linkedin.com/search/results/people/?keywords=Arnaud+Lebreton+Chef+Projet+Construction+Chantiers+Atlantique",angle:"Bonjour Arnaud, nous intervenons sur la tuyauterie GNL et les structures métalliques pour la construction navale. Votre chantier MSC nous intéresse."}],tags:["naval","GNL","Saint-Nazaire","paquebot"]},
+  {id:"d6",title:"Extension raffinerie TotalEnergies Donges",type:"fr",sector:"energie",region:"Pays de la Loire",score_prospection:85,montant:"200 M€",montant_num:200,localisation:"Donges, Loire-Atlantique",client:"TotalEnergies",entreprises:["TotalEnergies"],sous_traitants:["Spie","Cofely"],statut:"Appel d'offres ouvert — réponse avant fin mai 2025",date_annonce:"1 avril 2025",source:"L'Usine Nouvelle, 1er avr. 2025",summary:"TotalEnergies lance un AO pour l'extension de sa raffinerie de Donges, incluant de nouveaux équipements de traitement des hydrocarbures. Réponses attendues avant fin mai 2025.",opportunites:["Tuyauterie procédés haute pression","Chaudronnerie échangeurs & colonnes","Instrumentation & robinetterie","Calorifuge industriel"],contacts:[{nom:"Stéphane Aubert",titre:"Directeur de projet raffinage",entreprise:"TotalEnergies Raffinage",linkedin_url:"https://www.linkedin.com/search/results/people/?keywords=St%C3%A9phane+Aubert+Directeur+Projet+Raffinage+TotalEnergies",angle:"Bonjour Stéphane, nous répondons à votre AO Donges. Spécialisés en tuyauterie procédés et chaudronnerie, nous avons des références sur des chantiers raffinerie similaires."},{nom:"Isabelle Chartier",titre:"Responsable achats travaux",entreprise:"TotalEnergies",linkedin_url:"https://www.linkedin.com/search/results/people/?keywords=Isabelle+Chartier+Achats+Travaux+TotalEnergies",angle:"Bonjour Isabelle, suite à votre AO publié, nous souhaitons vous présenter notre dossier de candidature pour les lots tuyauterie et chaudronnerie."}],tags:["raffinerie","TotalEnergies","Donges","hydrocarbures"]}
+];}
 </script>
 </body>
 </html>
