@@ -2,11 +2,11 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>NEO2 — Veille & Prospection Industrielle</title>
+<title>NEO2 — Veille Investissements Industriels</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --neo-red:#E3001B;--neo-dark:#1A1A1A;--neo-gray:#F4F4F4;--neo-border:#E0E0E0;
+  --neo-red:#E3001B;--neo-dark:#1A1A1A;
   --bg:#F7F7F7;--surface:#fff;--surface2:#F4F4F4;
   --border:rgba(0,0,0,.09);--border-strong:rgba(0,0,0,.18);
   --text:#1A1A1A;--text-muted:#666;--text-faint:#999;
@@ -16,47 +16,54 @@
   --r:8px;--rl:12px
 }
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.6;min-height:100vh}
-
-/* NAV */
 nav{background:var(--neo-dark);padding:0 2rem;height:58px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;gap:12px}
 .nav-logo{display:flex;align-items:center;gap:12px}
 .neo-logo{font-size:22px;font-weight:800;letter-spacing:-.02em;color:#fff}
 .neo-logo span{color:var(--neo-red)}
-.nav-tagline{font-size:11px;color:rgba(255,255,255,.5);border-left:1px solid rgba(255,255,255,.2);padding-left:12px;line-height:1.3}
+.nav-tagline{font-size:11px;color:rgba(255,255,255,.45);border-left:1px solid rgba(255,255,255,.15);padding-left:12px;line-height:1.3}
 .nav-right{display:flex;align-items:center;gap:8px}
 .status-pill{display:flex;align-items:center;gap:6px;font-size:11px;color:rgba(255,255,255,.6);background:rgba(255,255,255,.08);border-radius:20px;padding:4px 10px;white-space:nowrap}
 .dot{width:7px;height:7px;border-radius:50%;background:#5DCAA5;flex-shrink:0}
 .dot.loading{background:#EF9F27;animation:pulse 1s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
-.nav-btn{font-size:12px;padding:5px 12px;border-radius:var(--r);border:.5px solid rgba(255,255,255,.2);background:rgba(255,255,255,.1);color:#fff;cursor:pointer;white-space:nowrap}
-.nav-btn:hover{background:rgba(255,255,255,.2)}
+.nav-btn{font-size:12px;padding:5px 12px;border-radius:var(--r);border:.5px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);color:#fff;cursor:pointer;white-space:nowrap}
+.nav-btn:hover{background:rgba(255,255,255,.18)}
 .nav-btn.red{background:var(--neo-red);border-color:var(--neo-red)}
-.nav-btn.red:hover{opacity:.9}
-
-/* PAGE */
 .page{max-width:1200px;margin:0 auto;padding:1.5rem 1.5rem 4rem}
 
-/* INPUT ZONE */
-.input-zone{background:var(--surface);border:1.5px solid var(--neo-red);border-radius:var(--rl);padding:1.25rem;margin-bottom:1.25rem}
-.input-zone-title{font-size:13px;font-weight:600;color:var(--neo-red);margin-bottom:8px;display:flex;align-items:center;gap:6px}
-.input-zone textarea{width:100%;height:110px;border:.5px solid var(--border-strong);border-radius:var(--r);padding:10px 12px;font-size:13px;color:var(--text);background:var(--surface2);resize:vertical;outline:none;font-family:inherit;line-height:1.5}
-.input-zone textarea:focus{border-color:var(--neo-red)}
-.input-zone textarea::placeholder{color:var(--text-faint)}
-.input-zone-footer{display:flex;align-items:center;justify-content:space-between;margin-top:8px;flex-wrap:wrap;gap:8px}
-.input-hint{font-size:11px;color:var(--text-faint)}
-.launch-btn{height:38px;padding:0 20px;border-radius:var(--r);border:none;background:var(--neo-red);color:#fff;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;white-space:nowrap}
+/* WEEK BANNER */
+.week-banner{background:var(--neo-dark);color:#fff;border-radius:var(--r);padding:.75rem 1.25rem;margin-bottom:1rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.week-label{font-size:12px;color:rgba(255,255,255,.55)}
+.week-dates{font-size:14px;font-weight:600;color:#fff}
+
+/* PASTE ZONE */
+.paste-zone{background:var(--surface);border:1.5px dashed rgba(227,0,27,.35);border-radius:var(--rl);padding:1.1rem 1.25rem;margin-bottom:1.25rem}
+.paste-title{font-size:12px;font-weight:600;color:var(--neo-red);margin-bottom:7px;display:flex;align-items:center;gap:6px}
+.paste-zone textarea{width:100%;height:90px;border:.5px solid var(--border-strong);border-radius:var(--r);padding:9px 11px;font-size:12px;color:var(--text);background:var(--surface2);resize:vertical;outline:none;font-family:inherit;line-height:1.5}
+.paste-zone textarea:focus{border-color:var(--neo-red)}
+.paste-zone textarea::placeholder{color:var(--text-faint);font-size:12px}
+
+/* LAUNCH */
+.launch-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:1.25rem}
+.launch-hint{font-size:11px;color:var(--text-faint);line-height:1.5}
+.launch-hint strong{color:var(--text-muted)}
+.launch-btn{height:42px;padding:0 24px;border-radius:var(--r);border:none;background:var(--neo-red);color:#fff;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:8px;white-space:nowrap;letter-spacing:-.01em}
 .launch-btn:hover{opacity:.9}
 .launch-btn:disabled{opacity:.4;cursor:not-allowed}
 
 /* PROGRESS */
 .progress-bar{background:var(--surface);border:.5px solid var(--border);border-radius:var(--r);padding:.9rem 1.25rem;margin-bottom:1.25rem;display:none}
 .progress-bar.visible{display:block}
+.progress-steps{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap}
+.pstep{font-size:11px;padding:3px 9px;border-radius:20px;background:var(--surface2);border:.5px solid var(--border);color:var(--text-faint)}
+.pstep.active{background:#FFF3E0;color:#E65100;border-color:#FFB300;animation:pulse 1s infinite}
+.pstep.done{background:var(--green-bg);color:var(--green);border-color:var(--green-border)}
 .progress-title{font-size:12px;color:var(--text-muted);margin-bottom:8px}
 .progress-track{height:3px;background:var(--border);border-radius:2px;overflow:hidden}
 .progress-fill{height:100%;background:var(--neo-red);border-radius:2px;transition:width .4s ease}
 
 /* STATS */
-.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;margin-bottom:1.25rem}
+.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:8px;margin-bottom:1.25rem}
 .stat-card{background:var(--surface);border:.5px solid var(--border);border-radius:var(--r);padding:10px 14px}
 .stat-label{font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px}
 .stat-value{font-size:20px;font-weight:700;letter-spacing:-.02em}
@@ -68,9 +75,9 @@ nav{background:var(--neo-dark);padding:0 2rem;height:58px;display:flex;align-ite
 .search-wrap input{width:100%;height:36px;padding:0 12px 0 34px;border:.5px solid var(--border-strong);border-radius:var(--r);background:var(--surface);color:var(--text);font-size:13px;outline:none}
 .search-wrap input:focus{border-color:var(--neo-red)}
 .search-icon{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--text-faint);pointer-events:none}
-.mail-btn{height:36px;padding:0 14px;border-radius:var(--r);border:.5px solid var(--border-strong);background:var(--surface);color:var(--text);font-size:12px;cursor:pointer;display:flex;align-items:center;gap:5px;white-space:nowrap}
-.mail-btn:hover{background:var(--surface2)}
-.export-btn{height:36px;padding:0 14px;border-radius:var(--r);border:.5px solid var(--green-border);background:var(--green-bg);color:var(--green);font-size:12px;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:5px;white-space:nowrap}
+.tbtn{height:36px;padding:0 14px;border-radius:var(--r);border:.5px solid var(--border-strong);background:var(--surface);color:var(--text);font-size:12px;cursor:pointer;display:flex;align-items:center;gap:5px;white-space:nowrap}
+.tbtn:hover{background:var(--surface2)}
+.tbtn.green{background:var(--green-bg);border-color:var(--green-border);color:var(--green)}
 
 /* FILTERS */
 .filter-row{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:5px;align-items:center}
@@ -80,31 +87,31 @@ nav{background:var(--neo-dark);padding:0 2rem;height:58px;display:flex;align-ite
 .chip.active{background:var(--neo-red);color:#fff;border-color:var(--neo-red)}
 
 /* CARDS */
-.cards-list{display:flex;flex-direction:column;gap:8px}
-.project-card{background:var(--surface);border:.5px solid var(--border);border-radius:var(--rl);overflow:hidden;transition:border-color .15s}
+.project-card{background:var(--surface);border:.5px solid var(--border);border-radius:var(--rl);overflow:hidden;transition:border-color .15s;margin-bottom:8px}
 .project-card:hover{border-color:var(--border-strong)}
 .project-card.selected{border-color:var(--neo-red);border-width:1.5px}
-.card-main{padding:.9rem 1.25rem;cursor:pointer}
-.card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:6px}
+.card-main{padding:.85rem 1.25rem;cursor:pointer}
+.card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:5px}
 .card-left{flex:1;min-width:0}
-.card-select{display:flex;align-items:center;gap:8px;margin-bottom:5px}
-.card-checkbox{width:16px;height:16px;accent-color:var(--neo-red);cursor:pointer;flex-shrink:0}
-.card-title{font-size:14px;font-weight:600;line-height:1.35}
-.card-badges{display:flex;gap:4px;flex-wrap:wrap;margin-top:4px}
+.card-select{display:flex;align-items:flex-start;gap:8px}
+.card-checkbox{width:15px;height:15px;accent-color:var(--neo-red);cursor:pointer;flex-shrink:0;margin-top:2px}
+.card-title{font-size:13px;font-weight:600;line-height:1.35}
+.card-badges{display:flex;gap:4px;flex-wrap:wrap;margin-top:4px;margin-left:23px}
 .badge{font-size:10px;padding:2px 7px;border-radius:20px;font-weight:500;white-space:nowrap}
 .badge-fr{background:var(--green-bg);color:var(--green)}
 .badge-int{background:var(--blue-bg);color:var(--blue)}
-.badge-statut{background:#FFF3E0;color:#E65100;border:.5px solid #FFCC02}
-.badge-source-un{background:#FFEBEE;color:var(--neo-red);border:.5px solid var(--neo-red)}
+.badge-statut{background:#FFF3E0;color:#E65100;border:.5px solid #FFB300}
+.badge-un{background:#FFEBEE;color:var(--neo-red);border:.5px solid var(--neo-red)}
+.badge-auto{background:var(--surface2);color:var(--text-muted);border:.5px solid var(--border-strong)}
 .score-block{flex-shrink:0;text-align:center}
 .score-circle{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;border:2px solid}
 .score-high{background:#E8F5E9;color:#1B5E20;border-color:#2E7D32}
 .score-mid{background:var(--amber-bg);color:var(--amber);border-color:var(--amber)}
 .score-low{background:var(--surface2);color:var(--text-muted);border-color:var(--border-strong)}
 .score-label{font-size:8px;color:var(--text-faint);margin-top:1px}
-.card-meta{display:flex;gap:10px;flex-wrap:wrap;font-size:11px;color:var(--text-muted);margin-bottom:5px}
-.card-summary{font-size:12px;color:var(--text-muted);line-height:1.55}
-.contacts-preview{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}
+.card-meta{display:flex;gap:10px;flex-wrap:wrap;font-size:11px;color:var(--text-muted);margin-bottom:5px;margin-left:23px}
+.card-summary{font-size:12px;color:var(--text-muted);line-height:1.5;margin-left:23px}
+.contacts-preview{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px;margin-left:23px}
 .contact-pill{display:flex;align-items:center;gap:4px;font-size:11px;padding:2px 7px 2px 3px;border-radius:20px;background:var(--blue-bg);border:.5px solid var(--blue-border);color:var(--blue);text-decoration:none}
 .contact-pill:hover{opacity:.8}
 .cavatar{width:16px;height:16px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:600;flex-shrink:0}
@@ -114,7 +121,7 @@ nav{background:var(--neo-dark);padding:0 2rem;height:58px;display:flex;align-ite
 .expand-btn{font-size:11px;color:var(--neo-red);background:none;border:none;cursor:pointer;white-space:nowrap;padding:0}
 
 /* DETAIL */
-.detail-panel{border-top:.5px solid var(--border);padding:.9rem 1.25rem;display:none}
+.detail-panel{border-top:.5px solid var(--border);padding:.85rem 1.25rem;display:none}
 .detail-panel.open{display:block}
 .detail-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.25rem}
 @media(max-width:768px){.detail-grid{grid-template-columns:1fr}}
@@ -123,12 +130,12 @@ nav{background:var(--neo-dark);padding:0 2rem;height:58px;display:flex;align-ite
 .opp-item:last-child{border-bottom:none}
 .opp-check{width:15px;height:15px;border-radius:3px;flex-shrink:0;background:var(--green-bg);color:var(--green);display:flex;align-items:center;justify-content:center;font-size:8px;margin-top:2px}
 .ccard{background:var(--surface2);border:.5px solid var(--border);border-radius:var(--r);padding:8px 10px;margin-bottom:6px}
-.cheader{display:flex;align-items:center;gap:7px;margin-bottom:5px}
+.cheader{display:flex;align-items:center;gap:7px;margin-bottom:4px}
 .cavatar-lg{width:28px;height:28px;border-radius:50%;background:var(--neo-red);color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0}
 .cname{font-size:12px;font-weight:600}
 .crole{font-size:11px;color:var(--text-muted)}
 .cco{font-size:10px;color:var(--text-faint)}
-.angle-box{background:#FFF8E1;border:.5px solid #FFB300;border-radius:5px;padding:5px 8px;font-size:11px;color:#E65100;margin-top:5px;line-height:1.4}
+.angle-box{background:#FFF8E1;border:.5px solid #FFB300;border-radius:5px;padding:5px 8px;font-size:11px;color:#E65100;margin-top:4px;line-height:1.4}
 .cactions{display:flex;gap:5px;margin-top:5px}
 .clink{font-size:10px;padding:3px 7px;border-radius:5px;text-decoration:none;display:inline-flex;align-items:center;gap:3px;border:.5px solid var(--border-strong);color:var(--text-muted);background:var(--surface)}
 .clink.li{background:#0A66C2;color:#fff;border-color:#0A66C2}
@@ -137,36 +144,31 @@ nav{background:var(--neo-dark);padding:0 2rem;height:58px;display:flex;align-ite
 .abtn:hover{background:var(--surface2)}
 .abtn.primary{background:var(--neo-red);border-color:var(--neo-red);color:#fff}
 
-/* SKELETON */
 .skeleton{background:var(--border);border-radius:4px;animation:shimmer 1.5s ease-in-out infinite}
 @keyframes shimmer{0%,100%{opacity:.4}50%{opacity:.9}}
-.lcard{background:var(--surface);border:.5px solid var(--border);border-radius:var(--rl);padding:.9rem 1.25rem;margin-bottom:8px}
-
+.lcard{background:var(--surface);border:.5px solid var(--border);border-radius:var(--rl);padding:.85rem 1.25rem;margin-bottom:8px}
 .empty-state{text-align:center;padding:3rem 1rem;color:var(--text-muted)}
 
-/* MAIL MODAL */
+/* MODALS */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;z-index:200;padding:1rem}
 .modal-overlay.hidden{display:none}
-.modal{background:var(--surface);border-radius:var(--rl);border:.5px solid var(--border-strong);padding:0;max-width:680px;width:100%;max-height:90vh;display:flex;flex-direction:column}
-.modal-header{padding:1.25rem 1.5rem;border-bottom:.5px solid var(--border);display:flex;align-items:center;justify-content:space-between}
-.modal-header h2{font-size:16px;font-weight:600}
-.modal-close{background:none;border:none;font-size:18px;cursor:pointer;color:var(--text-muted);padding:0 4px}
-.modal-body{padding:1.25rem 1.5rem;overflow-y:auto;flex:1}
-.modal-body textarea{width:100%;height:300px;border:.5px solid var(--border-strong);border-radius:var(--r);padding:10px;font-size:12px;font-family:monospace;resize:vertical;outline:none}
-.modal-footer{padding:1rem 1.5rem;border-top:.5px solid var(--border);display:flex;gap:8px;justify-content:flex-end}
+.modal{background:var(--surface);border-radius:var(--rl);border:.5px solid var(--border-strong);max-width:660px;width:100%;max-height:90vh;display:flex;flex-direction:column}
+.modal-header{padding:1.1rem 1.5rem;border-bottom:.5px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.modal-header h2{font-size:15px;font-weight:600}
+.modal-close{background:none;border:none;font-size:18px;cursor:pointer;color:var(--text-muted)}
+.modal-body{padding:1.1rem 1.5rem;overflow-y:auto;flex:1}
+.modal-body textarea{width:100%;height:320px;border:.5px solid var(--border-strong);border-radius:var(--r);padding:10px;font-size:12px;font-family:monospace;resize:vertical;outline:none;line-height:1.6}
+.modal-footer{padding:.9rem 1.5rem;border-top:.5px solid var(--border);display:flex;gap:8px;justify-content:flex-end}
 .mbtn{height:36px;padding:0 16px;border-radius:var(--r);font-size:13px;font-weight:500;cursor:pointer;border:.5px solid var(--border-strong)}
 .mbtn.primary{background:var(--neo-red);color:#fff;border-color:var(--neo-red)}
 .mbtn.secondary{background:var(--surface2);color:var(--text)}
-
-/* API MODAL */
-.api-modal{background:var(--surface);border-radius:var(--rl);border:.5px solid var(--border-strong);padding:2rem;max-width:440px;width:100%}
-.api-modal h2{font-size:16px;font-weight:600;margin-bottom:8px}
-.api-modal p{font-size:12px;color:var(--text-muted);margin-bottom:1.25rem;line-height:1.6}
-.api-modal input{width:100%;height:38px;padding:0 12px;border:.5px solid var(--border-strong);border-radius:var(--r);background:var(--surface2);color:var(--text);font-size:13px;outline:none;margin-bottom:10px;font-family:monospace}
-.api-modal input:focus{border-color:var(--neo-red)}
+.api-box{background:var(--surface);border-radius:var(--rl);border:.5px solid var(--border-strong);padding:2rem;max-width:440px;width:100%}
+.api-box h2{font-size:16px;font-weight:600;margin-bottom:8px}
+.api-box p{font-size:12px;color:var(--text-muted);margin-bottom:1.25rem;line-height:1.6}
+.api-box input{width:100%;height:38px;padding:0 12px;border:.5px solid var(--border-strong);border-radius:var(--r);background:var(--surface2);color:var(--text);font-size:13px;outline:none;margin-bottom:10px;font-family:monospace}
+.api-box input:focus{border-color:var(--neo-red)}
 .api-actions{display:flex;gap:8px}
 .mnote{font-size:11px;color:var(--text-faint);margin-top:10px}
-
 footer{max-width:1200px;margin:2rem auto 0;padding:1.5rem 1.5rem 2rem;border-top:.5px solid var(--border);font-size:11px;color:var(--text-faint);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
 @media(max-width:640px){nav{padding:0 1rem}.page{padding:1rem 1rem 3rem}}
 </style>
@@ -175,15 +177,15 @@ footer{max-width:1200px;margin:2rem auto 0;padding:1.5rem 1.5rem 2rem;border-top
 
 <!-- API MODAL -->
 <div class="modal-overlay hidden" id="apiModal">
-  <div class="api-modal">
+  <div class="api-box">
     <h2>Clé API Anthropic</h2>
-    <p>Saisissez votre clé API pour activer la recherche en temps réel. Elle est stockée uniquement dans votre navigateur.</p>
+    <p>Saisissez votre clé API pour activer la veille automatique. Elle est stockée dans votre navigateur.</p>
     <input type="password" id="apiKeyInput" placeholder="sk-ant-api03-..." autocomplete="off"/>
     <div class="api-actions">
       <button class="mbtn secondary" style="flex:1" onclick="useDemoMode()">Mode démo</button>
       <button class="mbtn primary" style="flex:1" onclick="saveApiKey()">Valider</button>
     </div>
-    <p class="mnote">Clé sur <a href="https://console.anthropic.com" target="_blank" style="color:var(--neo-red)">console.anthropic.com</a> — Modèle : claude-haiku-4-5</p>
+    <p class="mnote">Modèle : claude-haiku-4-5 (économique) · <a href="https://console.anthropic.com" target="_blank" style="color:var(--neo-red)">console.anthropic.com</a></p>
   </div>
 </div>
 
@@ -192,14 +194,14 @@ footer{max-width:1200px;margin:2rem auto 0;padding:1.5rem 1.5rem 2rem;border-top
   <div class="modal">
     <div class="modal-header">
       <h2>📧 Mail de veille hebdomadaire NEO2</h2>
-      <button class="modal-close" onclick="closeMailModal()">✕</button>
+      <button class="modal-close" onclick="document.getElementById('mailModal').classList.add('hidden')">✕</button>
     </div>
     <div class="modal-body">
-      <p style="font-size:12px;color:var(--text-muted);margin-bottom:10px">Mail généré à partir des projets sélectionnés (cochés). Copiez et collez dans Outlook.</p>
-      <textarea id="mailContent" readonly placeholder="Sélectionnez des projets puis cliquez sur Générer le mail..."></textarea>
+      <p style="font-size:12px;color:var(--text-muted);margin-bottom:10px">Projets cochés uniquement. Copiez et collez dans Outlook.</p>
+      <textarea id="mailContent" readonly></textarea>
     </div>
     <div class="modal-footer">
-      <button class="mbtn secondary" onclick="closeMailModal()">Fermer</button>
+      <button class="mbtn secondary" onclick="document.getElementById('mailModal').classList.add('hidden')">Fermer</button>
       <button class="mbtn primary" onclick="copyMail()">📋 Copier</button>
     </div>
   </div>
@@ -209,7 +211,7 @@ footer{max-width:1200px;margin:2rem auto 0;padding:1.5rem 1.5rem 2rem;border-top
 <nav>
   <div class="nav-logo">
     <div class="neo-logo">NEO<span>2</span></div>
-    <div class="nav-tagline">Veille & Prospection<br>Industrielle</div>
+    <div class="nav-tagline">Veille Investissements<br>Industriels</div>
   </div>
   <div class="nav-right">
     <div class="status-pill"><span class="dot" id="navDot"></span><span id="navStatus">Prêt</span></div>
@@ -221,40 +223,56 @@ footer{max-width:1200px;margin:2rem auto 0;padding:1.5rem 1.5rem 2rem;border-top
 
 <div class="page">
 
-  <!-- INPUT ZONE -->
-  <div class="input-zone">
-    <div class="input-zone-title">
-      📰 Collez ici les articles de la semaine (Usines Nouvelles, Les Échos, presse spécialisée...)
+  <!-- SEMAINE -->
+  <div class="week-banner">
+    <div>
+      <div class="week-label">Semaine analysée</div>
+      <div class="week-dates" id="weekDates">—</div>
     </div>
-    <textarea id="articlesInput" placeholder="Collez ici le texte ou les titres/résumés des articles que vous avez lus cette semaine sur Usines Nouvelles, Les Échos Industries, Le Moniteur, communiqués de presse...
+    <div style="font-size:11px;color:rgba(255,255,255,.4);text-align:right">Scan automatique + articles Usine Nouvelle collés</div>
+  </div>
+
+  <!-- ZONE COLLAGE UN -->
+  <div class="paste-zone">
+    <div class="paste-title">📰 Articles Usine Nouvelle (optionnel — collez les articles payants que vous avez lus)</div>
+    <textarea id="articlesInput" placeholder="Collez ici le texte des articles payants d'Usine Nouvelle de la semaine...
 
 Exemple :
-- Sanofi investit 400M€ dans une nouvelle unité à Vitry-sur-Seine (Les Échos, 8 avril 2025)
-- TotalEnergies lance un chantier de biokérosène à Grandpuits pour 200M€
-- Danone construit une nouvelle ligne de production à Bailleul...
+Sanofi investit 400M€ dans une nouvelle unité biopharmaceutique à Vitry-sur-Seine. Le groupe prévoit de démarrer les travaux au T4 2025...
 
-L'IA analysera ces articles ET cherchera d'autres projets récents sur le web."></textarea>
-    <div class="input-zone-footer">
-      <span class="input-hint">💡 Plus vous collez d'articles, plus les projets seront précis et réels</span>
-      <button class="launch-btn" id="launchBtn" onclick="fetchAll()">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 7a6 6 0 1 0 1-3.2M1 1v3h3"/></svg>
-        Lancer la veille
-      </button>
+L'outil scannera automatiquement toutes les autres sources gratuites (Usine Nouvelle articles gratuits, Les Échos, Batiactu, BOAMP, Business France, Google Actualités...)."></textarea>
+  </div>
+
+  <!-- LAUNCH -->
+  <div class="launch-row">
+    <div class="launch-hint">
+      <strong>Scan automatique :</strong> Usine Nouvelle (gratuit) · Les Échos · Batiactu · BOAMP · Business France · Google Actualités<br>
+      Mots-clés : investissement · usine · chantier · millions/milliards · permis construire · appel d'offres
     </div>
+    <button class="launch-btn" id="launchBtn" onclick="fetchAll()">
+      <svg width="15" height="15" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M1 7a6 6 0 1 0 1-3.2M1 1v3h3"/></svg>
+      Lancer la veille
+    </button>
   </div>
 
   <!-- PROGRESS -->
   <div class="progress-bar" id="progressBar">
-    <div class="progress-title" id="progressTitle">Analyse en cours...</div>
+    <div class="progress-steps" id="progressSteps">
+      <span class="pstep" id="ps1">🔍 Scan web automatique</span>
+      <span class="pstep" id="ps2">📰 Analyse articles UN</span>
+      <span class="pstep" id="ps3">🏗 Structuration projets</span>
+      <span class="pstep" id="ps4">👤 Identification contacts</span>
+    </div>
+    <div class="progress-title" id="progressTitle">Initialisation...</div>
     <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
   </div>
 
   <!-- STATS -->
   <div class="stats-row">
     <div class="stat-card"><div class="stat-label">Projets</div><div class="stat-value" id="sT">—</div><div class="stat-sub">identifiés</div></div>
-    <div class="stat-card"><div class="stat-label">Sélectionnés</div><div class="stat-value" id="sSel" style="color:var(--neo-red)">0</div><div class="stat-sub">pour le mail</div></div>
-    <div class="stat-card"><div class="stat-label">Contacts</div><div class="stat-value" id="sC" style="color:var(--blue)">—</div><div class="stat-sub">à démarcher</div></div>
-    <div class="stat-card"><div class="stat-label">France</div><div class="stat-value" id="sFr">—</div><div class="stat-sub">projets</div></div>
+    <div class="stat-card"><div class="stat-label">✅ Sélectionnés</div><div class="stat-value" id="sSel" style="color:var(--neo-red)">0</div><div class="stat-sub">pour mail</div></div>
+    <div class="stat-card"><div class="stat-label">Contacts</div><div class="stat-value" id="sC" style="color:var(--blue)">—</div><div class="stat-sub">terrain</div></div>
+    <div class="stat-card"><div class="stat-label">Usine Nouvelle</div><div class="stat-value" id="sUN" style="color:var(--neo-red)">—</div><div class="stat-sub">projets identifiés</div></div>
     <div class="stat-card"><div class="stat-label">Volume</div><div class="stat-value" id="sV">—</div><div class="stat-sub">estimé</div></div>
   </div>
 
@@ -262,13 +280,13 @@ L'IA analysera ces articles ET cherchera d'autres projets récents sur le web.">
   <div class="toolbar">
     <div class="search-wrap">
       <span class="search-icon"><svg width="13" height="13" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="6.5" cy="6.5" r="5"/><path d="M11 11l2.5 2.5"/></svg></span>
-      <input type="text" id="searchInput" placeholder="Rechercher..." oninput="renderCards()"/>
+      <input type="text" id="searchInput" placeholder="Rechercher projet, client, région, contact..." oninput="renderCards()"/>
     </div>
-    <button class="mail-btn" onclick="openMailModal()">📧 Mail des sélectionnés</button>
-    <button class="export-btn" onclick="exportCSV()">📥 Export CSV</button>
+    <button class="tbtn" onclick="openMailModal()">📧 Générer mail</button>
+    <button class="tbtn green" onclick="exportCSV()">📥 Export CSV</button>
   </div>
 
-  <!-- FILTRES SECTEUR -->
+  <!-- FILTRES -->
   <div class="filter-row" style="margin-bottom:5px">
     <span class="filter-label">Secteur</span>
     <span class="chip active" onclick="setF('sector','all',this)">Tous</span>
@@ -280,8 +298,12 @@ L'IA analysera ces articles ET cherchera d'autres projets récents sur le web.">
     <span class="chip" onclick="setF('sector','asd',this)">✈ Aéro & Défense</span>
     <span class="chip" onclick="setF('sector','ferro',this)">🚆 Ferroviaire</span>
   </div>
-
-  <!-- FILTRES RÉGION -->
+  <div class="filter-row" style="margin-bottom:5px">
+    <span class="filter-label">Source</span>
+    <span class="chip active" onclick="setF('source','all',this)">Toutes</span>
+    <span class="chip" onclick="setF('source','un',this)" style="color:var(--neo-red);border-color:var(--neo-red)">📰 Usine Nouvelle</span>
+    <span class="chip" onclick="setF('source','auto',this)">🔍 Scan auto</span>
+  </div>
   <div class="filter-row" style="margin-bottom:1.25rem">
     <span class="filter-label">Région</span>
     <span class="chip active" onclick="setF('region','all',this)">Toutes</span>
@@ -299,111 +321,135 @@ L'IA analysera ces articles ET cherchera d'autres projets récents sur le web.">
     <span class="chip" onclick="setF('region','Bourgogne-Franche-Comté',this)">Bourgogne-FC</span>
   </div>
 
-  <div class="cards-list" id="cardsContainer">
+  <div id="cardsContainer">
     <div class="empty-state">
       <div style="font-size:2.5rem;margin-bottom:.75rem">📡</div>
-      <div style="font-size:14px;font-weight:600;color:var(--text)">Collez vos articles et cliquez sur Lancer la veille</div>
-      <div style="font-size:12px;margin-top:6px">L'IA analyse vos articles + recherche d'autres projets récents sur Usines Nouvelles, Les Échos, BOAMP...</div>
+      <div style="font-size:14px;font-weight:600;color:var(--text)">Prêt pour la veille de la semaine</div>
+      <div style="font-size:12px;margin-top:6px;max-width:500px;margin-left:auto;margin-right:auto">Collez vos articles Usine Nouvelle si vous en avez, puis cliquez <strong>Lancer la veille</strong>.<br>L'outil scanne automatiquement le web sur les mots-clés investissement.</div>
     </div>
   </div>
-
 </div>
 
 <footer>
-  <span>NEO2 — Veille & Prospection Industrielle · Propulsé par Claude Haiku (Anthropic)</span>
+  <span>NEO2 — Veille Investissements Industriels · claude-haiku-4-5 (Anthropic)</span>
   <span id="lastUpdate"></span>
 </footer>
 
 <script>
-let allP=[],aF={sector:'all',region:'all'};
+let allP=[],aF={sector:'all',source:'all',region:'all'};
 let apiKey=localStorage.getItem('anthropic_key')||'',demoMode=false;
 let selectedIds=new Set();
 
+// Calcul semaine lundi-dimanche précédente
+function getPrevWeek(){
+  const now=new Date();
+  const dow=now.getDay()||7;
+  const lastMon=new Date(now);lastMon.setDate(now.getDate()-dow-6);lastMon.setHours(0,0,0,0);
+  const lastSun=new Date(lastMon);lastSun.setDate(lastMon.getDate()+6);
+  return{mon:lastMon,sun:lastSun};
+}
+function fmtDate(d){return d.toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'})}
+function fmtDateShort(d){return d.toLocaleDateString('fr-FR',{day:'numeric',month:'short'})}
+
+const week=getPrevWeek();
+document.getElementById('weekDates').textContent=`Lundi ${fmtDate(week.mon)} → Dimanche ${fmtDate(week.sun)}`;
+
 function showApiModal(){document.getElementById('apiModal').classList.remove('hidden');document.getElementById('apiKeyInput').value=apiKey}
-function hideApiModal(){document.getElementById('apiModal').classList.add('hidden')}
-function saveApiKey(){const v=document.getElementById('apiKeyInput').value.trim();if(!v.startsWith('sk-')){alert('Clé invalide.');return}apiKey=v;localStorage.setItem('anthropic_key',v);demoMode=false;hideApiModal()}
-function useDemoMode(){demoMode=true;hideApiModal();allP=getDemoP();selectedIds=new Set();updateStats();renderCards();setStatus(false,'Mode démo — '+allP.length+' projets')}
+function saveApiKey(){const v=document.getElementById('apiKeyInput').value.trim();if(!v.startsWith('sk-')){alert('Clé invalide.');return}apiKey=v;localStorage.setItem('anthropic_key',v);demoMode=false;document.getElementById('apiModal').classList.add('hidden')}
+function useDemoMode(){demoMode=true;document.getElementById('apiModal').classList.add('hidden');allP=getDemoP();selectedIds=new Set();updateStats();renderCards();setStatus(false,'Mode démo — '+allP.length+' projets')}
 if(!apiKey)setTimeout(()=>document.getElementById('apiModal').classList.remove('hidden'),400);
 else document.getElementById('apiModal').classList.add('hidden');
 function setStatus(l,t){document.getElementById('navStatus').textContent=t;document.getElementById('navDot').className=l?'dot loading':'dot'}
+function setStep(n){[1,2,3,4].forEach(i=>{const el=document.getElementById('ps'+i);el.className='pstep'+(i<n?' done':i===n?' active':'')});document.getElementById('progressFill').style.width=Math.round(n/4*100)+'%'}
 
 async function fetchAll(){
   if(!apiKey&&!demoMode){showApiModal();return}
   if(demoMode){useDemoMode();return}
-
   const articles=document.getElementById('articlesInput').value.trim();
   const btn=document.getElementById('launchBtn');
   btn.disabled=true;allP=[];selectedIds=new Set();
   const pb=document.getElementById('progressBar');pb.classList.add('visible');
-  document.getElementById('progressFill').style.width='0%';
-  setStatus(true,'Analyse et recherche en cours...');
-  document.getElementById('cardsContainer').innerHTML=[1,2,3,4].map(()=>`<div class="lcard"><div style="display:flex;justify-content:space-between;margin-bottom:10px"><div class="skeleton" style="height:14px;width:55%"></div><div class="skeleton" style="height:40px;width:40px;border-radius:50%"></div></div><div style="display:flex;gap:8px;margin-bottom:8px"><div class="skeleton" style="width:80px;height:10px"></div><div class="skeleton" style="width:100px;height:10px"></div></div><div class="skeleton" style="width:100%;height:10px;margin-bottom:4px"></div><div class="skeleton" style="width:70%;height:10px"></div></div>`).join('');
+  setStatus(true,'Scan en cours...');
+  document.getElementById('cardsContainer').innerHTML=[1,2,3,4,5].map(()=>`<div class="lcard"><div style="display:flex;justify-content:space-between;margin-bottom:10px"><div><div class="skeleton" style="height:13px;width:55%;margin-bottom:6px"></div><div style="display:flex;gap:5px"><div class="skeleton" style="width:60px;height:10px"></div><div class="skeleton" style="width:80px;height:10px"></div></div></div><div class="skeleton" style="height:40px;width:40px;border-radius:50%"></div></div><div class="skeleton" style="width:100%;height:10px;margin-bottom:4px"></div><div class="skeleton" style="width:75%;height:10px"></div></div>`).join('');
 
-  const now=new Date();
-  const since=new Date(now.getTime()-28*24*60*60*1000).toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'});
+  const monStr=fmtDate(week.mon);
+  const sunStr=fmtDate(week.sun);
 
-  const prompt=`Tu es expert en veille industrielle et prospection commerciale pour NEO2, cabinet de conseil en ingénierie de process et infrastructure.
+  setStep(1);
+  document.getElementById('progressTitle').textContent='Scan web : Google Actualités, Usine Nouvelle, BOAMP, Les Échos...';
 
-${articles?`ARTICLES FOURNIS PAR L'UTILISATEUR (priorité maximale) :
+  const prompt=`Tu es expert en veille industrielle pour NEO2, cabinet de conseil en ingénierie de process et infrastructure (300+ ingénieurs, secteurs : Énergie, Environnement, Pharma/Chimie/Agro, Naval, Infra, ASD, Ferro).
+
+PÉRIODE : Du ${monStr} au ${sunStr} UNIQUEMENT. Exclure tout projet antérieur.
+
+═══════════════════════════════════════
+ÉTAPE 1 — SCAN WEB AUTOMATIQUE
+═══════════════════════════════════════
+Fais des recherches web avec ces requêtes (une par une) pour trouver des annonces publiées entre le ${monStr} et le ${sunStr} :
+
+1. "investissement industriel usine France" site:usinenouvelle.com after:${week.mon.toISOString().slice(0,10)}
+2. "investissement millions chantier construction France industrie" site:usinenouvelle.com
+3. "investissement milliards usine France 2025" site:lesechos.fr
+4. "permis construire usine industrie France" site:batiactu.com
+5. "appel offres industrie énergie environnement" site:boamp.fr
+6. "investissement industriel France annonce" site:businessfrance.fr
+7. investissement usine chantier "millions d'euros" France industrie pharma chimie agro énergie nucléaire eau 2025
+8. "nouveau site" OR "nouvelle usine" OR "extension usine" investissement France 2025
+
+${articles?`
+═══════════════════════════════════════
+ÉTAPE 2 — ARTICLES USINE NOUVELLE (payants, fournis par l'utilisateur)
+═══════════════════════════════════════
+Analyse ces articles en priorité absolue et extrais tous les projets :
 ---
-${articles.substring(0,3000)}
+${articles.substring(0,4000)}
 ---
-Analyse ces articles en priorité et extrais TOUS les projets industriels mentionnés.
-
+Marque ces projets avec "source_un": true
 `:''}
-MISSION COMPLÉMENTAIRE : Cherche sur le web les annonces de projets industriels publiées depuis le ${since} sur :
-- usinenouvelle.com (PRIORITÉ 1)
-- lesechos.fr industrie
-- lemoniteur.fr
-- boamp.fr
-- communiqués de presse entreprises industrielles
 
-Mots-clés Google à utiliser : "investissement industriel millions milliards usine site France 2025", "permis construire usine industrie", "chantier démarrage construction industrie France", "appel offres industrie France"
+═══════════════════════════════════════
+RÈGLES DE SORTIE
+═══════════════════════════════════════
+- Vise 15 à 30 projets distincts
+- Secteurs NEO2 par priorité : energie > environnement > industrie (pharma/chimie/agro/cosmetique) > naval > infra > asd > ferro
+- Contacts : UNIQUEMENT Chef de projet, Directeur de site, Responsable ingénierie, Responsable travaux neufs — jamais PDG/DG
+- Note les sous-traitants déjà nommés si mentionnés dans les articles
+- Si un projet est mentionné dans plusieurs sources, garde la version la plus complète
 
-SECTEURS NEO2 par ordre de priorité : Énergie/Nucléaire > Environnement/Eau > Industrie process (pharma/chimie/agro/cosmétique) > Naval/Lourd > Infrastructures/BTP > Aéronautique/Défense > Ferroviaire
-
-RÈGLES IMPORTANTES :
-- Vise 15 à 25 projets distincts au total
-- Contacts : UNIQUEMENT Chef de projet, Directeur de site, Responsable ingénierie, Responsable travaux neufs — PAS de PDG/DG
-- Identifie les sous-traitants déjà nommés si mentionnés
-- Fiches courtes et factuelles
-- Indique clairement la source (media + date)
-- Pour les projets Usines Nouvelles, ajoute "source_un": true
-
-Réponds UNIQUEMENT en JSON valide sans markdown :
+Réponds UNIQUEMENT en JSON valide sans markdown ni backticks :
 {"projects":[{
 "id":"p1",
-"title":"Nom court projet",
+"title":"Nom court du projet",
 "type":"fr",
 "sector":"energie|environnement|industrie|naval|infra|asd|ferro",
-"region":"Région française",
+"region":"Région française exacte",
 "score_prospection":80,
 "montant":"120 M€",
 "montant_num":120,
 "localisation":"Ville, Région",
-"client":"Nom client donneur d'ordre",
-"entreprises":["Entreprise"],
-"sous_traitants":["ST nommé si connu"],
-"statut":"Texte libre : Vient d'être annoncé / Permis accordé / Démarrage construction T3 2025 / AO ouvert",
-"date_annonce":"15 avril 2025",
-"source":"Usines Nouvelles, 15 avr. 2025",
+"client":"Nom exact du client/donneur d'ordre",
+"entreprises":["Constructeur/MOE principal"],
+"sous_traitants":["ST nommé si mentionné"],
+"statut":"Texte libre court : Vient d'être annoncé / Permis accordé / Démarrage construction T3 2025 / AO ouvert jusqu'au XX / Mise en service prévue XXXX",
+"date_annonce":"ex: 14 avril 2025",
+"source":"Nom media exact, date",
 "source_un":false,
-"summary":"1-2 phrases factuelles courtes.",
-"opportunites":["Opportunité NEO2 1","Opportunité 2","Opportunité 3"],
+"summary":"1-2 phrases factuelles. Montant, localisation, calendrier.",
+"opportunites":["Opportunité sous-traitance NEO2 précise 1","Opportunité 2","Opportunité 3"],
 "contacts":[{
 "nom":"Prénom Nom",
-"titre":"Chef de projet / Directeur de site / Responsable ingénierie",
-"entreprise":"Société",
+"titre":"Chef de projet / Directeur de site / Responsable ingénierie / Responsable travaux neufs",
+"entreprise":"Société exacte",
 "linkedin_url":"https://www.linkedin.com/search/results/people/?keywords=Pr%C3%A9nom+Nom+Titre+Soci%C3%A9t%C3%A9",
-"angle":"Accroche courte et personnalisée"
+"angle":"Message d'accroche de 2 phrases, spécifique au projet et au rôle"
 }],
-"tags":["tag1"]
+"tags":["tag1","tag2"]
 }]}`;
 
-  document.getElementById('progressFill').style.width='30%';
-  document.getElementById('progressTitle').textContent='Recherche et analyse des projets...';
+  try{
+    setStep(2);
+    document.getElementById('progressTitle').textContent='Analyse des articles et structuration...';
 
-  try {
     const r=await fetch('https://api.anthropic.com/v1/messages',{
       method:'POST',
       headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
@@ -415,28 +461,31 @@ Réponds UNIQUEMENT en JSON valide sans markdown :
       })
     });
 
-    document.getElementById('progressFill').style.width='80%';
-    document.getElementById('progressTitle').textContent='Structuration des projets...';
+    setStep(3);
+    document.getElementById('progressTitle').textContent='Extraction et classement des projets...';
 
-    if(!r.ok){const e=await r.json();throw new Error(e.error?.message||'API '+r.status)}
+    if(!r.ok){const e=await r.json();throw new Error(e.error?.message||'Erreur API '+r.status)}
     const d=await r.json();
     const txt=d.content.map(i=>i.type==='text'?i.text:'').join('');
     const clean=txt.replace(/```json|```/g,'').trim();
-    const js=clean.substring(clean.indexOf('{'),clean.lastIndexOf('}')+1);
-    allP=JSON.parse(js).projects||[];
-    allP.sort((a,b)=>(b.source_un?1:0)-(a.source_un?1:0)||(b.score_prospection||0)-(a.score_prospection||0));
-  } catch(e) {
+    const start=clean.indexOf('{');const end=clean.lastIndexOf('}');
+    if(start===-1||end===-1)throw new Error('JSON introuvable dans la réponse');
+    allP=JSON.parse(clean.substring(start,end+1)).projects||[];
+    allP.sort((a,b)=>(b.source_un?2:0)-(a.source_un?2:0)||(b.score_prospection||0)-(a.score_prospection||0));
+
+    setStep(4);
+    document.getElementById('progressTitle').textContent='Finalisation...';
+  }catch(e){
     console.error(e);
-    setStatus(false,'Erreur — '+e.message);
+    setStatus(false,'Erreur : '+e.message);
     allP=getDemoP();
   }
 
-  document.getElementById('progressFill').style.width='100%';
   pb.classList.remove('visible');
   btn.disabled=false;
   updateStats();renderCards();
   const n=new Date();
-  document.getElementById('lastUpdate').textContent='Mis à jour le '+n.toLocaleDateString('fr-FR')+' à '+n.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
+  document.getElementById('lastUpdate').textContent='Lancé le '+n.toLocaleDateString('fr-FR')+' à '+n.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
   setStatus(false,allP.length+' projets · '+allP.reduce((s,p)=>s+(p.contacts||[]).length,0)+' contacts');
 }
 
@@ -444,7 +493,7 @@ function updateStats(){
   document.getElementById('sT').textContent=allP.length;
   document.getElementById('sSel').textContent=selectedIds.size;
   document.getElementById('sC').textContent=allP.reduce((s,p)=>s+(p.contacts||[]).length,0);
-  document.getElementById('sFr').textContent=allP.filter(p=>p.type==='fr').length;
+  document.getElementById('sUN').textContent=allP.filter(p=>p.source_un).length;
   const v=allP.reduce((s,p)=>s+(p.montant_num||0),0);
   document.getElementById('sV').textContent=v>0?Math.round(v/1000)+' Md€':'—';
 }
@@ -453,34 +502,37 @@ function setF(type,val,el){aF[type]=val;el.closest('.filter-row').querySelectorA
 function ini(n){return(n||'?').split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase()}
 function scClass(s){return s>=70?'score-high':s>=40?'score-mid':'score-low'}
 function matchR(p,f){if(f==='all')return true;if(f==='int')return p.type==='int';return(p.localisation+' '+(p.region||'')).toLowerCase().includes(f.toLowerCase())}
+function matchSrc(p,f){if(f==='all')return true;if(f==='un')return!!p.source_un;if(f==='auto')return!p.source_un;return true}
 
 function toggleSelect(id,cb){
   if(cb.checked)selectedIds.add(id);else selectedIds.delete(id);
-  document.getElementById('card-'+id).classList.toggle('selected',selectedIds.has(id));
-  document.getElementById('sT').textContent=allP.length;
+  document.getElementById('card-'+id)?.classList.toggle('selected',selectedIds.has(id));
   document.getElementById('sSel').textContent=selectedIds.size;
 }
 
 function renderCards(){
   const q=(document.getElementById('searchInput').value||'').toLowerCase();
-  let list=allP.filter(p=>(aF.sector==='all'||p.sector===aF.sector)&&matchR(p,aF.region)&&(!q||[p.title,p.summary||'',p.localisation||'',p.region||'',p.client||'',...(p.entreprises||[]),...(p.contacts||[]).map(c=>c.nom+' '+c.titre),...(p.tags||[])].join(' ').toLowerCase().includes(q)));
+  let list=allP.filter(p=>
+    (aF.sector==='all'||p.sector===aF.sector)&&
+    matchR(p,aF.region)&&matchSrc(p,aF.source)&&
+    (!q||[p.title,p.summary||'',p.localisation||'',p.region||'',p.client||'',...(p.entreprises||[]),...(p.contacts||[]).map(c=>c.nom+' '+c.titre),...(p.tags||[])].join(' ').toLowerCase().includes(q))
+  );
   const c=document.getElementById('cardsContainer');
   if(!list.length){c.innerHTML='<div class="empty-state"><div style="font-size:2rem">🔍</div><div style="font-size:13px;margin-top:8px">Aucun projet pour ces critères.</div></div>';return}
   c.innerHTML=list.map(p=>{
     const s=p.score_prospection||50,cts=p.contacts||[],sel=selectedIds.has(p.id);
+    const liUrl=ct=>`${ct.linkedin_url||'https://www.linkedin.com/search/results/people/?keywords='+encodeURIComponent((ct.nom||'')+' '+(ct.titre||'')+' '+(ct.entreprise||p.client||''))}`;
     return`<div class="project-card${sel?' selected':''}" id="card-${p.id}">
 <div class="card-main" onclick="toggleD('${p.id}')">
 <div class="card-top">
 <div class="card-left">
-<div class="card-select" onclick="event.stopPropagation()">
-<input type="checkbox" class="card-checkbox" id="chk-${p.id}" ${sel?'checked':''} onchange="toggleSelect('${p.id}',this)"/>
-<label for="chk-${p.id}" onclick="event.stopPropagation()" style="cursor:pointer">
+<div class="card-select">
+<input type="checkbox" class="card-checkbox" id="chk-${p.id}" ${sel?'checked':''} onclick="event.stopPropagation()" onchange="toggleSelect('${p.id}',this)"/>
 <div class="card-title">${p.title}</div>
-</label>
 </div>
 <div class="card-badges">
-<span class="badge ${p.type==='fr'?'badge-fr':'badge-int'}">${p.type==='fr'?'🇫🇷 France':'🌍 International'}</span>
-${p.source_un?'<span class="badge badge-source-un">📰 Usines Nouvelles</span>':''}
+<span class="badge ${p.type==='fr'?'badge-fr':'badge-int'}">${p.type==='fr'?'🇫🇷':'🌍'} ${p.type==='fr'?'France':'International'}</span>
+${p.source_un?'<span class="badge badge-un">📰 Usine Nouvelle</span>':'<span class="badge badge-auto">🔍 Scan auto</span>'}
 ${p.statut?`<span class="badge badge-statut">📌 ${p.statut}</span>`:''}
 ${p.region?`<span class="badge" style="background:var(--surface2);color:var(--text-muted);border:.5px solid var(--border-strong)">📍 ${p.region}</span>`:''}
 </div>
@@ -492,9 +544,10 @@ ${p.region?`<span class="badge" style="background:var(--surface2);color:var(--te
 <span>📍 ${p.localisation||'—'}</span>
 <span>💶 ${p.montant||'—'}</span>
 ${p.date_annonce?`<span>📅 ${p.date_annonce}</span>`:''}
+${p.source?`<span style="color:var(--text-faint)">· ${p.source}</span>`:''}
 </div>
 <div class="card-summary">${p.summary||''}</div>
-${cts.length?`<div class="contacts-preview">${cts.map(ct=>`<a class="contact-pill" href="${ct.linkedin_url||'https://www.linkedin.com/search/results/people/?keywords='+encodeURIComponent((ct.nom||'')+' '+(ct.titre||'')+' '+(ct.entreprise||p.client||''))}" target="_blank" onclick="event.stopPropagation()"><div class="cavatar">${ini(ct.nom)}</div><span>${ct.nom} · ${ct.titre}</span></a>`).join('')}</div>`:''}
+${cts.length?`<div class="contacts-preview">${cts.map(ct=>`<a class="contact-pill" href="${liUrl(ct)}" target="_blank" onclick="event.stopPropagation()"><div class="cavatar">${ini(ct.nom)}</div><span>${ct.nom} · ${ct.titre}</span></a>`).join('')}</div>`:''}
 </div>
 <div class="card-footer">
 <div class="card-tags">
@@ -509,22 +562,22 @@ ${(p.tags||[]).map(t=>`<span class="tag">${t}</span>`).join('')}
 <div>
 <div class="dstitle">Opportunités NEO2</div>
 ${(p.opportunites||[]).map(o=>`<div class="opp-item"><div class="opp-check">✓</div><span>${o}</span></div>`).join('')}
-${(p.sous_traitants||[]).length?`<div style="margin-top:.75rem"><div class="dstitle">Sous-traitants nommés</div>${p.sous_traitants.map(e=>`<span style="display:inline-flex;font-size:11px;padding:2px 7px;border-radius:5px;background:var(--green-bg);color:var(--green);margin:2px">🔧 ${e}</span>`).join('')}</div>`:''}
+${(p.sous_traitants||[]).length?`<div style="margin-top:.75rem"><div class="dstitle">Sous-traitants déjà nommés</div>${p.sous_traitants.map(e=>`<span style="display:inline-flex;font-size:11px;padding:2px 7px;border-radius:5px;background:var(--green-bg);color:var(--green);margin:2px">🔧 ${e}</span>`).join('')}</div>`:''}
 </div>
 <div>
-<div class="dstitle">Contacts terrain (${cts.length})</div>
-${cts.length?cts.map(ct=>`<div class="ccard"><div class="cheader"><div class="cavatar-lg">${ini(ct.nom)}</div><div><div class="cname">${ct.nom}</div><div class="crole">${ct.titre}</div><div class="cco">${ct.entreprise||p.client||''}</div></div></div>${ct.angle?`<div class="angle-box">💬 ${ct.angle}</div>`:''}<div class="cactions"><a class="clink li" href="${ct.linkedin_url||'https://www.linkedin.com/search/results/people/?keywords='+encodeURIComponent((ct.nom||'')+' '+(ct.entreprise||p.client||''))}" target="_blank">in LinkedIn</a><a class="clink" href="https://www.google.com/search?q=${encodeURIComponent((ct.nom||'')+' '+(ct.entreprise||p.client||'')+' '+p.title)}" target="_blank">🔍</a></div></div>`).join(''):'<div style="font-size:12px;color:var(--text-faint)">Aucun contact identifié.</div>'}
+<div class="dstitle">Contacts terrain</div>
+${cts.length?cts.map(ct=>`<div class="ccard"><div class="cheader"><div class="cavatar-lg">${ini(ct.nom)}</div><div><div class="cname">${ct.nom}</div><div class="crole">${ct.titre}</div><div class="cco">${ct.entreprise||p.client||''}</div></div></div>${ct.angle?`<div class="angle-box">💬 ${ct.angle}</div>`:''}<div class="cactions"><a class="clink li" href="${liUrl(ct)}" target="_blank">in LinkedIn</a><a class="clink" href="https://www.google.com/search?q=${encodeURIComponent((ct.nom||'')+' '+(ct.entreprise||p.client||''))}" target="_blank">🔍 Google</a></div></div>`).join(''):'<div style="font-size:12px;color:var(--text-faint)">Aucun contact identifié.</div>'}
 </div>
 <div>
-<div class="dstitle">Infos projet</div>
+<div class="dstitle">Infos & actions</div>
 <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><div class="score-circle ${scClass(s)}" style="width:44px;height:44px;font-size:14px">${s}</div><div style="font-size:11px;color:var(--text-muted)">Score lead<br><span style="color:var(--text-faint)">${s>=70?'Priorité haute':s>=40?'Priorité moyenne':'À surveiller'}</span></div></div>
 ${p.client?`<div style="font-size:11px;margin-bottom:3px"><span style="color:var(--text-faint)">Client : </span><strong>${p.client}</strong></div>`:''}
 ${p.statut?`<div style="font-size:11px;margin-bottom:3px"><span style="color:var(--text-faint)">Statut : </span>${p.statut}</div>`:''}
 ${p.date_annonce?`<div style="font-size:11px;margin-bottom:3px"><span style="color:var(--text-faint)">Annoncé : </span>${p.date_annonce}</div>`:''}
-${p.source?`<div style="font-size:11px;margin-bottom:3px"><span style="color:var(--text-faint)">Source : </span>${p.source}</div>`:''}
+${p.source?`<div style="font-size:11px;margin-bottom:8px"><span style="color:var(--text-faint)">Source : </span>${p.source}</div>`:''}
 <div class="detail-actions">
-<a class="abtn primary" href="https://www.linkedin.com/search/results/people/?keywords=${encodeURIComponent((p.client||'')+' chef projet directeur site ingénierie')}" target="_blank">in Contacts</a>
-<a class="abtn" href="https://www.usinenouvelle.com/recherche/?q=${encodeURIComponent(p.title)}" target="_blank">Usines Nouv.</a>
+<a class="abtn primary" href="https://www.linkedin.com/search/results/people/?keywords=${encodeURIComponent((p.client||'')+' chef projet directeur site ingénierie travaux')}" target="_blank">in Contacts</a>
+<a class="abtn" href="https://www.usinenouvelle.com/recherche/?q=${encodeURIComponent(p.title)}" target="_blank">Usine Nouvelle</a>
 <a class="abtn" href="https://www.boamp.fr" target="_blank">BOAMP</a>
 </div>
 </div>
@@ -537,58 +590,58 @@ ${p.source?`<div style="font-size:11px;margin-bottom:3px"><span style="color:var
 function toggleD(id){const p=document.getElementById('det-'+id),b=document.getElementById('eb-'+id),o=p.classList.contains('open');p.classList.toggle('open');b.textContent=o?'Détails & contacts ▾':'Réduire ▴'}
 
 function openMailModal(){
-  const selected=allP.filter(p=>selectedIds.has(p.id));
-  if(!selected.length){alert('Cochez au moins un projet pour générer le mail.');return}
-  const now=new Date();
-  const dateStr=now.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
-  const bySectr={};
-  selected.forEach(p=>{if(!bySectr[p.sector])bySectr[p.sector]=[];bySectr[p.sector].push(p)});
-  const sectorNames={energie:'⚡ Énergie & Nucléaire',environnement:'🌿 Environnement & Eau',industrie:'🏭 Industrie de Process',naval:'⚓ Naval & Lourd',infra:'🏗 Infrastructures & BTP',asd:'✈ Aéronautique & Défense',ferro:'🚆 Ferroviaire'};
-  let body=`Objet : NEO2 | Veille Investissements Industriels — Semaine du ${dateStr}\n\n`;
-  body+=`Bonjour,\n\nVoici la sélection des projets d'investissements industriels identifiés cette semaine, susceptibles de générer des opportunités pour nos métiers.\n\n`;
-  body+=`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
-  body+=`NEO2 — VEILLE INVESTISSEMENTS INDUSTRIELS\n`;
-  body+=`${dateStr}\n`;
-  body+=`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
-  Object.entries(bySectr).forEach(([sec,projs])=>{
-    body+=`${sectorNames[sec]||sec.toUpperCase()}\n${'─'.repeat(40)}\n`;
+  const sel=allP.filter(p=>selectedIds.has(p.id));
+  if(!sel.length){alert('Cochez au moins un projet pour générer le mail.');return}
+  const sNames={energie:'⚡ Énergie & Nucléaire',environnement:'🌿 Environnement & Eau',industrie:'🏭 Industrie de Process',naval:'⚓ Naval & Lourd',infra:'🏗 Infrastructures & BTP',asd:'✈ Aéronautique & Défense',ferro:'🚆 Ferroviaire'};
+  const bySec={};sel.forEach(p=>{if(!bySec[p.sector])bySec[p.sector]=[];bySec[p.sector].push(p)});
+  let mail=`Objet : NEO2 | Veille Investissements Industriels — Semaine du ${fmtDateShort(week.mon)} au ${fmtDateShort(week.sun)}\n\n`;
+  mail+=`Bonjour,\n\nVoici la sélection des projets d'investissements industriels annoncés cette semaine, susceptibles de générer des opportunités pour les métiers de NEO2.\n\n`;
+  mail+=`${'═'.repeat(55)}\n`;
+  mail+=`  NEO2 — VEILLE INVESTISSEMENTS INDUSTRIELS\n`;
+  mail+=`  Semaine du ${fmtDate(week.mon)} au ${fmtDate(week.sun)}\n`;
+  mail+=`${'═'.repeat(55)}\n\n`;
+  Object.entries(bySec).forEach(([sec,projs])=>{
+    mail+=`${sNames[sec]||sec.toUpperCase()}\n${'─'.repeat(45)}\n`;
     projs.forEach((p,i)=>{
-      body+=`\n${i+1}. ${p.title}\n`;
-      body+=`   Client : ${p.client||((p.entreprises||[])[0]||'—')}\n`;
-      body+=`   Localisation : ${p.localisation||'—'} | Montant : ${p.montant||'—'}\n`;
-      body+=`   Statut : ${p.statut||'—'}\n`;
-      body+=`   ${p.summary||''}\n`;
-      if((p.contacts||[]).length){
-        body+=`   Contact : ${p.contacts[0].nom} — ${p.contacts[0].titre}\n`;
-      }
-      body+=`   Source : ${p.source||'—'}\n`;
+      mail+=`\n${i+1}. ${p.title}${p.source_un?' [Usine Nouvelle]':''}\n`;
+      mail+=`   Client : ${p.client||((p.entreprises||[])[0]||'—')}\n`;
+      mail+=`   Localisation : ${p.localisation||'—'} | Montant : ${p.montant||'—'}\n`;
+      if(p.statut)mail+=`   Statut : ${p.statut}\n`;
+      mail+=`   ${p.summary||''}\n`;
+      if((p.opportunites||[]).length)mail+=`   Opportunités NEO2 : ${p.opportunites.slice(0,2).join(' · ')}\n`;
+      if((p.contacts||[]).length){const ct=p.contacts[0];mail+=`   Contact : ${ct.nom} — ${ct.titre} (${ct.entreprise||p.client||''})\n`;}
+      mail+=`   Source : ${p.source||'—'}\n`;
     });
-    body+='\n';
+    mail+='\n';
   });
-  body+=`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
-  body+=`${selected.length} projets sélectionnés | NEO2 Veille Industrielle\n`;
-  body+=`Pour toute question : veille@neo2.eu\n`;
-  document.getElementById('mailContent').value=body;
+  mail+=`${'═'.repeat(55)}\n`;
+  mail+=`${sel.length} projet${sel.length>1?'s':''} sélectionné${sel.length>1?'s':''} | NEO2 Veille Industrielle\n`;
+  mail+=`Contacts : www.neo2.eu\n`;
+  document.getElementById('mailContent').value=mail;
   document.getElementById('mailModal').classList.remove('hidden');
 }
-function closeMailModal(){document.getElementById('mailModal').classList.add('hidden')}
-function copyMail(){navigator.clipboard.writeText(document.getElementById('mailContent').value).then(()=>alert('Mail copié ! Collez-le dans Outlook.')).catch(()=>document.getElementById('mailContent').select())}
+
+function copyMail(){
+  navigator.clipboard.writeText(document.getElementById('mailContent').value)
+    .then(()=>alert('✅ Mail copié ! Collez-le dans Outlook (Ctrl+V).'))
+    .catch(()=>{document.getElementById('mailContent').select();document.execCommand('copy');alert('✅ Mail copié !')});
+}
 
 function exportCSV(){
-  if(!allP.length){alert('Aucun projet.');return}
-  const rows=[['Projet','Secteur','Région','Client','Statut','Localisation','Montant','Date annonce','Source','Usines Nouvelles','Sous-traitants','Opportunités','Contact Nom','Titre','Entreprise','LinkedIn','Angle','Score']];
-  allP.forEach(p=>{const cts=p.contacts||[{}];cts.forEach(c=>{rows.push([p.title,p.sector,p.region||'',p.client||'',p.statut||'',p.localisation||'',p.montant||'',p.date_annonce||'',p.source||'',p.source_un?'Oui':'Non',(p.sous_traitants||[]).join('/'),(p.opportunites||[]).join('|'),c.nom||'',c.titre||'',c.entreprise||p.client||'',c.linkedin_url||'',c.angle||'',p.score_prospection||''])})});
+  if(!allP.length){alert('Aucun projet à exporter.');return}
+  const rows=[['Projet','Secteur','Région','Client','Statut','Localisation','Montant','Date annonce','Source','Usine Nouvelle','Sous-traitants','Opportunités','Contact Nom','Titre','Entreprise','LinkedIn','Angle','Score lead']];
+  allP.forEach(p=>{const cts=p.contacts||[{}];cts.forEach(c=>{rows.push([p.title,p.sector,p.region||'',p.client||'',p.statut||'',p.localisation||'',p.montant||'',p.date_annonce||'',p.source||'',p.source_un?'Oui':'Non',(p.sous_traitants||[]).join(' / '),(p.opportunites||[]).join(' | '),c.nom||'',c.titre||'',c.entreprise||p.client||'',c.linkedin_url||'',c.angle||'',p.score_prospection||''])})});
   const csv=rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\n');
   const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8'}));
-  a.download='NEO2-veille-'+new Date().toISOString().slice(0,10)+'.csv';a.click();
+  a.download=`NEO2-veille-${week.mon.toISOString().slice(0,10)}.csv`;a.click();
 }
 
 function getDemoP(){return[
-  {id:"d1",title:"Extension STEP Grand Lyon — Pierre-Bénite",type:"fr",sector:"environnement",region:"Auvergne-Rhône-Alpes",score_prospection:88,montant:"85 M€",montant_num:85,localisation:"Lyon, AuRA",client:"Métropole de Lyon / Veolia",entreprises:["Veolia Water"],sous_traitants:["OTV","Degrémont"],statut:"Permis déposé avril 2025",date_annonce:"10 avril 2025",source:"Usines Nouvelles, 10 avr. 2025",source_un:true,summary:"Extension de la STEP de Pierre-Bénite à 1,2M équivalents-habitants. Permis déposé, démarrage travaux prévu T1 2026.",opportunites:["Tuyauterie inox procédés eau","Génie électrique BT/HTA","Chaudronnerie cuves & décanteurs"],contacts:[{nom:"Frédéric Morel",titre:"Directeur de projet travaux neufs",entreprise:"Veolia Water Technologies",linkedin_url:"https://www.linkedin.com/search/results/people/?keywords=Fr%C3%A9d%C3%A9ric+Morel+Veolia+Water",angle:"Bonjour Frédéric, spécialisés en tuyauterie inox pour STEP, nous suivons votre projet Pierre-Bénite."}],tags:["eau","STEP","Lyon"]},
-  {id:"d2",title:"Nouvelle unité Sanofi — Vitry-sur-Seine",type:"fr",sector:"industrie",region:"Île-de-France",score_prospection:94,montant:"400 M€",montant_num:400,localisation:"Vitry-sur-Seine, IDF",client:"Sanofi",entreprises:["Sanofi"],sous_traitants:[],statut:"Annoncé — études en cours",date_annonce:"8 avril 2025",source:"Les Échos, 8 avr. 2025",source_un:false,summary:"Sanofi annonce une nouvelle unité biopharmaceutique à Vitry. AO construction attendus fin 2025.",opportunites:["Tuyauterie inox pharma GMP","Génie électrique salles propres","Chaudronnerie cuves GMP"],contacts:[{nom:"Hélène Marceau",titre:"Responsable travaux neufs",entreprise:"Sanofi Global Manufacturing",linkedin_url:"https://www.linkedin.com/search/results/people/?keywords=H%C3%A9l%C3%A8ne+Marceau+Travaux+Neufs+Sanofi",angle:"Bonjour Hélène, nous intervenons sur les travaux pharma GMP. Votre projet Vitry correspond à nos métiers."}],tags:["pharma","Sanofi","GMP"]},
-  {id:"d3",title:"EPR2 Penly — consultations sous-traitance",type:"fr",sector:"energie",region:"Normandie",score_prospection:96,montant:"10 Md€",montant_num:10000,localisation:"Penly, Normandie",client:"EDF / Framatome",entreprises:["EDF","Framatome"],sous_traitants:["Spie","Endel"],statut:"Consultations sous-traitance ouvertes",date_annonce:"3 avril 2025",source:"Usines Nouvelles, 3 avr. 2025",source_un:true,summary:"EDF lance les premières consultations sous-traitants pour les travaux nucléaires EPR2 Penly. Démarrage terrain 2026.",opportunites:["Tuyauterie nucléaire N1/N2","Génie électrique zone contrôlée","Calorifuge & échafaudage"],contacts:[{nom:"Marc Lefevre",titre:"Responsable sous-traitance chantier",entreprise:"Framatome",linkedin_url:"https://www.linkedin.com/search/results/people/?keywords=Marc+Lefevre+Framatome+sous-traitance",angle:"Bonjour Marc, nous intervenons sur la tuyauterie nucléaire N1/N2. Votre consultation Penly nous intéresse."}],tags:["nucléaire","EPR2","Normandie"]},
-  {id:"d4",title:"Nouvelle usine Lactalis — Laval",type:"fr",sector:"industrie",region:"Pays de la Loire",score_prospection:82,montant:"120 M€",montant_num:120,localisation:"Laval, Pays de la Loire",client:"Lactalis",entreprises:["Lactalis"],sous_traitants:[],statut:"Permis accordé — démarrage T3 2025",date_annonce:"5 avril 2025",source:"Le Maine Libre, 5 avr. 2025",source_un:false,summary:"Lactalis obtient son permis pour une nouvelle unité laitière à Laval. AO lots techniques en cours.",opportunites:["Tuyauterie alimentaire inox","Génie électrique BT agroalimentaire","Froid industriel"],contacts:[{nom:"Paul Renaud",titre:"Responsable travaux neufs",entreprise:"Lactalis Groupe",linkedin_url:"https://www.linkedin.com/search/results/people/?keywords=Paul+Renaud+Travaux+Neufs+Lactalis",angle:"Bonjour Paul, nos équipes interviennent sur la tuyauterie inox et génie électrique en agroalimentaire."}],tags:["agro","Lactalis","inox"]},
-  {id:"d5",title:"TotalEnergies Donges — AO tuyauterie ouvert",type:"fr",sector:"energie",region:"Pays de la Loire",score_prospection:91,montant:"200 M€",montant_num:200,localisation:"Donges, Loire-Atlantique",client:"TotalEnergies",entreprises:["TotalEnergies"],sous_traitants:["Spie","Cofely"],statut:"AO ouvert — réponse avant fin mai 2025",date_annonce:"1 avril 2025",source:"Usines Nouvelles, 1er avr. 2025",source_un:true,summary:"TotalEnergies lance un AO pour l'extension de la raffinerie de Donges. Réponses attendues avant fin mai.",opportunites:["Tuyauterie procédés haute pression","Chaudronnerie échangeurs","Instrumentation & robinetterie"],contacts:[{nom:"Stéphane Aubert",titre:"Directeur de projet raffinage",entreprise:"TotalEnergies Raffinage",linkedin_url:"https://www.linkedin.com/search/results/people/?keywords=St%C3%A9phane+Aubert+TotalEnergies+Raffinage",angle:"Bonjour Stéphane, nous répondons à votre AO Donges. Références raffinerie disponibles."}],tags:["raffinerie","TotalEnergies","Donges"]}
+  {id:"d1",title:"Extension STEP Pierre-Bénite — Grand Lyon",type:"fr",sector:"environnement",region:"Auvergne-Rhône-Alpes",score_prospection:88,montant:"85 M€",montant_num:85,localisation:"Lyon, AuRA",client:"Métropole de Lyon / Veolia",entreprises:["Veolia Water"],sous_traitants:["OTV","Degrémont"],statut:"Permis déposé — démarrage T1 2026",date_annonce:"14 avril 2025",source:"Usine Nouvelle, 14 avr. 2025",source_un:true,summary:"Extension de la STEP de Pierre-Bénite à 1,2M équivalents-habitants. Permis déposé semaine dernière, démarrage travaux prévu T1 2026.",opportunites:["Tuyauterie inox procédés traitement eau","Génie électrique BT/HTA","Chaudronnerie cuves & décanteurs"],contacts:[{nom:"Frédéric Morel",titre:"Directeur de projet travaux neufs",entreprise:"Veolia Water Technologies",linkedin_url:"https://www.linkedin.com/search/results/people/?keywords=Fr%C3%A9d%C3%A9ric+Morel+Directeur+Projet+Veolia+Water",angle:"Bonjour Frédéric, nous sommes spécialisés en tuyauterie inox pour STEP. Votre projet Pierre-Bénite correspond exactement à nos métiers, et nous aimerions vous présenter nos références."}],tags:["eau","STEP","Lyon"]},
+  {id:"d2",title:"Nouvelle unité biopharma Sanofi — Vitry",type:"fr",sector:"industrie",region:"Île-de-France",score_prospection:94,montant:"400 M€",montant_num:400,localisation:"Vitry-sur-Seine, IDF",client:"Sanofi",entreprises:["Sanofi"],sous_traitants:[],statut:"Annoncé — études ingénierie en cours",date_annonce:"10 avril 2025",source:"Les Échos, 10 avr. 2025",source_un:false,summary:"Sanofi annonce 400M€ pour une nouvelle unité biopharmaceutique à Vitry dans le cadre de la réindustrialisation. Appels d'offres construction attendus fin 2025.",opportunites:["Tuyauterie inox pharma GMP","Génie électrique salles propres","Chaudronnerie cuves GMP"],contacts:[{nom:"Hélène Marceau",titre:"Responsable travaux neufs",entreprise:"Sanofi Global Manufacturing",linkedin_url:"https://www.linkedin.com/search/results/people/?keywords=H%C3%A9l%C3%A8ne+Marceau+Travaux+Neufs+Sanofi",angle:"Bonjour Hélène, NEO2 intervient sur les travaux neufs pharma GMP (tuyauterie inox, génie électrique salles propres). Votre futur projet Vitry nous intéresse et nous avons des références similaires chez AstraZeneca et Pfizer."}],tags:["pharma","Sanofi","GMP"]},
+  {id:"d3",title:"EPR2 Penly — ouverture consultations sous-traitance",type:"fr",sector:"energie",region:"Normandie",score_prospection:96,montant:"10 Md€",montant_num:10000,localisation:"Penly, Normandie",client:"EDF / Framatome",entreprises:["EDF","Framatome"],sous_traitants:["Spie","Endel","Ortec"],statut:"Consultations sous-traitance ouvertes",date_annonce:"11 avril 2025",source:"Usine Nouvelle, 11 avr. 2025",source_un:true,summary:"EDF ouvre les premières consultations sous-traitants spécialisés pour les travaux nucléaires EPR2 de Penly. Démarrage terrain prévu 2026, fort volume attendu.",opportunites:["Tuyauterie nucléaire N1/N2","Génie électrique zone contrôlée","Calorifuge & échafaudage","Chaudronnerie & robinetterie"],contacts:[{nom:"Marc Lefevre",titre:"Responsable sous-traitance chantier",entreprise:"Framatome",linkedin_url:"https://www.linkedin.com/search/results/people/?keywords=Marc+Lefevre+Framatome+sous-traitance+nucl%C3%A9aire",angle:"Bonjour Marc, NEO2 est spécialisé en tuyauterie nucléaire N1/N2 avec des références sur Flamanville et Civaux. Nous souhaitons répondre à vos consultations pour Penly."}],tags:["nucléaire","EPR2","Normandie"]},
+  {id:"d4",title:"Nouvelle ligne Lactalis — Laval",type:"fr",sector:"industrie",region:"Pays de la Loire",score_prospection:82,montant:"120 M€",montant_num:120,localisation:"Laval, Pays de la Loire",client:"Lactalis",entreprises:["Lactalis"],sous_traitants:[],statut:"Permis accordé — AO lots techniques en cours",date_annonce:"9 avril 2025",source:"Le Maine Libre, 9 avr. 2025",source_un:false,summary:"Lactalis obtient son permis pour une nouvelle ligne de transformation laitière à Laval (120 M€). Appels d'offres pour les lots techniques en cours.",opportunites:["Tuyauterie alimentaire inox","Génie électrique agroalimentaire","Froid industriel & utilités"],contacts:[{nom:"Paul Renaud",titre:"Responsable travaux neufs",entreprise:"Lactalis Groupe",linkedin_url:"https://www.linkedin.com/search/results/people/?keywords=Paul+Renaud+Travaux+Neufs+Lactalis",angle:"Bonjour Paul, NEO2 intervient en tuyauterie inox et génie électrique sur les sites agroalimentaires. Vos AO en cours pour Laval nous intéressent directement."}],tags:["agro","Lactalis","inox"]},
+  {id:"d5",title:"TotalEnergies Donges — AO tuyauterie procédés",type:"fr",sector:"energie",region:"Pays de la Loire",score_prospection:91,montant:"200 M€",montant_num:200,localisation:"Donges, Loire-Atlantique",client:"TotalEnergies",entreprises:["TotalEnergies"],sous_traitants:["Spie","Cofely"],statut:"AO ouvert — réponse avant 30 mai 2025",date_annonce:"7 avril 2025",source:"Usine Nouvelle, 7 avr. 2025",source_un:true,summary:"TotalEnergies lance un AO pour l'extension de la raffinerie de Donges avec de nouveaux équipements de traitement. Réponse avant le 30 mai 2025.",opportunites:["Tuyauterie procédés haute pression","Chaudronnerie échangeurs & colonnes","Instrumentation & robinetterie"],contacts:[{nom:"Stéphane Aubert",titre:"Directeur de projet raffinage",entreprise:"TotalEnergies Raffinage",linkedin_url:"https://www.linkedin.com/search/results/people/?keywords=St%C3%A9phane+Aubert+TotalEnergies+Raffinage+Donges",angle:"Bonjour Stéphane, NEO2 répond à votre AO Donges. Nous sommes spécialisés en tuyauterie procédés et chaudronnerie sur sites raffinerie avec des références chez Exxon et Esso."}],tags:["raffinerie","TotalEnergies","Donges"]}
 ];}
 </script>
 </body>
