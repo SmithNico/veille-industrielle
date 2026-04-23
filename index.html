@@ -322,6 +322,8 @@ function getPrevWeek(){
   const sun=new Date(mon);sun.setDate(mon.getDate()+6);sun.setHours(23,59,59,999);
   return{mon,sun};
 }
+// Debug: log current date
+console.log('Today:',new Date().toISOString(),'Week:',getPrevWeek().mon.toISOString(),'->',getPrevWeek().sun.toISOString());
 function fmtDate(d){return d.toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'})}
 function fmtDateShort(d){return d.toLocaleDateString('fr-FR',{day:'numeric',month:'short'})}
 function fmtISO(d){return d.toISOString().slice(0,10)}
@@ -457,7 +459,10 @@ async function fetchRSS(){
   const results=await Promise.allSettled(RSS_FEEDS.map(feed=>fetchOneFeed(feed).then(items=>({feed,items})).catch(e=>({feed,error:e}))));
 
   for(const res of results){
-    if(res.status==='rejected'){setSrc(res.reason?.feed?.srcBadge||'src-gnews','err');continue;}
+    if(res.status==='rejected'){
+      console.warn('RSS rejected:',res.reason);
+      continue;
+    }
     const {feed,items,error}=res.value;
     if(error){console.warn(feed.name,error.message);setSrc(feed.srcBadge,'err');continue;}
     setSrc(feed.srcBadge,'ok');
@@ -488,7 +493,29 @@ async function fetchRSS(){
 async function fetchAll(){
   if(!apiKey&&!demoMode){showApiModal();return}
   if(demoMode){useDemoMode();return}
-  const articles=document.getElementById('articlesInput').value.trim();
+  const rawPaste=document.getElementById('articlesInput').value.trim();
+  // Detect and fetch URLs pasted by user
+  let articles=rawPaste;
+  const urlRegex=/(https?:\/\/[^\s]+)/g;
+  const urls=rawPaste.match(urlRegex)||[];
+  if(urls.length>0){
+    document.getElementById('progressTitle').textContent='Lecture des articles Usine Nouvelle collés...';
+    const urlContents=await Promise.allSettled(urls.slice(0,5).map(async url=>{
+      try{
+        const proxy='https://api.allorigins.win/get?url='+encodeURIComponent(url);
+        const r=await fetch(proxy,{signal:AbortSignal.timeout(10000)});
+        const d=await r.json();
+        // Extract text content, remove HTML
+        const text=(d.contents||'').replace(/<[^>]*>/g,' ').replace(/\s+/g,' ').substring(0,1000);
+        return url+'\n'+text;
+      }catch(e){return url+' (non accessible)'}
+    }));
+    const fetchedTexts=urlContents.map(r=>r.status==='fulfilled'?r.value:r.reason).join('\n\n');
+    articles=rawPaste+'\n\n=== CONTENU ARTICLES ===\n'+fetchedTexts;
+    setSrc('paste','ok');
+  } else if(rawPaste){
+    setSrc('paste','ok');
+  }
   const btn=document.getElementById('launchBtn');
   btn.disabled=true;allP=[];selectedIds=new Set();
   const pb=document.getElementById('progressBar');pb.classList.add('visible');
@@ -529,7 +556,11 @@ async function fetchAll(){
 
   const prompt=`Tu es expert en veille industrielle pour NEO2 (cabinet de conseil ingénierie process et infrastructure).
 
-DONNÉES RÉELLES COLLECTÉES cette semaine (${monStr} → ${sunStr}) :
+⚠️ ANNÉE OBLIGATOIRE : 2026 ⚠️
+Nous sommes en AVRIL 2026. Toute annonce doit dater de 2026.
+Rejette systématiquement tout article ou projet de 2024 ou 2025.
+
+DONNÉES RÉELLES COLLECTÉES cette semaine (${monStr} → ${sunStr} 2026) :
 
 ═══ BOAMP — APPELS D'OFFRES OFFICIELS (${boampData.length} trouvés) ═══
 ${boampContext||'Aucun résultat BOAMP cette semaine'}
@@ -543,7 +574,8 @@ ${articles.substring(0,3000)}`:''}
 ═══ MISSION ═══
 À partir de ces données RÉELLES uniquement :
 1. Identifie tous les projets d'investissement industriel pertinents pour NEO2
-2. Pour les articles RSS hors semaine (sans ✓semaine), inclus-les UNIQUEMENT si la date de publication est entre ${monStr} et ${sunStr}
+2. Pour les articles RSS hors semaine (sans ✓semaine), inclus-les UNIQUEMENT si la date de publication est entre ${monStr} et ${sunStr} 2026
+3. REJETTE tout projet dont la date_annonce contient "2024" ou "2025" — nous sommes en 2026
 3. Priorité : énergie > environnement > industrie (pharma/chimie/agro) > naval > infra > asd > ferro
 4. Contacts : Chef de projet, Directeur de site, Responsable ingénierie, Responsable travaux — jamais PDG
 5. N'invente aucun projet qui n'est pas dans les données ci-dessus
