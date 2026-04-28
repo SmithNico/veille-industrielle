@@ -393,27 +393,25 @@ async function fetchBOAMP(){
 }
 
 // ─── RSS FEEDS ───────────────────────────────────────────────
-// RSS via rss2json (gratuit, fiable, pas de CORS)
-const R2J='https://api.rss2json.com/v1/api.json?count=50&rss_url=';
+// RSS via fetch direct avec proxy CORS fiable
+const PROXY='https://corsproxy.io/?';
 const RSS_FEEDS=[
-  {id:'un',   name:'Usine Nouvelle',  srcBadge:'src-un',
-   url:R2J+encodeURIComponent('https://www.usinenouvelle.com/rss/toute-l-actu.rss')},
-  {id:'un2',  name:'Usine Nouvelle industries', srcBadge:'src-un',
-   url:R2J+encodeURIComponent('https://www.usinenouvelle.com/rss/industries.rss')},
-  {id:'bati', name:'Batiactu',         srcBadge:'src-batiactu',
-   url:R2J+encodeURIComponent('https://www.batiactu.com/rss/flux.xml')},
-  {id:'gn1',  name:'Google News investissement', srcBadge:'src-gnews',
-   url:R2J+encodeURIComponent('https://news.google.com/rss/search?q=investissement+usine+industrie+France+millions&hl=fr&gl=FR&ceid=FR:fr')},
-  {id:'gn2',  name:'Google News chantier', srcBadge:'src-gnews',
-   url:R2J+encodeURIComponent('https://news.google.com/rss/search?q=chantier+construction+usine+France+2025&hl=fr&gl=FR&ceid=FR:fr')},
-  {id:'gn3',  name:'Google News AO',   srcBadge:'src-gnews',
-   url:R2J+encodeURIComponent('https://news.google.com/rss/search?q=appel+offres+industrie+energie+environnement+France&hl=fr&gl=FR&ceid=FR:fr')},
-  {id:'gn4',  name:'Google News pharma', srcBadge:'src-gnews',
-   url:R2J+encodeURIComponent('https://news.google.com/rss/search?q=investissement+usine+pharma+chimie+agro+France+millions&hl=fr&gl=FR&ceid=FR:fr')},
-  {id:'gn5',  name:'Google News énergie', srcBadge:'src-gnews',
-   url:R2J+encodeURIComponent('https://news.google.com/rss/search?q=investissement+energie+nucleaire+hydrogene+France+2025&hl=fr&gl=FR&ceid=FR:fr')},
-  {id:'bf',   name:'Business France',  srcBadge:'src-bf',
-   url:R2J+encodeURIComponent('https://www.businessfrance.fr/rss-investissements')},
+  {id:'gn1', name:'Google News investissement', srcBadge:'src-gnews',
+   url:PROXY+encodeURIComponent('https://news.google.com/rss/search?q=investissement+usine+industrie+France+millions+2026&hl=fr&gl=FR&ceid=FR:fr')},
+  {id:'gn2', name:'Google News chantier', srcBadge:'src-gnews',
+   url:PROXY+encodeURIComponent('https://news.google.com/rss/search?q=chantier+construction+usine+France+2026&hl=fr&gl=FR&ceid=FR:fr')},
+  {id:'gn3', name:'Google News AO', srcBadge:'src-gnews',
+   url:PROXY+encodeURIComponent('https://news.google.com/rss/search?q=appel+offres+industrie+energie+environnement+France+2026&hl=fr&gl=FR&ceid=FR:fr')},
+  {id:'gn4', name:'Google News pharma chimie', srcBadge:'src-gnews',
+   url:PROXY+encodeURIComponent('https://news.google.com/rss/search?q=investissement+pharma+chimie+agro+usine+France+2026&hl=fr&gl=FR&ceid=FR:fr')},
+  {id:'gn5', name:'Google News énergie', srcBadge:'src-gnews',
+   url:PROXY+encodeURIComponent('https://news.google.com/rss/search?q=investissement+energie+nucleaire+hydrogene+France+2026&hl=fr&gl=FR&ceid=FR:fr')},
+  {id:'gn6', name:'Google News naval BTP', srcBadge:'src-gnews',
+   url:PROXY+encodeURIComponent('https://news.google.com/rss/search?q=investissement+naval+BTP+infrastructure+France+2026&hl=fr&gl=FR&ceid=FR:fr')},
+  {id:'bati', name:'Batiactu', srcBadge:'src-batiactu',
+   url:PROXY+encodeURIComponent('https://www.batiactu.com/rss/flux.xml')},
+  {id:'un', name:'Usine Nouvelle', srcBadge:'src-un',
+   url:PROXY+encodeURIComponent('https://www.usinenouvelle.com/rss/toute-l-actu.rss')},
 ];
 
 function parseRSS(xmlStr){
@@ -441,10 +439,16 @@ function isInWeek(dateStr){
 async function fetchOneFeed(feed){
   const r=await fetch(feed.url,{signal:AbortSignal.timeout(12000)});
   if(!r.ok)throw new Error(feed.name+' '+r.status);
-  const data=await r.json();
-  // rss2json format: data.items[]
-  if(data.status==='error')throw new Error(data.message||'rss2json error');
-  return data.items||[];
+  const txt=await r.text();
+  // Parse XML RSS
+  const parser=new DOMParser();
+  const doc=parser.parseFromString(txt,'text/xml');
+  const items=Array.from(doc.querySelectorAll('item'));
+  return items.map(item=>({
+    title:item.querySelector('title')?.textContent||'',
+    description:(item.querySelector('description')?.textContent||'').replace(/<[^>]*>/g,' '),
+    pubDate:item.querySelector('pubDate')?.textContent||''
+  }));
 }
 
 async function fetchRSS(){
