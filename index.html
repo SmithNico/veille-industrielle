@@ -449,7 +449,7 @@ async function fetchBOAMP(){
   setSrc('boamp','loading');
   try{
     const kw='industrie+energie+environnement+pharma+chimie+naval+infrastructure+nucleaire+hydrogene+eau+agroalimentaire';
-    const url=`https://boamp-datadila.opendatasoft.com/api/explore/v2.1/catalog/datasets/boamp/records?where=dateparution>="${monISO}" AND dateparution<="${sunISO}"&limit=100&refine=typeidentifiant:BOAMP&order_by=dateparution DESC`;
+    const url=`https://boamp-datadila.opendatasoft.com/api/explore/v2.1/catalog/datasets/boamp/records?where=dateparution%3E%3D%22${monISO}%22%20AND%20dateparution%3C%3D%22${sunISO}%22&limit=100&order_by=dateparution%20DESC`;
     const r=await fetch(url,{signal:AbortSignal.timeout(15000)});
     if(!r.ok)throw new Error('BOAMP '+r.status);
     const d=await r.json();
@@ -503,8 +503,9 @@ Pour chaque article trouvé dans cette fenêtre de dates, extrais :
 - Date de publication exacte
 - Résumé factuel en 1 phrase
 
-Réponds en JSON : {"items":[{"title":"...","client":"...","montant":"...","localisation":"...","date":"JJ mois AAAA","summary":"..."}]}
-Si aucun article dans la fenêtre de dates : {"items":[]}`;
+IMPORTANT : Réponds UNIQUEMENT avec ce JSON exact, rien d'autre avant ou après :
+{"items":[{"title":"titre exact","client":"client","montant":"montant si connu","localisation":"ville","date":"JJ mois AAAA","summary":"1 phrase"}]}
+Si aucun article trouvé dans la fenêtre de dates : {"items":[]}`;
 
   try{
     const r=await fetch('https://api.anthropic.com/v1/messages',{
@@ -512,7 +513,7 @@ Si aucun article dans la fenêtre de dates : {"items":[]}`;
       headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
       body:JSON.stringify({
         model:'claude-haiku-4-5-20251001',
-        max_tokens:2000,
+        max_tokens:3000,
         tools:[{type:'web_search_20250305',name:'web_search'}],
         messages:[{role:'user',content:prompt}]
       })
@@ -522,8 +523,8 @@ Si aucun article dans la fenêtre de dates : {"items":[]}`;
     const txt=d.content.map(i=>i.type==='text'?i.text:'').join('');
     const clean=txt.replace(/```json|```/g,'').trim();
     const s=clean.indexOf('{'),e=clean.lastIndexOf('}');
-    if(s===-1||e===-1)throw new Error('No JSON');
-    const parsed=JSON.parse(clean.substring(s,e+1));
+    if(s===-1||e===-1){console.warn(source.name,'No JSON in:',txt.substring(0,200));return[];}
+    let parsed;try{parsed=JSON.parse(clean.substring(s,e+1));}catch(pe){console.warn(source.name,'JSON parse error',pe.message);return[];}
     const items=parsed.items||[];
     setSrc(source.id,'ok',items.length);
     return items.map(item=>({...item,source:source.name,source_id:source.id}));
