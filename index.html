@@ -597,7 +597,7 @@ async function fetchAll(){
   btn.disabled=true;allP=[];selectedIds=new Set();
 
   // Reset source cards
-  WEB_SOURCES.forEach(s=>setSrc(s.id,'idle'));
+  ['un','ud','echo','monitor','bati','mer','air','bf','fi','ted','gn'].forEach(id=>setSrc(id,'idle'));
   setSrc('boamp','idle');setSrc('paste','idle');
 
   const pw=document.getElementById('progressWrap');pw.classList.add('visible');
