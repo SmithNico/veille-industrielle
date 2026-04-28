@@ -4,149 +4,494 @@
 <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>NEO2 — Veille Investissements Industriels</title>
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@400;500;600&display=swap');
+
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--neo-red:#E3001B;--neo-dark:#1A1A1A;--bg:#F7F7F7;--surface:#fff;--surface2:#F4F4F4;--border:rgba(0,0,0,.09);--border-strong:rgba(0,0,0,.18);--text:#1A1A1A;--text-muted:#666;--text-faint:#999;--blue:#185FA5;--blue-bg:#E6F1FB;--blue-border:#85B7EB;--green:#0F6E56;--green-bg:#E1F5EE;--green-border:#5DCAA5;--amber:#854F0B;--amber-bg:#FAEEDA;--r:8px;--rl:12px}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.6;min-height:100vh}
-nav{background:var(--neo-dark);padding:0 2rem;height:58px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;gap:12px}
-.nav-logo{display:flex;align-items:center;gap:12px}
-.neo-logo{font-size:22px;font-weight:800;letter-spacing:-.02em;color:#fff}
-.neo-logo span{color:var(--neo-red)}
-.nav-tagline{font-size:11px;color:rgba(255,255,255,.45);border-left:1px solid rgba(255,255,255,.15);padding-left:12px;line-height:1.3}
+:root{
+  --neo-red:#E3001B;
+  --neo-red-dark:#B8001A;
+  --neo-red-light:#FF1A2E;
+  --neo-dark:#1A1A1A;
+  --neo-gray:#2D2D2D;
+  --bg:#F2F2F0;
+  --surface:#FFFFFF;
+  --surface2:#F5F5F3;
+  --surface3:#EBEBEA;
+  --border:rgba(0,0,0,.08);
+  --border-strong:rgba(0,0,0,.16);
+  --text:#1A1A1A;
+  --text-muted:#5A5A5A;
+  --text-faint:#9A9A9A;
+  --blue:#185FA5;--blue-bg:#E6F1FB;--blue-border:#85B7EB;
+  --green:#0A6B45;--green-bg:#E3F5ED;--green-border:#4DC48A;
+  --amber:#8A5200;--amber-bg:#FEF3DC;
+  --r:6px;--rl:10px;
+  --shadow:0 1px 3px rgba(0,0,0,.08),0 4px 12px rgba(0,0,0,.04);
+  --shadow-lg:0 4px 16px rgba(0,0,0,.1),0 16px 40px rgba(0,0,0,.06);
+}
+
+body{
+  font-family:'Barlow',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  font-size:14px;
+  line-height:1.6;
+  min-height:100vh;
+}
+
+/* ── NAV ── */
+nav{
+  background:var(--neo-dark);
+  padding:0 2rem;
+  height:64px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  position:sticky;
+  top:0;
+  z-index:100;
+  gap:16px;
+  border-bottom:3px solid var(--neo-red);
+  box-shadow:0 2px 20px rgba(0,0,0,.3);
+}
+.nav-logo{display:flex;align-items:center;gap:16px}
+.neo-img-logo{
+  height:36px;
+  width:auto;
+  filter:brightness(0) invert(1);
+  object-fit:contain;
+}
+.neo-logo-fallback{
+  display:none;
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:28px;
+  font-weight:800;
+  letter-spacing:-.02em;
+  color:#fff;
+}
+.neo-logo-fallback span{color:var(--neo-red)}
+.nav-divider{width:1px;height:28px;background:rgba(255,255,255,.15)}
+.nav-tagline{
+  font-family:'Barlow',sans-serif;
+  font-size:11px;
+  font-weight:500;
+  color:rgba(255,255,255,.45);
+  line-height:1.4;
+  letter-spacing:.02em;
+  text-transform:uppercase;
+}
 .nav-right{display:flex;align-items:center;gap:8px}
-.status-pill{display:flex;align-items:center;gap:6px;font-size:11px;color:rgba(255,255,255,.6);background:rgba(255,255,255,.08);border-radius:20px;padding:4px 10px;white-space:nowrap}
-.dot{width:7px;height:7px;border-radius:50%;background:#5DCAA5;flex-shrink:0}
-.dot.loading{background:#EF9F27;animation:pulse 1s infinite}
+.status-pill{
+  display:flex;align-items:center;gap:6px;
+  font-size:11px;color:rgba(255,255,255,.55);
+  background:rgba(255,255,255,.07);
+  border-radius:20px;padding:4px 12px;
+  border:.5px solid rgba(255,255,255,.12);
+  white-space:nowrap;font-weight:500;
+}
+.dot{width:7px;height:7px;border-radius:50%;background:#4DC48A;flex-shrink:0}
+.dot.loading{background:#F5A623;animation:pulse 1s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
-.nav-btn{font-size:12px;padding:5px 12px;border-radius:var(--r);border:.5px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);color:#fff;cursor:pointer;white-space:nowrap}
-.nav-btn:hover{background:rgba(255,255,255,.18)}
-.page{max-width:1200px;margin:0 auto;padding:1.5rem 1.5rem 4rem}
-.week-banner{background:var(--neo-dark);color:#fff;border-radius:var(--r);padding:.75rem 1.25rem;margin-bottom:1rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
-.week-label{font-size:11px;color:rgba(255,255,255,.45)}
-.week-dates{font-size:14px;font-weight:600}
-.sources-status{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1.25rem}
-.src-badge{font-size:11px;padding:4px 10px;border-radius:20px;border:.5px solid var(--border-strong);background:var(--surface);color:var(--text-muted);display:flex;align-items:center;gap:5px}
-.src-badge.ok{background:var(--green-bg);color:var(--green);border-color:var(--green-border)}
-.src-badge.loading{background:var(--amber-bg);color:var(--amber);border-color:var(--amber);animation:pulse 1s infinite}
-.src-badge.err{background:#FFEBEE;color:var(--neo-red);border-color:var(--neo-red)}
-.paste-zone{background:var(--surface);border:1.5px dashed rgba(227,0,27,.3);border-radius:var(--rl);padding:1rem 1.25rem;margin-bottom:1.25rem}
-.paste-title{font-size:12px;font-weight:600;color:var(--neo-red);margin-bottom:6px}
-.paste-zone textarea{width:100%;height:80px;border:.5px solid var(--border-strong);border-radius:var(--r);padding:8px 11px;font-size:12px;color:var(--text);background:var(--surface2);resize:vertical;outline:none;font-family:inherit}
+.nav-btn{
+  font-size:12px;font-weight:600;letter-spacing:.02em;
+  padding:6px 14px;border-radius:var(--r);
+  border:.5px solid rgba(255,255,255,.18);
+  background:rgba(255,255,255,.08);
+  color:#fff;cursor:pointer;white-space:nowrap;
+  transition:all .15s;text-transform:uppercase;
+}
+.nav-btn:hover{background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.3)}
+
+/* ── PAGE ── */
+.page{max-width:1280px;margin:0 auto;padding:1.75rem 2rem 4rem}
+
+/* ── HERO BANNER ── */
+.week-banner{
+  background:var(--neo-dark);
+  color:#fff;
+  border-radius:var(--rl);
+  padding:1.25rem 1.75rem;
+  margin-bottom:1.25rem;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:12px;
+  position:relative;
+  overflow:hidden;
+  box-shadow:var(--shadow-lg);
+}
+.week-banner::before{
+  content:'';
+  position:absolute;left:0;top:0;bottom:0;
+  width:5px;
+  background:var(--neo-red);
+}
+.week-banner::after{
+  content:'';
+  position:absolute;right:0;top:0;
+  width:200px;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(227,0,27,.08));
+  pointer-events:none;
+}
+.week-label{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:3px}
+.week-dates{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:22px;font-weight:700;letter-spacing:-.01em;
+}
+.week-right{font-size:11px;color:rgba(255,255,255,.3);text-align:right;line-height:1.5}
+
+/* ── SOURCES GRID ── */
+.sources-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(148px,1fr));
+  gap:6px;
+  margin-bottom:1.25rem;
+}
+.src-card{
+  background:var(--surface);
+  border:.5px solid var(--border);
+  border-radius:var(--r);
+  padding:8px 12px;
+  display:flex;align-items:center;gap:8px;
+  font-size:12px;font-weight:500;
+  transition:all .25s;
+  box-shadow:var(--shadow);
+}
+.src-card.loading{background:var(--amber-bg);border-color:rgba(138,82,0,.25);color:var(--amber)}
+.src-card.ok{background:var(--green-bg);border-color:rgba(77,196,138,.4);color:var(--green)}
+.src-card.err{background:#FFEBEE;border-color:rgba(227,0,27,.3);color:var(--neo-red)}
+.src-card.idle{color:var(--text-faint)}
+.src-icon{font-size:14px;flex-shrink:0}
+.src-name{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.src-count{font-size:10px;margin-left:auto;font-weight:700;
+  background:rgba(0,0,0,.06);padding:1px 5px;border-radius:10px}
+
+/* ── PROGRESS ── */
+.progress-wrap{
+  background:var(--surface);border:.5px solid var(--border);
+  border-radius:var(--r);padding:.9rem 1.25rem;
+  margin-bottom:1.25rem;display:none;
+  box-shadow:var(--shadow);
+}
+.progress-wrap.visible{display:block}
+.progress-title{font-size:12px;font-weight:500;color:var(--text-muted);margin-bottom:8px}
+.progress-track{height:3px;background:var(--border);border-radius:2px;overflow:hidden}
+.progress-fill{height:100%;background:var(--neo-red);border-radius:2px;transition:width .3s ease}
+
+/* ── PASTE ZONE ── */
+.paste-zone{
+  background:var(--surface);
+  border:1.5px dashed rgba(227,0,27,.25);
+  border-radius:var(--rl);
+  padding:1.1rem 1.5rem;
+  margin-bottom:1rem;
+  box-shadow:var(--shadow);
+}
+.paste-title{
+  font-size:11px;font-weight:700;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--neo-red);
+  margin-bottom:8px;display:flex;align-items:center;gap:6px;
+}
+.paste-zone textarea{
+  width:100%;height:72px;
+  border:.5px solid var(--border-strong);
+  border-radius:var(--r);
+  padding:8px 11px;font-size:12px;font-family:'Barlow',sans-serif;
+  color:var(--text);background:var(--surface2);
+  resize:vertical;outline:none;line-height:1.5;
+  transition:border-color .15s;
+}
 .paste-zone textarea:focus{border-color:var(--neo-red)}
 .paste-zone textarea::placeholder{color:var(--text-faint);font-size:12px}
-.launch-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:1.25rem}
-.sources-info{font-size:11px;color:var(--text-faint);line-height:1.7}
-.sources-info strong{color:var(--text-muted)}
-.launch-btn{height:42px;padding:0 24px;border-radius:var(--r);border:none;background:var(--neo-red);color:#fff;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:8px;white-space:nowrap}
-.launch-btn:hover{opacity:.9}
-.launch-btn:disabled{opacity:.4;cursor:not-allowed}
-.progress-bar{background:var(--surface);border:.5px solid var(--border);border-radius:var(--r);padding:.9rem 1.25rem;margin-bottom:1.25rem;display:none}
-.progress-bar.visible{display:block}
-.progress-steps{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap}
-.pstep{font-size:11px;padding:3px 10px;border-radius:20px;background:var(--surface2);border:.5px solid var(--border);color:var(--text-faint);transition:all .3s}
-.pstep.active{background:var(--amber-bg);color:var(--amber);border-color:var(--amber);animation:pulse 1s infinite}
-.pstep.done{background:var(--green-bg);color:var(--green);border-color:var(--green-border)}
-.pstep.err{background:#FFEBEE;color:var(--neo-red);border-color:var(--neo-red)}
-.progress-title{font-size:12px;color:var(--text-muted);margin-bottom:8px}
-.progress-track{height:3px;background:var(--border);border-radius:2px;overflow:hidden}
-.progress-fill{height:100%;background:var(--neo-red);border-radius:2px;transition:width .4s ease}
-.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:8px;margin-bottom:1.25rem}
-.stat-card{background:var(--surface);border:.5px solid var(--border);border-radius:var(--r);padding:10px 14px}
-.stat-label{font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px}
-.stat-value{font-size:20px;font-weight:700;letter-spacing:-.02em}
-.stat-sub{font-size:9px;color:var(--text-faint)}
-.toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:.9rem}
-.search-wrap{position:relative;flex:1;min-width:180px}
-.search-wrap input{width:100%;height:36px;padding:0 12px 0 34px;border:.5px solid var(--border-strong);border-radius:var(--r);background:var(--surface);color:var(--text);font-size:13px;outline:none}
-.search-wrap input:focus{border-color:var(--neo-red)}
-.search-icon{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--text-faint);pointer-events:none}
-.tbtn{height:36px;padding:0 14px;border-radius:var(--r);border:.5px solid var(--border-strong);background:var(--surface);color:var(--text);font-size:12px;cursor:pointer;display:flex;align-items:center;gap:5px;white-space:nowrap}
-.tbtn:hover{background:var(--surface2)}
-.tbtn.green{background:var(--green-bg);border-color:var(--green-border);color:var(--green)}
-.filter-row{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:5px;align-items:center}
-.filter-label{font-size:10px;color:var(--text-faint);white-space:nowrap;min-width:48px;flex-shrink:0}
-.chip{font-size:11px;padding:3px 9px;border-radius:20px;border:.5px solid var(--border-strong);background:var(--surface);color:var(--text-muted);cursor:pointer;transition:all .15s;user-select:none;white-space:nowrap}
-.chip:hover{background:var(--surface2)}
-.chip.active{background:var(--neo-red);color:#fff;border-color:var(--neo-red)}
-.project-card{background:var(--surface);border:.5px solid var(--border);border-radius:var(--rl);overflow:hidden;transition:border-color .15s;margin-bottom:8px}
-.project-card:hover{border-color:var(--border-strong)}
-.project-card.selected{border-color:var(--neo-red);border-width:1.5px}
-.card-main{padding:.85rem 1.25rem;cursor:pointer}
-.card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:5px}
+
+/* ── LAUNCH ROW ── */
+.launch-row{
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:12px;margin-bottom:1.5rem;
+}
+.launch-info{font-size:11px;color:var(--text-faint);line-height:1.7}
+.launch-info strong{color:var(--text-muted)}
+.launch-info .accent{color:var(--neo-red);font-weight:600}
+.launch-btn{
+  height:46px;padding:0 28px;border-radius:var(--r);
+  border:none;background:var(--neo-red);color:#fff;
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:16px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;
+  cursor:pointer;display:flex;align-items:center;gap:10px;
+  box-shadow:0 4px 14px rgba(227,0,27,.35);
+  transition:all .15s;
+}
+.launch-btn:hover{background:var(--neo-red-dark);transform:translateY(-1px);box-shadow:0 6px 20px rgba(227,0,27,.4)}
+.launch-btn:active{transform:translateY(0)}
+.launch-btn:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
+
+/* ── STATS ── */
+.stats-row{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(105px,1fr));
+  gap:8px;margin-bottom:1.5rem;
+}
+.stat-card{
+  background:var(--surface);border:.5px solid var(--border);
+  border-radius:var(--r);padding:12px 16px;
+  box-shadow:var(--shadow);transition:transform .15s;
+}
+.stat-card:hover{transform:translateY(-1px)}
+.stat-label{
+  font-size:9px;font-weight:700;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--text-faint);margin-bottom:4px;
+}
+.stat-value{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:28px;font-weight:700;letter-spacing:-.02em;line-height:1;
+}
+.stat-sub{font-size:9px;color:var(--text-faint);margin-top:3px}
+
+/* ── TOOLBAR & FILTERS ── */
+.toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:1rem}
+.search-wrap{position:relative;flex:1;min-width:200px}
+.search-wrap input{
+  width:100%;height:38px;padding:0 14px 0 38px;
+  border:.5px solid var(--border-strong);border-radius:var(--r);
+  background:var(--surface);color:var(--text);
+  font-size:13px;font-family:'Barlow',sans-serif;
+  outline:none;box-shadow:var(--shadow);
+  transition:border-color .15s;
+}
+.search-wrap input:focus{border-color:var(--neo-red);box-shadow:0 0 0 3px rgba(227,0,27,.08)}
+.search-icon{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--text-faint);pointer-events:none}
+.tbtn{
+  height:38px;padding:0 16px;border-radius:var(--r);
+  border:.5px solid var(--border-strong);
+  background:var(--surface);color:var(--text);
+  font-size:12px;font-weight:600;font-family:'Barlow',sans-serif;
+  cursor:pointer;display:flex;align-items:center;gap:5px;
+  white-space:nowrap;box-shadow:var(--shadow);transition:all .15s;
+}
+.tbtn:hover{background:var(--surface2);border-color:var(--border-strong)}
+.tbtn.green{
+  background:var(--green-bg);border-color:var(--green-border);color:var(--green);
+}
+.filter-section{margin-bottom:.6rem}
+.filter-row{display:flex;gap:5px;flex-wrap:wrap;align-items:center;margin-bottom:0}
+.filter-label{
+  font-size:9px;font-weight:700;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--text-faint);
+  white-space:nowrap;min-width:52px;flex-shrink:0;
+}
+.chip{
+  font-size:11px;font-weight:500;
+  padding:4px 10px;border-radius:20px;
+  border:.5px solid var(--border-strong);
+  background:var(--surface);color:var(--text-muted);
+  cursor:pointer;transition:all .15s;user-select:none;white-space:nowrap;
+}
+.chip:hover{background:var(--surface2);color:var(--text)}
+.chip.active{background:var(--neo-red);color:#fff;border-color:var(--neo-red);box-shadow:0 2px 8px rgba(227,0,27,.25)}
+
+/* ── CARDS ── */
+.project-card{
+  background:var(--surface);
+  border:.5px solid var(--border);
+  border-radius:var(--rl);
+  overflow:hidden;margin-bottom:8px;
+  transition:all .15s;
+  box-shadow:var(--shadow);
+}
+.project-card:hover{border-color:var(--border-strong);box-shadow:var(--shadow-lg);transform:translateY(-1px)}
+.project-card.selected{border-color:var(--neo-red);border-width:1.5px;box-shadow:0 0 0 3px rgba(227,0,27,.08)}
+.project-card.date-warn{border-left:3px solid var(--amber)}
+.card-main{padding:.9rem 1.25rem;cursor:pointer}
+.card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:6px}
 .card-left{flex:1;min-width:0}
 .card-select{display:flex;align-items:flex-start;gap:8px}
 .card-checkbox{width:15px;height:15px;accent-color:var(--neo-red);cursor:pointer;flex-shrink:0;margin-top:2px}
-.card-title{font-size:13px;font-weight:600;line-height:1.35}
-.card-badges{display:flex;gap:4px;flex-wrap:wrap;margin-top:4px;margin-left:23px}
-.badge{font-size:10px;padding:2px 7px;border-radius:20px;font-weight:500;white-space:nowrap}
+.card-title{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:15px;font-weight:700;line-height:1.3;
+  letter-spacing:-.01em;
+}
+.card-badges{display:flex;gap:4px;flex-wrap:wrap;margin-top:5px;margin-left:23px}
+.badge{
+  font-size:10px;font-weight:600;letter-spacing:.03em;
+  padding:2px 8px;border-radius:3px;white-space:nowrap;
+  text-transform:uppercase;
+}
 .badge-fr{background:var(--green-bg);color:var(--green)}
 .badge-int{background:var(--blue-bg);color:var(--blue)}
-.badge-statut{background:#FFF3E0;color:#E65100;border:.5px solid #FFB300}
-.badge-un{background:#FFEBEE;color:var(--neo-red);border:.5px solid var(--neo-red)}
-.badge-boamp{background:#E8F5E9;color:#1B5E20;border:.5px solid #2E7D32}
-.badge-rss{background:var(--surface2);color:var(--text-muted);border:.5px solid var(--border-strong)}
+.badge-statut{background:#FFF3E0;color:#E65100;border:.5px solid rgba(230,81,0,.2)}
+.badge-warn{background:var(--amber-bg);color:var(--amber)}
+.badge-src{background:var(--surface3);color:var(--text-muted);border:.5px solid var(--border-strong)}
 .score-block{flex-shrink:0;text-align:center}
-.score-circle{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;border:2px solid}
-.score-high{background:#E8F5E9;color:#1B5E20;border-color:#2E7D32}
-.score-mid{background:var(--amber-bg);color:var(--amber);border-color:var(--amber)}
-.score-low{background:var(--surface2);color:var(--text-muted);border-color:var(--border-strong)}
-.score-label{font-size:8px;color:var(--text-faint);margin-top:1px}
-.card-meta{display:flex;gap:10px;flex-wrap:wrap;font-size:11px;color:var(--text-muted);margin-bottom:5px;margin-left:23px}
-.card-summary{font-size:12px;color:var(--text-muted);line-height:1.5;margin-left:23px}
-.contacts-preview{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px;margin-left:23px}
-.contact-pill{display:flex;align-items:center;gap:4px;font-size:11px;padding:2px 7px 2px 3px;border-radius:20px;background:var(--blue-bg);border:.5px solid var(--blue-border);color:var(--blue);text-decoration:none}
-.contact-pill:hover{opacity:.8}
-.cavatar{width:16px;height:16px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:600;flex-shrink:0}
-.card-footer{padding:6px 1.25rem;border-top:.5px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;background:var(--surface2)}
+.score-circle{
+  width:42px;height:42px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:14px;font-weight:800;border:2px solid;
+}
+.score-high{background:#E3F5ED;color:#0A6B45;border-color:#4DC48A}
+.score-mid{background:var(--amber-bg);color:var(--amber);border-color:rgba(138,82,0,.4)}
+.score-low{background:var(--surface3);color:var(--text-faint);border-color:var(--border-strong)}
+.score-label{font-size:8px;color:var(--text-faint);margin-top:2px;text-transform:uppercase;letter-spacing:.05em}
+.card-meta{
+  display:flex;gap:12px;flex-wrap:wrap;
+  font-size:11px;color:var(--text-muted);
+  margin-bottom:6px;margin-left:23px;
+}
+.card-meta strong{color:var(--text);font-weight:600}
+.card-summary{font-size:12px;color:var(--text-muted);line-height:1.55;margin-left:23px}
+.contacts-preview{display:flex;gap:5px;flex-wrap:wrap;margin-top:7px;margin-left:23px}
+.contact-pill{
+  display:flex;align-items:center;gap:4px;
+  font-size:11px;padding:3px 8px 3px 4px;border-radius:20px;
+  background:var(--blue-bg);border:.5px solid var(--blue-border);
+  color:var(--blue);text-decoration:none;font-weight:500;
+  transition:opacity .15s;
+}
+.contact-pill:hover{opacity:.75}
+.cavatar{
+  width:17px;height:17px;border-radius:50%;
+  background:var(--blue);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-size:8px;font-weight:700;flex-shrink:0;
+}
+.card-footer{
+  padding:7px 1.25rem;
+  border-top:.5px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  gap:8px;flex-wrap:wrap;background:var(--surface2);
+}
 .card-tags{display:flex;gap:3px;flex-wrap:wrap}
-.tag{font-size:10px;padding:1px 5px;border-radius:4px;background:var(--border);color:var(--text-muted)}
-.expand-btn{font-size:11px;color:var(--neo-red);background:none;border:none;cursor:pointer;white-space:nowrap;padding:0}
-.detail-panel{border-top:.5px solid var(--border);padding:.85rem 1.25rem;display:none}
+.tag{font-size:10px;padding:2px 6px;border-radius:3px;background:var(--surface3);color:var(--text-muted);font-weight:500}
+.expand-btn{
+  font-size:11px;font-weight:600;letter-spacing:.02em;
+  color:var(--neo-red);background:none;border:none;
+  cursor:pointer;white-space:nowrap;padding:0;
+  text-transform:uppercase;
+}
+
+/* ── DETAIL PANEL ── */
+.detail-panel{border-top:.5px solid var(--border);padding:.9rem 1.25rem;display:none}
 .detail-panel.open{display:block}
-.detail-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.25rem}
+.detail-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.5rem}
 @media(max-width:768px){.detail-grid{grid-template-columns:1fr}}
-.dstitle{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text-faint);margin-bottom:8px}
-.opp-item{display:flex;align-items:flex-start;gap:6px;padding:5px 0;border-bottom:.5px solid var(--border);font-size:12px}
+.dstitle{
+  font-size:9px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.1em;color:var(--text-faint);margin-bottom:10px;
+}
+.opp-item{
+  display:flex;align-items:flex-start;gap:7px;
+  padding:6px 0;border-bottom:.5px solid var(--border);font-size:12px;
+}
 .opp-item:last-child{border-bottom:none}
-.opp-check{width:15px;height:15px;border-radius:3px;flex-shrink:0;background:var(--green-bg);color:var(--green);display:flex;align-items:center;justify-content:center;font-size:8px;margin-top:2px}
-.ccard{background:var(--surface2);border:.5px solid var(--border);border-radius:var(--r);padding:8px 10px;margin-bottom:6px}
-.cheader{display:flex;align-items:center;gap:7px;margin-bottom:4px}
-.cavatar-lg{width:28px;height:28px;border-radius:50%;background:var(--neo-red);color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0}
-.cname{font-size:12px;font-weight:600}
+.opp-check{
+  width:16px;height:16px;border-radius:3px;flex-shrink:0;
+  background:var(--green-bg);color:var(--green);
+  display:flex;align-items:center;justify-content:center;
+  font-size:9px;margin-top:2px;font-weight:700;
+}
+.ccard{
+  background:var(--surface2);border:.5px solid var(--border);
+  border-radius:var(--r);padding:10px 12px;margin-bottom:7px;
+}
+.cheader{display:flex;align-items:center;gap:8px;margin-bottom:5px}
+.cavatar-lg{
+  width:30px;height:30px;border-radius:50%;
+  background:var(--neo-red);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:12px;font-weight:800;flex-shrink:0;
+}
+.cname{font-size:13px;font-weight:600}
 .crole{font-size:11px;color:var(--text-muted)}
 .cco{font-size:10px;color:var(--text-faint)}
-.angle-box{background:#FFF8E1;border:.5px solid #FFB300;border-radius:5px;padding:5px 8px;font-size:11px;color:#E65100;margin-top:4px;line-height:1.4}
-.cactions{display:flex;gap:5px;margin-top:5px}
-.clink{font-size:10px;padding:3px 7px;border-radius:5px;text-decoration:none;display:inline-flex;align-items:center;gap:3px;border:.5px solid var(--border-strong);color:var(--text-muted);background:var(--surface)}
+.angle-box{
+  background:#FFFBF0;border:.5px solid rgba(138,82,0,.25);
+  border-radius:5px;padding:6px 9px;
+  font-size:11px;color:var(--amber);
+  margin-top:5px;line-height:1.5;
+}
+.cactions{display:flex;gap:5px;margin-top:6px}
+.clink{
+  font-size:11px;font-weight:500;
+  padding:4px 9px;border-radius:var(--r);
+  text-decoration:none;display:inline-flex;align-items:center;gap:4px;
+  border:.5px solid var(--border-strong);color:var(--text-muted);background:var(--surface);
+  transition:all .15s;
+}
+.clink:hover{background:var(--surface2)}
 .clink.li{background:#0A66C2;color:#fff;border-color:#0A66C2}
-.detail-actions{margin-top:.75rem;display:flex;gap:6px;flex-wrap:wrap}
-.abtn{font-size:11px;padding:5px 10px;border-radius:var(--r);border:.5px solid var(--border-strong);background:var(--surface);color:var(--text);text-decoration:none;display:inline-flex;align-items:center;gap:3px}
+.clink.li:hover{background:#085A9E}
+.detail-actions{margin-top:.9rem;display:flex;gap:6px;flex-wrap:wrap}
+.abtn{
+  font-size:11px;font-weight:600;letter-spacing:.02em;
+  padding:6px 12px;border-radius:var(--r);
+  border:.5px solid var(--border-strong);
+  background:var(--surface);color:var(--text);
+  text-decoration:none;display:inline-flex;align-items:center;gap:4px;
+  transition:all .15s;text-transform:uppercase;
+}
 .abtn:hover{background:var(--surface2)}
-.abtn.primary{background:var(--neo-red);border-color:var(--neo-red);color:#fff}
-.skeleton{background:var(--border);border-radius:4px;animation:shimmer 1.5s ease-in-out infinite}
-@keyframes shimmer{0%,100%{opacity:.4}50%{opacity:.9}}
-.lcard{background:var(--surface);border:.5px solid var(--border);border-radius:var(--rl);padding:.85rem 1.25rem;margin-bottom:8px}
-.empty-state{text-align:center;padding:3rem 1rem;color:var(--text-muted)}
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;z-index:200;padding:1rem}
+.abtn.primary{background:var(--neo-red);border-color:var(--neo-red);color:#fff;box-shadow:0 2px 8px rgba(227,0,27,.25)}
+.abtn.primary:hover{background:var(--neo-red-dark)}
+
+/* ── SKELETON ── */
+.skeleton{background:var(--surface3);border-radius:4px;animation:shimmer 1.5s ease-in-out infinite}
+@keyframes shimmer{0%,100%{opacity:.5}50%{opacity:1}}
+.lcard{background:var(--surface);border:.5px solid var(--border);border-radius:var(--rl);padding:.9rem 1.25rem;margin-bottom:8px;box-shadow:var(--shadow)}
+
+/* ── EMPTY ── */
+.empty-state{
+  text-align:center;padding:4rem 1rem;color:var(--text-muted);
+  background:var(--surface);border-radius:var(--rl);
+  border:.5px solid var(--border);box-shadow:var(--shadow);
+}
+.empty-icon{font-size:3rem;margin-bottom:1rem;opacity:.4}
+
+/* ── MODALS ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;z-index:200;padding:1rem;backdrop-filter:blur(4px)}
 .modal-overlay.hidden{display:none}
-.modal{background:var(--surface);border-radius:var(--rl);border:.5px solid var(--border-strong);max-width:660px;width:100%;max-height:90vh;display:flex;flex-direction:column}
-.modal-header{padding:1.1rem 1.5rem;border-bottom:.5px solid var(--border);display:flex;align-items:center;justify-content:space-between}
-.modal-header h2{font-size:15px;font-weight:600}
-.modal-close{background:none;border:none;font-size:18px;cursor:pointer;color:var(--text-muted)}
-.modal-body{padding:1.1rem 1.5rem;overflow-y:auto;flex:1}
-.modal-body textarea{width:100%;height:320px;border:.5px solid var(--border-strong);border-radius:var(--r);padding:10px;font-size:12px;font-family:monospace;resize:vertical;outline:none;line-height:1.6}
-.modal-footer{padding:.9rem 1.5rem;border-top:.5px solid var(--border);display:flex;gap:8px;justify-content:flex-end}
-.mbtn{height:36px;padding:0 16px;border-radius:var(--r);font-size:13px;font-weight:500;cursor:pointer;border:.5px solid var(--border-strong)}
+.modal{background:var(--surface);border-radius:var(--rl);border:.5px solid var(--border-strong);max-width:660px;width:100%;max-height:90vh;display:flex;flex-direction:column;box-shadow:var(--shadow-lg)}
+.modal-header{padding:1.25rem 1.5rem;border-bottom:.5px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.modal-header h2{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700;letter-spacing:-.01em}
+.modal-close{background:none;border:none;font-size:20px;cursor:pointer;color:var(--text-muted);width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:4px}
+.modal-close:hover{background:var(--surface2)}
+.modal-body{padding:1.25rem 1.5rem;overflow-y:auto;flex:1}
+.modal-body textarea{width:100%;height:320px;border:.5px solid var(--border-strong);border-radius:var(--r);padding:10px;font-size:12px;font-family:monospace;resize:vertical;outline:none;line-height:1.6;background:var(--surface2)}
+.modal-footer{padding:1rem 1.5rem;border-top:.5px solid var(--border);display:flex;gap:8px;justify-content:flex-end}
+.mbtn{height:38px;padding:0 18px;border-radius:var(--r);font-size:13px;font-weight:600;cursor:pointer;border:.5px solid var(--border-strong);font-family:'Barlow',sans-serif;letter-spacing:.02em}
 .mbtn.primary{background:var(--neo-red);color:#fff;border-color:var(--neo-red)}
 .mbtn.secondary{background:var(--surface2);color:var(--text)}
-.api-box{background:var(--surface);border-radius:var(--rl);border:.5px solid var(--border-strong);padding:2rem;max-width:440px;width:100%}
-.api-box h2{font-size:16px;font-weight:600;margin-bottom:8px}
+.api-box{background:var(--surface);border-radius:var(--rl);border:.5px solid var(--border-strong);padding:2rem;max-width:440px;width:100%;box-shadow:var(--shadow-lg)}
+.api-box h2{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;margin-bottom:8px}
 .api-box p{font-size:12px;color:var(--text-muted);margin-bottom:1.25rem;line-height:1.6}
-.api-box input{width:100%;height:38px;padding:0 12px;border:.5px solid var(--border-strong);border-radius:var(--r);background:var(--surface2);color:var(--text);font-size:13px;outline:none;margin-bottom:10px;font-family:monospace}
+.api-box input{width:100%;height:40px;padding:0 12px;border:.5px solid var(--border-strong);border-radius:var(--r);background:var(--surface2);color:var(--text);font-size:13px;outline:none;margin-bottom:10px;font-family:monospace;transition:border-color .15s}
 .api-box input:focus{border-color:var(--neo-red)}
 .api-actions{display:flex;gap:8px}
-.mnote{font-size:11px;color:var(--text-faint);margin-top:10px}
-footer{max-width:1200px;margin:2rem auto 0;padding:1.5rem 1.5rem 2rem;border-top:.5px solid var(--border);font-size:11px;color:var(--text-faint);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
-@media(max-width:640px){nav{padding:0 1rem}.page{padding:1rem 1rem 3rem}}
+.mnote{font-size:11px;color:var(--text-faint);margin-top:10px;line-height:1.5}
+
+/* ── FOOTER ── */
+footer{
+  max-width:1280px;margin:2rem auto 0;
+  padding:1.5rem 2rem 2rem;
+  border-top:.5px solid var(--border);
+  font-size:11px;color:var(--text-faint);
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;
+}
+.footer-logo{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:14px;font-weight:700;color:var(--neo-red);
+}
+
+/* ── RED ACCENT LINE ── */
+.red-line{height:2px;background:var(--neo-red);border-radius:1px;margin-bottom:1.25rem;width:60px}
+
+@media(max-width:640px){
+  nav{padding:0 1rem}
+  .page{padding:1rem 1rem 3rem}
+  .stats-row{grid-template-columns:repeat(2,1fr)}
+  .sources-grid{grid-template-columns:repeat(2,1fr)}
+}
 </style>
 </head>
 <body>
@@ -154,13 +499,13 @@ footer{max-width:1200px;margin:2rem auto 0;padding:1.5rem 1.5rem 2rem;border-top
 <div class="modal-overlay hidden" id="apiModal">
   <div class="api-box">
     <h2>Clé API Anthropic</h2>
-    <p>Nécessaire uniquement pour l'analyse IA des projets. Le scan BOAMP et RSS fonctionne sans clé.</p>
+    <p>Nécessaire pour la recherche web et l'analyse IA. Stockée dans votre navigateur uniquement.</p>
     <input type="password" id="apiKeyInput" placeholder="sk-ant-api03-..." autocomplete="off"/>
     <div class="api-actions">
       <button class="mbtn secondary" style="flex:1" onclick="useDemoMode()">Mode démo</button>
       <button class="mbtn primary" style="flex:1" onclick="saveApiKey()">Valider</button>
     </div>
-    <p class="mnote">Modèle : claude-haiku-4-5 (économique ~0,20$/lancement) · <a href="https://console.anthropic.com" target="_blank" style="color:var(--neo-red)">console.anthropic.com</a></p>
+    <p class="mnote">Modèle : claude-haiku-4-5 · ~0,30$/lancement · <a href="https://console.anthropic.com" target="_blank" style="color:var(--neo-red)">console.anthropic.com</a></p>
   </div>
 </div>
 
@@ -183,7 +528,9 @@ footer{max-width:1200px;margin:2rem auto 0;padding:1.5rem 1.5rem 2rem;border-top
 
 <nav>
   <div class="nav-logo">
-    <div class="neo-logo">NEO<span>2</span></div>
+    <img src="https://www.neo2.eu/wp-content/uploads/2022/09/LOGO-NEO2.png" alt="NEO2" class="neo-img-logo" onerror="this.style.display='none';document.getElementById('neo-fallback').style.display='flex'"/>
+    <div class="neo-logo-fallback" id="neo-fallback">NEO<span>2</span></div>
+    <div class="nav-divider"></div>
     <div class="nav-tagline">Veille Investissements<br>Industriels</div>
   </div>
   <div class="nav-right">
@@ -195,36 +542,40 @@ footer{max-width:1200px;margin:2rem auto 0;padding:1.5rem 1.5rem 2rem;border-top
 </nav>
 
 <div class="page">
-
   <div class="week-banner">
     <div>
       <div class="week-label">Semaine analysée</div>
       <div class="week-dates" id="weekDates">—</div>
     </div>
-    <div style="font-size:11px;color:rgba(255,255,255,.35)">BOAMP · RSS Usine Nouvelle · Batiactu · Google News · Articles collés</div>
+    <div class="week-right">13 sources · Dates vérifiées<br>BOAMP · Usine Nouvelle · Les Échos · Batiactu · +9</div>
   </div>
 
-  <!-- STATUT SOURCES -->
-  <div class="sources-status" id="sourcesStatus">
-    <span class="src-badge" id="src-boamp">📋 BOAMP</span>
-    <span class="src-badge" id="src-un">📰 Usine Nouvelle RSS</span>
-    <span class="src-badge" id="src-batiactu">🏗 Batiactu</span>
-    <span class="src-badge" id="src-gnews">🔍 Google News</span>
-    <span class="src-badge" id="src-bf">🇫🇷 Business France</span>
-    <span class="src-badge" id="src-paste">📝 Articles collés</span>
+  <!-- SOURCES STATUS GRID -->
+  <div class="sources-grid" id="sourcesGrid">
+    <div class="src-card idle" id="sc-boamp"><span class="src-icon">📋</span><span class="src-name">BOAMP</span><span class="src-count" id="ct-boamp"></span></div>
+    <div class="src-card idle" id="sc-ted"><span class="src-icon">🇪🇺</span><span class="src-name">TED Europa</span><span class="src-count" id="ct-ted"></span></div>
+    <div class="src-card idle" id="sc-un"><span class="src-icon">📰</span><span class="src-name">Usine Nouvelle</span><span class="src-count" id="ct-un"></span></div>
+    <div class="src-card idle" id="sc-ud"><span class="src-icon">💻</span><span class="src-name">Usine Digitale</span><span class="src-count" id="ct-ud"></span></div>
+    <div class="src-card idle" id="sc-echo"><span class="src-icon">📊</span><span class="src-name">Les Échos</span><span class="src-count" id="ct-echo"></span></div>
+    <div class="src-card idle" id="sc-monitor"><span class="src-icon">🏗</span><span class="src-name">Le Moniteur</span><span class="src-count" id="ct-monitor"></span></div>
+    <div class="src-card idle" id="sc-bati"><span class="src-icon">🧱</span><span class="src-name">Batiactu</span><span class="src-count" id="ct-bati"></span></div>
+    <div class="src-card idle" id="sc-mer"><span class="src-icon">⚓</span><span class="src-name">Mer et Marine</span><span class="src-count" id="ct-mer"></span></div>
+    <div class="src-card idle" id="sc-air"><span class="src-icon">✈</span><span class="src-name">Air & Cosmos</span><span class="src-count" id="ct-air"></span></div>
+    <div class="src-card idle" id="sc-bf"><span class="src-icon">🇫🇷</span><span class="src-name">Business France</span><span class="src-count" id="ct-bf"></span></div>
+    <div class="src-card idle" id="sc-fi"><span class="src-icon">🏭</span><span class="src-name">France Industrie</span><span class="src-count" id="ct-fi"></span></div>
+    <div class="src-card idle" id="sc-gn"><span class="src-icon">🔍</span><span class="src-name">Google Actualités</span><span class="src-count" id="ct-gn"></span></div>
+    <div class="src-card idle" id="sc-paste"><span class="src-icon">📝</span><span class="src-name">Articles collés</span><span class="src-count" id="ct-paste"></span></div>
   </div>
 
-  <!-- ZONE COLLAGE -->
   <div class="paste-zone">
-    <div class="paste-title">📰 Articles Usine Nouvelle payants (optionnel — collez le texte des articles que vous avez lus)</div>
-    <textarea id="articlesInput" placeholder="Collez ici le texte des articles payants d'Usine Nouvelle de la semaine...&#10;&#10;L'outil scanne automatiquement : BOAMP (API officielle), RSS Usine Nouvelle, Batiactu, Google News industrie, Business France."></textarea>
+    <div class="paste-title">📰 Articles Usine Nouvelle payants — collez le texte ou les URLs</div>
+    <textarea id="articlesInput" placeholder="Collez ici le texte ou les URLs des articles payants Usine Nouvelle de la semaine..."></textarea>
   </div>
 
   <div class="launch-row">
-    <div class="sources-info">
-      <strong>Sources scannées automatiquement :</strong><br>
-      📋 API BOAMP (marchés publics officiels) · 📰 RSS Usine Nouvelle · 🏗 Batiactu · 🔍 Google News industrie · 🇫🇷 Business France<br>
-      <span style="color:var(--neo-red)">+ vos articles Usine Nouvelle collés ci-dessus</span>
+    <div class="launch-info">
+      <strong>Sources scannées :</strong> BOAMP · TED Europa · Usine Nouvelle · Usine Digitale · Les Échos · Le Moniteur · Batiactu · Mer et Marine · Air & Cosmos · Business France · France Industrie · Google Actualités<br>
+      <span style="color:var(--neo-red)">Dates strictement limitées à la semaine affichée ci-dessus</span>
     </div>
     <button class="launch-btn" id="launchBtn" onclick="fetchAll()">
       <svg width="15" height="15" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M1 7a6 6 0 1 0 1-3.2M1 1v3h3"/></svg>
@@ -232,13 +583,7 @@ footer{max-width:1200px;margin:2rem auto 0;padding:1.5rem 1.5rem 2rem;border-top
     </button>
   </div>
 
-  <div class="progress-bar" id="progressBar">
-    <div class="progress-steps">
-      <span class="pstep" id="ps1">📋 API BOAMP</span>
-      <span class="pstep" id="ps2">📰 RSS sources</span>
-      <span class="pstep" id="ps3">🤖 Analyse IA</span>
-      <span class="pstep" id="ps4">👤 Contacts</span>
-    </div>
+  <div class="progress-wrap" id="progressWrap">
     <div class="progress-title" id="progressTitle">Initialisation...</div>
     <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
   </div>
@@ -246,16 +591,15 @@ footer{max-width:1200px;margin:2rem auto 0;padding:1.5rem 1.5rem 2rem;border-top
   <div class="stats-row">
     <div class="stat-card"><div class="stat-label">Projets</div><div class="stat-value" id="sT">—</div><div class="stat-sub">identifiés</div></div>
     <div class="stat-card"><div class="stat-label">✅ Sélectionnés</div><div class="stat-value" id="sSel" style="color:var(--neo-red)">0</div><div class="stat-sub">pour mail</div></div>
-    <div class="stat-card"><div class="stat-label">BOAMP</div><div class="stat-value" id="sBOAMP" style="color:#1B5E20">—</div><div class="stat-sub">AO officiels</div></div>
-    <div class="stat-card"><div class="stat-label">Usine Nouvelle</div><div class="stat-value" id="sUN" style="color:var(--neo-red)">—</div><div class="stat-sub">articles</div></div>
     <div class="stat-card"><div class="stat-label">Contacts</div><div class="stat-value" id="sC" style="color:var(--blue)">—</div><div class="stat-sub">terrain</div></div>
+    <div class="stat-card"><div class="stat-label">Sources actives</div><div class="stat-value" id="sSrc">—</div><div class="stat-sub">sur 13</div></div>
     <div class="stat-card"><div class="stat-label">Volume</div><div class="stat-value" id="sV">—</div><div class="stat-sub">estimé</div></div>
   </div>
 
   <div class="toolbar">
     <div class="search-wrap">
       <span class="search-icon"><svg width="13" height="13" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="6.5" cy="6.5" r="5"/><path d="M11 11l2.5 2.5"/></svg></span>
-      <input type="text" id="searchInput" placeholder="Rechercher projet, client, région, contact..." oninput="renderCards()"/>
+      <input type="text" id="searchInput" placeholder="Projet, client, région, contact..." oninput="renderCards()"/>
     </div>
     <button class="tbtn" onclick="openMailModal()">📧 Mail</button>
     <button class="tbtn green" onclick="exportCSV()">📥 CSV</button>
@@ -264,9 +608,14 @@ footer{max-width:1200px;margin:2rem auto 0;padding:1.5rem 1.5rem 2rem;border-top
   <div class="filter-row" style="margin-bottom:5px">
     <span class="filter-label">Source</span>
     <span class="chip active" onclick="setF('source','all',this)">Toutes</span>
-    <span class="chip" onclick="setF('source','boamp',this)" style="color:#1B5E20;border-color:#2E7D32">📋 BOAMP</span>
-    <span class="chip" onclick="setF('source','un',this)" style="color:var(--neo-red);border-color:var(--neo-red)">📰 Usine Nouvelle</span>
-    <span class="chip" onclick="setF('source','rss',this)">🔍 Autres RSS</span>
+    <span class="chip" onclick="setF('source','BOAMP',this)">📋 BOAMP</span>
+    <span class="chip" onclick="setF('source','TED Europa',this)">🇪🇺 TED</span>
+    <span class="chip" onclick="setF('source','Usine Nouvelle',this)">📰 Usine Nouvelle</span>
+    <span class="chip" onclick="setF('source','Les Échos',this)">📊 Les Échos</span>
+    <span class="chip" onclick="setF('source','Le Moniteur',this)">🏗 Moniteur</span>
+    <span class="chip" onclick="setF('source','Batiactu',this)">🧱 Batiactu</span>
+    <span class="chip" onclick="setF('source','Mer et Marine',this)">⚓ Mer & Marine</span>
+    <span class="chip" onclick="setF('source','Google Actualités',this)">🔍 Google</span>
   </div>
   <div class="filter-row" style="margin-bottom:5px">
     <span class="filter-label">Secteur</span>
@@ -298,15 +647,15 @@ footer{max-width:1200px;margin:2rem auto 0;padding:1.5rem 1.5rem 2rem;border-top
 
   <div id="cardsContainer">
     <div class="empty-state">
-      <div style="font-size:2.5rem;margin-bottom:.75rem">📡</div>
-      <div style="font-size:14px;font-weight:600;color:var(--text)">Prêt pour la veille de la semaine</div>
-      <div style="font-size:12px;margin-top:6px">Collez vos articles Usine Nouvelle si vous en avez, puis cliquez <strong>Lancer la veille</strong>.</div>
+      <div class="empty-icon">📡</div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:700;color:var(--text);margin-bottom:6px">Prêt pour la veille hebdomadaire</div>
+      <div style="font-size:13px;margin-top:6px;max-width:400px;margin-left:auto;margin-right:auto">Collez vos articles Usine Nouvelle si vous en avez, puis cliquez <strong style="color:var(--neo-red)">Lancer la veille</strong>.</div>
     </div>
   </div>
 </div>
 
 <footer>
-  <span>NEO2 — Veille Industrielle · BOAMP API + RSS + IA claude-haiku-4-5</span>
+  <div><span class="footer-logo">NEO2</span> — Veille Investissements Industriels · 13 sources · Propulsé par Claude Haiku</div>
   <span id="lastUpdate"></span>
 </footer>
 
@@ -314,7 +663,6 @@ footer{max-width:1200px;margin:2rem auto 0;padding:1.5rem 1.5rem 2rem;border-top
 let allP=[],aF={source:'all',sector:'all',region:'all'};
 let apiKey=localStorage.getItem('anthropic_key')||'',demoMode=false;
 let selectedIds=new Set();
-let rawData={boamp:[],rss:[]};
 
 function getPrevWeek(){
   const now=new Date(),dow=now.getDay()||7;
@@ -322,14 +670,16 @@ function getPrevWeek(){
   const sun=new Date(mon);sun.setDate(mon.getDate()+6);sun.setHours(23,59,59,999);
   return{mon,sun};
 }
-// Debug: log current date
-console.log('Today:',new Date().toISOString(),'Week:',getPrevWeek().mon.toISOString(),'->',getPrevWeek().sun.toISOString());
 function fmtDate(d){return d.toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'})}
 function fmtDateShort(d){return d.toLocaleDateString('fr-FR',{day:'numeric',month:'short'})}
 function fmtISO(d){return d.toISOString().slice(0,10)}
 
 const week=getPrevWeek();
 document.getElementById('weekDates').textContent=`Lundi ${fmtDate(week.mon)} → Dimanche ${fmtDate(week.sun)}`;
+const monISO=fmtISO(week.mon);
+const sunISO=fmtISO(week.sun);
+const monStr=fmtDate(week.mon);
+const sunStr=fmtDate(week.sun);
 
 function showApiModal(){document.getElementById('apiModal').classList.remove('hidden');document.getElementById('apiKeyInput').value=apiKey}
 function saveApiKey(){const v=document.getElementById('apiKeyInput').value.trim();if(!v.startsWith('sk-')){alert('Clé invalide.');return}apiKey=v;localStorage.setItem('anthropic_key',v);demoMode=false;document.getElementById('apiModal').classList.add('hidden')}
@@ -337,326 +687,253 @@ function useDemoMode(){demoMode=true;document.getElementById('apiModal').classLi
 if(!apiKey)setTimeout(()=>document.getElementById('apiModal').classList.remove('hidden'),400);
 else document.getElementById('apiModal').classList.add('hidden');
 function setStatus(l,t){document.getElementById('navStatus').textContent=t;document.getElementById('navDot').className=l?'dot loading':'dot'}
-function setSrc(id,state){document.getElementById('src-'+id).className='src-badge '+(state==='ok'?'ok':state==='err'?'err':state==='loading'?'loading':'')}
-function setStep(n,state='active'){
-  for(let i=1;i<=4;i++){
-    const el=document.getElementById('ps'+i);
-    if(i<n)el.className='pstep done';
-    else if(i===n)el.className='pstep '+(state==='err'?'err':'active');
-    else el.className='pstep';
-  }
-  document.getElementById('progressFill').style.width=Math.round((n-1)/4*100)+'%';
+function setSrc(id,state,count){
+  const el=document.getElementById('sc-'+id);
+  const ct=document.getElementById('ct-'+id);
+  if(el)el.className='src-card '+(state||'idle');
+  if(ct&&count!==undefined)ct.textContent=count>0?count+'':'';
+}
+function setProgress(pct,title){
+  document.getElementById('progressFill').style.width=pct+'%';
+  if(title)document.getElementById('progressTitle').textContent=title;
 }
 
-// ─── BOAMP API ───────────────────────────────────────────────
-const BOAMP_KEYWORDS=['industrie','energie','environnement','traitement eau','pharma','chimie','agro','naval','infrastructure','aéronautique','ferroviaire','nucléaire','hydrogène'];
-
+// ─── BOAMP API ────────────────────────────────────────────────
 async function fetchBOAMP(){
   setSrc('boamp','loading');
-  setStep(1);
-  document.getElementById('progressTitle').textContent='Interrogation API BOAMP (marchés publics officiels)...';
-  const results=[];
   try{
-    const monISO=fmtISO(week.mon);
-    const sunISO=fmtISO(week.sun);
-    // BOAMP OpenDataSoft API - free, no key required
-    const url=`https://boamp-datadila.opendatasoft.com/api/explore/v2.1/catalog/datasets/boamp/records?where=dateparution>="${monISO}" AND dateparution<="${sunISO}"&limit=100&order_by=dateparution DESC`;
-    const r=await fetch(url,{headers:{'Accept':'application/json'},signal:AbortSignal.timeout(15000)});
+    const kw='industrie+energie+environnement+pharma+chimie+naval+infrastructure+nucleaire+hydrogene+eau+agroalimentaire';
+    const url=`https://boamp-datadila.opendatasoft.com/api/explore/v2.1/catalog/datasets/boamp/records?where=dateparution>="${monISO}" AND dateparution<="${sunISO}"&limit=100&refine=typeidentifiant:BOAMP&order_by=dateparution DESC`;
+    const r=await fetch(url,{signal:AbortSignal.timeout(15000)});
     if(!r.ok)throw new Error('BOAMP '+r.status);
     const d=await r.json();
-    const records=d.results||[];
-    // Filter relevant to NEO2 sectors
-    for(const rec of records){
-      const objet=(rec.objet||rec.intitule||'').toLowerCase();
-      const isRelevant=BOAMP_KEYWORDS.some(k=>objet.includes(k));
-      if(isRelevant){
-        results.push({
-          id:'boamp_'+rec.idweb,
-          title:rec.objet||rec.intitule||'Marché public',
-          source:'BOAMP',
-          source_type:'boamp',
-          date:rec.dateparution||monISO,
-          client:rec.nomacheteur||rec.acheteur||'',
-          localisation:rec.cp?rec.cp+' '+rec.ville:'France',
-          montant_raw:rec.montant||'',
-          texte:rec.objet+' '+(rec.descriptif||'')+' '+(rec.nomacheteur||'')
-        });
-      }
-    }
-    setSrc('boamp','ok');
-    document.getElementById('sBOAMP').textContent=results.length;
-  }catch(e){
-    console.error('BOAMP',e);
-    setSrc('boamp','err');
-  }
-  return results;
+    const KW=['industri','energi','environ','pharma','chimi','naval','infrastruct','nucleair','hydrogen','eau','agroaliment','traitement','chantier','construction'];
+    const filtered=(d.results||[]).filter(rec=>{
+      const txt=((rec.objet||'')+(rec.intitule||'')).toLowerCase();
+      return KW.some(k=>txt.includes(k));
+    });
+    setSrc('boamp','ok',filtered.length);
+    return filtered.map(r=>({source:'BOAMP',title:r.objet||r.intitule||'',client:r.nomacheteur||'',localisation:(r.ville||'France'),date:r.dateparution||monISO,texte:r.objet+' '+(r.descriptif||'')+' '+(r.nomacheteur||'')}));
+  }catch(e){console.warn('BOAMP',e);setSrc('boamp','err',0);return[]}
 }
 
-// ─── RSS FEEDS ───────────────────────────────────────────────
-// RSS via fetch direct avec proxy CORS fiable
-const PROXY='https://corsproxy.io/?';
-const RSS_FEEDS=[
-  {id:'gn1', name:'Google News investissement', srcBadge:'src-gnews',
-   url:PROXY+encodeURIComponent('https://news.google.com/rss/search?q=investissement+usine+industrie+France+millions+2026&hl=fr&gl=FR&ceid=FR:fr')},
-  {id:'gn2', name:'Google News chantier', srcBadge:'src-gnews',
-   url:PROXY+encodeURIComponent('https://news.google.com/rss/search?q=chantier+construction+usine+France+2026&hl=fr&gl=FR&ceid=FR:fr')},
-  {id:'gn3', name:'Google News AO', srcBadge:'src-gnews',
-   url:PROXY+encodeURIComponent('https://news.google.com/rss/search?q=appel+offres+industrie+energie+environnement+France+2026&hl=fr&gl=FR&ceid=FR:fr')},
-  {id:'gn4', name:'Google News pharma chimie', srcBadge:'src-gnews',
-   url:PROXY+encodeURIComponent('https://news.google.com/rss/search?q=investissement+pharma+chimie+agro+usine+France+2026&hl=fr&gl=FR&ceid=FR:fr')},
-  {id:'gn5', name:'Google News énergie', srcBadge:'src-gnews',
-   url:PROXY+encodeURIComponent('https://news.google.com/rss/search?q=investissement+energie+nucleaire+hydrogene+France+2026&hl=fr&gl=FR&ceid=FR:fr')},
-  {id:'gn6', name:'Google News naval BTP', srcBadge:'src-gnews',
-   url:PROXY+encodeURIComponent('https://news.google.com/rss/search?q=investissement+naval+BTP+infrastructure+France+2026&hl=fr&gl=FR&ceid=FR:fr')},
-  {id:'bati', name:'Batiactu', srcBadge:'src-batiactu',
-   url:PROXY+encodeURIComponent('https://www.batiactu.com/rss/flux.xml')},
-  {id:'un', name:'Usine Nouvelle', srcBadge:'src-un',
-   url:PROXY+encodeURIComponent('https://www.usinenouvelle.com/rss/toute-l-actu.rss')},
+// ─── SOURCES WEB via IA ───────────────────────────────────────
+const WEB_SOURCES=[
+  {id:'un',    name:'Usine Nouvelle',   icon:'📰', queries:[`site:usinenouvelle.com investissement usine industrie France after:${monISO} before:${sunISO}`,`site:usinenouvelle.com chantier construction millions after:${monISO} before:${sunISO}`]},
+  {id:'ud',    name:'Usine Digitale',   icon:'💻', queries:[`site:usine-digitale.fr investissement industrie France after:${monISO} before:${sunISO}`]},
+  {id:'echo',  name:'Les Échos',        icon:'📊', queries:[`site:lesechos.fr investissement industriel usine France after:${monISO} before:${sunISO}`]},
+  {id:'monitor',name:'Le Moniteur',     icon:'🏗', queries:[`site:lemoniteur.fr chantier construction industrie appel offres after:${monISO} before:${sunISO}`]},
+  {id:'bati',  name:'Batiactu',         icon:'🧱', queries:[`site:batiactu.com permis construire usine industrie after:${monISO} before:${sunISO}`]},
+  {id:'mer',   name:'Mer et Marine',    icon:'⚓', queries:[`site:meretmarine.com investissement naval chantier after:${monISO} before:${sunISO}`]},
+  {id:'air',   name:'Air & Cosmos',     icon:'✈', queries:[`site:air-cosmos.com investissement aéronautique défense France after:${monISO} before:${sunISO}`]},
+  {id:'bf',    name:'Business France',  icon:'🇫🇷', queries:[`site:businessfrance.fr investissement France industrie after:${monISO} before:${sunISO}`]},
+  {id:'fi',    name:'France Industrie', icon:'🏭', queries:[`site:franceindustrie.fr investissement chantier France after:${monISO} before:${sunISO}`]},
+  {id:'ted',   name:'TED Europa',       icon:'🇪🇺', queries:[`site:ted.europa.eu appel offres France industrie energie after:${monISO} before:${sunISO}`]},
+  {id:'gn',    name:'Google Actualités',icon:'🔍', queries:[
+    `investissement usine industrie France millions after:${monISO} before:${sunISO}`,
+    `chantier construction industrie France 2026 after:${monISO} before:${sunISO}`,
+    `appel offres industrie énergie environnement France after:${monISO} before:${sunISO}`,
+    `nouveau site industriel France after:${monISO} before:${sunISO}`
+  ]},
 ];
 
-function parseRSS(xmlStr){
+async function fetchWebSource(source){
+  setSrc(source.id,'loading');
+  const queries=source.queries.join('\n');
+  const prompt=`Recherche web pour NEO2 (cabinet ingénierie industrielle).
+
+SOURCES À CONSULTER : ${source.name} uniquement.
+REQUÊTES À EXÉCUTER (une par une) :
+${queries}
+
+⚠️ DATES STRICTES : inclure UNIQUEMENT les articles publiés entre le ${monStr} et le ${sunStr}.
+Si la date d'un article n'est pas dans cette fenêtre, IGNORE-LE.
+
+Pour chaque article trouvé dans cette fenêtre de dates, extrais :
+- Titre du projet
+- Client / donneur d'ordre
+- Montant si mentionné
+- Localisation
+- Date de publication exacte
+- Résumé factuel en 1 phrase
+
+Réponds en JSON : {"items":[{"title":"...","client":"...","montant":"...","localisation":"...","date":"JJ mois AAAA","summary":"..."}]}
+Si aucun article dans la fenêtre de dates : {"items":[]}`;
+
   try{
-    const parser=new DOMParser();
-    const doc=parser.parseFromString(xmlStr,'text/xml');
-    const items=doc.querySelectorAll('item');
-    return Array.from(items).map(item=>({
-      title:item.querySelector('title')?.textContent||'',
-      description:item.querySelector('description')?.textContent||'',
-      link:item.querySelector('link')?.textContent||'',
-      pubDate:item.querySelector('pubDate')?.textContent||''
-    }));
-  }catch{return[]}
-}
-
-function isInWeek(dateStr){
-  if(!dateStr)return false;
-  try{
-    const d=new Date(dateStr);
-    return d>=week.mon&&d<=week.sun;
-  }catch{return false}
-}
-
-async function fetchOneFeed(feed){
-  const r=await fetch(feed.url,{signal:AbortSignal.timeout(12000)});
-  if(!r.ok)throw new Error(feed.name+' '+r.status);
-  const txt=await r.text();
-  // Parse XML RSS
-  const parser=new DOMParser();
-  const doc=parser.parseFromString(txt,'text/xml');
-  const items=Array.from(doc.querySelectorAll('item'));
-  return items.map(item=>({
-    title:item.querySelector('title')?.textContent||'',
-    description:(item.querySelector('description')?.textContent||'').replace(/<[^>]*>/g,' '),
-    pubDate:item.querySelector('pubDate')?.textContent||''
-  }));
-}
-
-async function fetchRSS(){
-  setSrc('un','loading');setSrc('batiactu','loading');setSrc('gnews','loading');setSrc('bf','loading');
-  setStep(2);
-  document.getElementById('progressTitle').textContent='Lecture des '+RSS_FEEDS.length+' flux RSS en parallèle...';
-  const allItems=[];
-  const seenTitles=new Set();
-  const KW=['investissement','millions','milliards','chantier','usine','construction','industrie','energie','nucléaire','eau','pharma','chimie','naval','ferroviaire','aéro','environnement'];
-
-  // Fetch all feeds in parallel with individual timeouts
-  const results=await Promise.allSettled(RSS_FEEDS.map(feed=>fetchOneFeed(feed).then(items=>({feed,items})).catch(e=>({feed,error:e}))));
-
-  for(const res of results){
-    if(res.status==='rejected'){
-      console.warn('RSS rejected:',res.reason);
-      continue;
-    }
-    const {feed,items,error}=res.value;
-    if(error){console.warn(feed.name,error.message);setSrc(feed.srcBadge,'err');continue;}
-    setSrc(feed.srcBadge,'ok');
-    for(const item of (items||[])){
-      const title=(item.title||'').trim();
-      if(!title||seenTitles.has(title))continue;
-      seenTitles.add(title);
-      const inWeek=isInWeek(item.pubDate);
-      const text=(title+' '+(item.description||'')).toLowerCase();
-      const isRelevant=KW.some(k=>text.includes(k));
-      if(isRelevant){
-        allItems.push({
-          title,
-          description:(item.description||'').replace(/<[^>]*>/g,'').substring(0,250),
-          pubDate:item.pubDate,
-          source:feed.name,
-          source_id:feed.id,
-          inWeek
-        });
-      }
-    }
+    const r=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+      body:JSON.stringify({
+        model:'claude-haiku-4-5-20251001',
+        max_tokens:2000,
+        tools:[{type:'web_search_20250305',name:'web_search'}],
+        messages:[{role:'user',content:prompt}]
+      })
+    });
+    if(!r.ok)throw new Error('API '+r.status);
+    const d=await r.json();
+    const txt=d.content.map(i=>i.type==='text'?i.text:'').join('');
+    const clean=txt.replace(/```json|```/g,'').trim();
+    const s=clean.indexOf('{'),e=clean.lastIndexOf('}');
+    if(s===-1||e===-1)throw new Error('No JSON');
+    const parsed=JSON.parse(clean.substring(s,e+1));
+    const items=parsed.items||[];
+    setSrc(source.id,'ok',items.length);
+    return items.map(item=>({...item,source:source.name,source_id:source.id}));
+  }catch(e){
+    console.warn(source.name,e.message);
+    setSrc(source.id,'err',0);
+    return[];
   }
-  document.getElementById('progressTitle').textContent=allItems.length+' articles RSS pertinents collectés...';
-  return allItems;
 }
 
-// ─── MAIN FETCH ───────────────────────────────────────────────
+// ─── MAIN ─────────────────────────────────────────────────────
 async function fetchAll(){
   if(!apiKey&&!demoMode){showApiModal();return}
   if(demoMode){useDemoMode();return}
-  const rawPaste=document.getElementById('articlesInput').value.trim();
-  // Detect and fetch URLs pasted by user
-  let articles=rawPaste;
-  const urlRegex=/(https?:\/\/[^\s]+)/g;
-  const urls=rawPaste.match(urlRegex)||[];
-  if(urls.length>0){
-    document.getElementById('progressTitle').textContent='Lecture des articles Usine Nouvelle collés...';
-    const urlContents=await Promise.allSettled(urls.slice(0,5).map(async url=>{
-      try{
-        const proxy='https://api.allorigins.win/get?url='+encodeURIComponent(url);
-        const r=await fetch(proxy,{signal:AbortSignal.timeout(10000)});
-        const d=await r.json();
-        // Extract text content, remove HTML
-        const text=(d.contents||'').replace(/<[^>]*>/g,' ').replace(/\s+/g,' ').substring(0,1000);
-        return url+'\n'+text;
-      }catch(e){return url+' (non accessible)'}
-    }));
-    const fetchedTexts=urlContents.map(r=>r.status==='fulfilled'?r.value:r.reason).join('\n\n');
-    articles=rawPaste+'\n\n=== CONTENU ARTICLES ===\n'+fetchedTexts;
-    setSrc('paste','ok');
-  } else if(rawPaste){
-    setSrc('paste','ok');
-  }
+  const paste=document.getElementById('articlesInput').value.trim();
   const btn=document.getElementById('launchBtn');
   btn.disabled=true;allP=[];selectedIds=new Set();
-  const pb=document.getElementById('progressBar');pb.classList.add('visible');
-  setStatus(true,'Scan des sources...');
-  // Global timeout 5 minutes
-  const globalTimer=setTimeout(()=>{
-    btn.disabled=false;pb.classList.remove('visible');
-    setStatus(false,'Timeout — relancez ou vérifiez votre connexion');
-    if(!allP.length)allP=getDemoP();
-    updateStats();renderCards();
-  },300000);
+
+  // Reset source cards
+  WEB_SOURCES.forEach(s=>setSrc(s.id,'idle'));
+  setSrc('boamp','idle');setSrc('paste','idle');
+
+  const pw=document.getElementById('progressWrap');pw.classList.add('visible');
+  setStatus(true,'Scan des sources en cours...');
   document.getElementById('cardsContainer').innerHTML=[1,2,3,4,5].map(()=>`<div class="lcard"><div style="display:flex;justify-content:space-between;margin-bottom:10px"><div><div class="skeleton" style="height:13px;width:55%;margin-bottom:6px"></div><div style="display:flex;gap:5px"><div class="skeleton" style="width:60px;height:10px"></div><div class="skeleton" style="width:80px;height:10px"></div></div></div><div class="skeleton" style="height:40px;width:40px;border-radius:50%"></div></div><div class="skeleton" style="width:100%;height:10px;margin-bottom:4px"></div><div class="skeleton" style="width:75%;height:10px"></div></div>`).join('');
 
-  // 1. BOAMP
-  const boampData=await fetchBOAMP();
-  rawData.boamp=boampData;
+  // Global timeout 6 minutes
+  let timedOut=false;
+  const globalTimer=setTimeout(()=>{
+    timedOut=true;
+    btn.disabled=false;pw.classList.remove('visible');
+    setStatus(false,'Timeout 6min — résultats partiels affichés');
+    finalizeResults([],paste);
+  },360000);
 
-  // 2. RSS
-  const rssData=await fetchRSS();
-  rawData.rss=rssData;
+  // 1. BOAMP (parallel with web sources)
+  setProgress(5,'Interrogation BOAMP + démarrage scan sources web...');
+  const boampPromise=fetchBOAMP();
 
-  // Update source badges
-  if(articles)setSrc('paste','ok');
+  // 2. Web sources - run in parallel batches of 3
+  const allRawItems=[];
+  const batchSize=3;
+  const total=WEB_SOURCES.length;
+  for(let i=0;i<total;i+=batchSize){
+    if(timedOut)break;
+    const batch=WEB_SOURCES.slice(i,i+batchSize);
+    const pct=Math.round(10+(i/total)*70);
+    setProgress(pct,`Scan ${batch.map(s=>s.name).join(', ')}...`);
+    const results=await Promise.allSettled(batch.map(s=>fetchWebSource(s)));
+    results.forEach(r=>{if(r.status==='fulfilled')allRawItems.push(...r.value)});
+  }
 
-  // 3. AI Analysis
-  setStep(3);
-  document.getElementById('progressTitle').textContent='Analyse IA — structuration des projets et identification contacts...';
-  document.getElementById('progressFill').style.width='60%';
+  const boampItems=await boampPromise;
+  if(timedOut)return;
 
-  const monStr=fmtDate(week.mon);
-  const sunStr=fmtDate(week.sun);
+  // 3. Handle paste
+  if(paste){setSrc('paste','ok',1)}
 
-  // Build context for AI
-  const boampContext=boampData.slice(0,30).map(b=>`[BOAMP] ${b.date} | ${b.title} | Client: ${b.client} | ${b.localisation}`).join('\n');
-  const rssWeek=rssData.filter(r=>r.inWeek).slice(0,40);
-  const rssOther=rssData.filter(r=>!r.inWeek).slice(0,20);
-  const rssContext=[...rssWeek,...rssOther].map(r=>`[${r.source}${r.inWeek?' ✓semaine':''}] ${r.pubDate?new Date(r.pubDate).toLocaleDateString('fr-FR'):''} | ${r.title} | ${r.description}`).join('\n');
+  // 4. AI final analysis & structuring
+  setProgress(85,'Analyse IA — structuration, classement, identification contacts...');
 
-  const prompt=`Tu es expert en veille industrielle pour NEO2 (cabinet de conseil ingénierie process et infrastructure).
+  const boampCtx=boampItems.slice(0,20).map(b=>`[BOAMP] ${b.date} | ${b.title} | ${b.client} | ${b.localisation}`).join('\n');
+  const webCtx=allRawItems.slice(0,60).map(i=>`[${i.source}] ${i.date||''} | ${i.title} | ${i.client||''} | ${i.localisation||''} | ${i.summary||''}`).join('\n');
 
-⚠️ ANNÉE OBLIGATOIRE : 2026 ⚠️
-Nous sommes en AVRIL 2026. Toute annonce doit dater de 2026.
-Rejette systématiquement tout article ou projet de 2024 ou 2025.
+  const finalPrompt=`Tu es expert en veille industrielle pour NEO2 (cabinet conseil ingénierie process & infrastructure).
 
-DONNÉES RÉELLES COLLECTÉES cette semaine (${monStr} → ${sunStr} 2026) :
+⚠️ RÈGLE ABSOLUE : Nous sommes en 2026. N'inclure QUE des projets annoncés entre le ${monStr} et le ${sunStr} 2026.
+Tout projet antérieur à ${monStr} 2026 doit être IGNORÉ.
 
-═══ BOAMP — APPELS D'OFFRES OFFICIELS (${boampData.length} trouvés) ═══
-${boampContext||'Aucun résultat BOAMP cette semaine'}
+DONNÉES COLLECTÉES CETTE SEMAINE :
 
-═══ FLUX RSS — ARTICLES DE PRESSE (${rssData.length} articles dont ${rssWeek.length} de cette semaine) ═══
-${rssContext||'Aucun article RSS récupéré'}
+=== BOAMP (${boampItems.length} marchés publics) ===
+${boampCtx||'Aucun marché BOAMP cette semaine'}
 
-${articles?`═══ ARTICLES USINE NOUVELLE PAYANTS (fournis par l'utilisateur) ═══
-${articles.substring(0,3000)}`:''}
+=== SOURCES WEB (${allRawItems.length} articles) ===
+${webCtx||'Aucun article web cette semaine'}
 
-═══ MISSION ═══
-À partir de ces données RÉELLES uniquement :
-1. Identifie tous les projets d'investissement industriel pertinents pour NEO2
-2. Pour les articles RSS hors semaine (sans ✓semaine), inclus-les UNIQUEMENT si la date de publication est entre ${monStr} et ${sunStr} 2026
-3. REJETTE tout projet dont la date_annonce contient "2024" ou "2025" — nous sommes en 2026
-3. Priorité : énergie > environnement > industrie (pharma/chimie/agro) > naval > infra > asd > ferro
-4. Contacts : Chef de projet, Directeur de site, Responsable ingénierie, Responsable travaux — jamais PDG
-5. N'invente aucun projet qui n'est pas dans les données ci-dessus
+${paste?`=== ARTICLES USINE NOUVELLE PAYANTS (priorité absolue) ===\n${paste.substring(0,3000)}`:''}
+
+MISSION : À partir de ces données UNIQUEMENT, génère les fiches projets.
+- Secteurs NEO2 par priorité : energie > environnement > industrie (pharma/chimie/agro/cosmetique) > naval > infra > asd > ferro
+- Contacts : Chef de projet, Directeur de site, Responsable ingénierie, Responsable travaux UNIQUEMENT — jamais PDG/DG
+- Si peu de projets cette semaine, dis-le honnêtement — ne complète pas avec des projets anciens
+- Le champ date_annonce doit contenir une date en 2026
 
 Réponds UNIQUEMENT en JSON valide sans markdown :
 {"projects":[{
 "id":"p1",
-"title":"Nom court",
+"title":"Nom court projet",
 "type":"fr",
 "sector":"energie|environnement|industrie|naval|infra|asd|ferro",
-"region":"Région française",
+"region":"Région française exacte",
 "score_prospection":80,
 "montant":"120 M€",
 "montant_num":120,
 "localisation":"Ville, Région",
-"client":"Nom client",
-"entreprises":["MOE"],
+"client":"Nom client donneur d'ordre",
+"entreprises":["MOE principal"],
 "sous_traitants":["ST si mentionné"],
-"statut":"Vient d'être annoncé / Permis accordé / AO ouvert / Démarrage T3 2025",
-"date_annonce":"14 avril 2025",
-"source":"BOAMP / Usine Nouvelle / Batiactu / etc.",
-"source_type":"boamp|un|rss",
+"source":"Nom source exacte (BOAMP / Usine Nouvelle / etc.)",
+"date_annonce":"14 avril 2026",
+"statut":"Vient d'être annoncé / Permis accordé / AO ouvert / Démarrage T3 2026",
 "summary":"1-2 phrases factuelles tirées des données.",
 "opportunites":["Opportunité NEO2 1","Opportunité 2","Opportunité 3"],
 "contacts":[{
 "nom":"Prénom Nom",
-"titre":"Chef de projet",
+"titre":"Chef de projet / Directeur de site / Responsable ingénierie",
 "entreprise":"Société",
 "linkedin_url":"https://www.linkedin.com/search/results/people/?keywords=Pr%C3%A9nom+Nom+Soci%C3%A9t%C3%A9",
-"angle":"2 phrases personnalisées"
+"angle":"2 phrases d'accroche personnalisées"
 }],
-"tags":["tag1"]
+"tags":["tag1","tag2"]
 }]}`;
 
   try{
     const r=await fetch('https://api.anthropic.com/v1/messages',{
       method:'POST',
       headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
-      body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:8000,messages:[{role:'user',content:prompt}]})
+      body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:8000,messages:[{role:'user',content:finalPrompt}]})
     });
-    setStep(4);
-    document.getElementById('progressFill').style.width='90%';
-    document.getElementById('progressTitle').textContent='Finalisation...';
     if(!r.ok){const e=await r.json();throw new Error(e.error?.message||'API '+r.status)}
     const d=await r.json();
     const txt=d.content.map(i=>i.type==='text'?i.text:'').join('');
     const clean=txt.replace(/```json|```/g,'').trim();
     const s=clean.indexOf('{'),e2=clean.lastIndexOf('}');
-    if(s===-1||e2===-1)throw new Error('JSON invalide');
     allP=JSON.parse(clean.substring(s,e2+1)).projects||[];
-    allP.sort((a,b)=>{
-      const wa=(a.source_type==='boamp'?3:a.source_type==='un'?2:1);
-      const wb=(b.source_type==='boamp'?3:b.source_type==='un'?2:1);
-      return wb-wa||(b.score_prospection||0)-(a.score_prospection||0);
-    });
+    // Filter out any dates not in 2026
+    allP=allP.filter(p=>!p.date_annonce||p.date_annonce.includes('2026'));
+    allP.sort((a,b)=>(b.score_prospection||0)-(a.score_prospection||0));
   }catch(e){
     console.error(e);
-    setStatus(false,'Erreur IA: '+e.message);
+    setStatus(false,'Erreur analyse: '+e.message);
     if(!allP.length)allP=getDemoP();
   }
 
   clearTimeout(globalTimer);
-  document.getElementById('progressFill').style.width='100%';
-  pb.classList.remove('visible');
-  btn.disabled=false;
-  updateStats();renderCards();
+  finalizeResults(allRawItems,paste);
+}
+
+function finalizeResults(rawItems,paste){
+  const pw=document.getElementById('progressWrap');
+  setProgress(100,'Terminé');
+  setTimeout(()=>pw.classList.remove('visible'),500);
+  document.getElementById('launchBtn').disabled=false;
+  updateStats(rawItems);renderCards();
   const n=new Date();
   document.getElementById('lastUpdate').textContent='Lancé le '+n.toLocaleDateString('fr-FR')+' à '+n.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
   setStatus(false,allP.length+' projets · '+allP.reduce((s,p)=>s+(p.contacts||[]).length,0)+' contacts');
 }
 
-function updateStats(){
+function updateStats(raw){
   document.getElementById('sT').textContent=allP.length;
   document.getElementById('sSel').textContent=selectedIds.size;
-  document.getElementById('sBOAMP').textContent=allP.filter(p=>p.source_type==='boamp').length;
-  document.getElementById('sUN').textContent=allP.filter(p=>p.source_type==='un').length;
   document.getElementById('sC').textContent=allP.reduce((s,p)=>s+(p.contacts||[]).length,0);
+  const okSrc=document.querySelectorAll('.src-card.ok').length;
+  document.getElementById('sSrc').textContent=okSrc;
   const v=allP.reduce((s,p)=>s+(p.montant_num||0),0);
   document.getElementById('sV').textContent=v>0?Math.round(v/1000)+' Md€':'—';
 }
@@ -665,13 +942,7 @@ function setF(type,val,el){aF[type]=val;el.closest('.filter-row').querySelectorA
 function ini(n){return(n||'?').split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase()}
 function scClass(s){return s>=70?'score-high':s>=40?'score-mid':'score-low'}
 function matchR(p,f){if(f==='all')return true;if(f==='int')return p.type==='int';return(p.localisation+' '+(p.region||'')).toLowerCase().includes(f.toLowerCase())}
-function matchSrc(p,f){if(f==='all')return true;if(f==='boamp')return p.source_type==='boamp';if(f==='un')return p.source_type==='un';if(f==='rss')return p.source_type==='rss';return true}
-
-function srcBadge(p){
-  if(p.source_type==='boamp')return'<span class="badge badge-boamp">📋 BOAMP</span>';
-  if(p.source_type==='un')return'<span class="badge badge-un">📰 Usine Nouvelle</span>';
-  return'<span class="badge badge-rss">🔍 '+( p.source||'RSS')+'</span>';
-}
+function matchSrc(p,f){if(f==='all')return true;return(p.source||'').includes(f)}
 
 function toggleSelect(id,cb){
   if(cb.checked)selectedIds.add(id);else selectedIds.delete(id);
@@ -687,7 +958,8 @@ function renderCards(){
   const liUrl=ct=>`${ct.linkedin_url||'https://www.linkedin.com/search/results/people/?keywords='+encodeURIComponent((ct.nom||'')+' '+(ct.titre||'')+' '+(ct.entreprise||''))}`;
   c.innerHTML=list.map(p=>{
     const s=p.score_prospection||50,cts=p.contacts||[],sel=selectedIds.has(p.id);
-    return`<div class="project-card${sel?' selected':''}" id="card-${p.id}">
+    const dateWarn=p.date_annonce&&!p.date_annonce.includes('2026');
+    return`<div class="project-card${sel?' selected':''}${dateWarn?' date-warn':''}" id="card-${p.id}">
 <div class="card-main" onclick="toggleD('${p.id}')">
 <div class="card-top">
 <div class="card-left">
@@ -697,9 +969,10 @@ function renderCards(){
 </div>
 <div class="card-badges">
 <span class="badge ${p.type==='fr'?'badge-fr':'badge-int'}">${p.type==='fr'?'🇫🇷 France':'🌍 International'}</span>
-${srcBadge(p)}
+<span class="badge" style="background:var(--surface2);color:var(--text-muted);border:.5px solid var(--border-strong)">📰 ${p.source||'—'}</span>
 ${p.statut?`<span class="badge badge-statut">📌 ${p.statut}</span>`:''}
 ${p.region?`<span class="badge" style="background:var(--surface2);color:var(--text-muted);border:.5px solid var(--border-strong)">📍 ${p.region}</span>`:''}
+${dateWarn?'<span class="badge badge-warn">⚠️ Date à vérifier</span>':''}
 </div>
 </div>
 <div class="score-block"><div class="score-circle ${scClass(s)}">${s}</div><div class="score-label">lead</div></div>
@@ -709,7 +982,6 @@ ${p.region?`<span class="badge" style="background:var(--surface2);color:var(--te
 <span>📍 ${p.localisation||'—'}</span>
 <span>💶 ${p.montant||'—'}</span>
 ${p.date_annonce?`<span>📅 ${p.date_annonce}</span>`:''}
-${p.source?`<span style="color:var(--text-faint)">· ${p.source}</span>`:''}
 </div>
 <div class="card-summary">${p.summary||''}</div>
 ${cts.length?`<div class="contacts-preview">${cts.map(ct=>`<a class="contact-pill" href="${liUrl(ct)}" target="_blank" onclick="event.stopPropagation()"><div class="cavatar">${ini(ct.nom)}</div><span>${ct.nom} · ${ct.titre}</span></a>`).join('')}</div>`:''}
@@ -741,9 +1013,9 @@ ${p.statut?`<div style="font-size:11px;margin-bottom:3px"><span style="color:var
 ${p.date_annonce?`<div style="font-size:11px;margin-bottom:3px"><span style="color:var(--text-faint)">Annoncé : </span>${p.date_annonce}</div>`:''}
 ${p.source?`<div style="font-size:11px;margin-bottom:8px"><span style="color:var(--text-faint)">Source : </span>${p.source}</div>`:''}
 <div class="detail-actions">
-<a class="abtn primary" href="https://www.linkedin.com/search/results/people/?keywords=${encodeURIComponent((p.client||'')+' chef projet directeur site ingénierie')}" target="_blank">in Contacts</a>
-${p.source_type==='boamp'?`<a class="abtn" href="https://www.boamp.fr/avis/detail/${(p.id||'').replace('boamp_','')}" target="_blank">BOAMP</a>`:''}
+<a class="abtn primary" href="https://www.linkedin.com/search/results/people/?keywords=${encodeURIComponent((p.client||'')+' chef projet directeur site ingenierie')}" target="_blank">in Contacts</a>
 <a class="abtn" href="https://www.usinenouvelle.com/recherche/?q=${encodeURIComponent(p.title)}" target="_blank">Usine Nouvelle</a>
+<a class="abtn" href="https://www.boamp.fr" target="_blank">BOAMP</a>
 </div>
 </div>
 </div>
@@ -756,28 +1028,27 @@ function toggleD(id){const p=document.getElementById('det-'+id),b=document.getEl
 
 function openMailModal(){
   const sel=allP.filter(p=>selectedIds.has(p.id));
-  if(!sel.length){alert('Cochez au moins un projet pour générer le mail.');return}
+  if(!sel.length){alert('Cochez au moins un projet.');return}
   const sNames={energie:'⚡ Énergie & Nucléaire',environnement:'🌿 Environnement & Eau',industrie:'🏭 Industrie de Process',naval:'⚓ Naval & Lourd',infra:'🏗 Infrastructures & BTP',asd:'✈ Aéronautique & Défense',ferro:'🚆 Ferroviaire'};
   const bySec={};sel.forEach(p=>{if(!bySec[p.sector])bySec[p.sector]=[];bySec[p.sector].push(p)});
-  let mail=`Objet : NEO2 | Veille Investissements — ${fmtDateShort(week.mon)} au ${fmtDateShort(week.sun)}\n\n`;
-  mail+=`Bonjour,\n\nVoici la sélection des projets d'investissements industriels de la semaine, identifiés via BOAMP, Usine Nouvelle, Batiactu et Google News.\n\n`;
+  let mail=`Objet : NEO2 | Veille Investissements — ${fmtDateShort(week.mon)} au ${fmtDateShort(week.sun)} 2026\n\n`;
+  mail+=`Bonjour,\n\nVoici la sélection des projets d'investissements industriels de la semaine (sources : BOAMP, Usine Nouvelle, Les Échos, Batiactu, Mer et Marine, Air & Cosmos, Google Actualités...).\n\n`;
   mail+=`${'═'.repeat(55)}\n  NEO2 — VEILLE INVESTISSEMENTS INDUSTRIELS\n  ${fmtDate(week.mon)} → ${fmtDate(week.sun)}\n${'═'.repeat(55)}\n\n`;
   Object.entries(bySec).forEach(([sec,projs])=>{
     mail+=`${sNames[sec]||sec}\n${'─'.repeat(45)}\n`;
     projs.forEach((p,i)=>{
-      const srcLabel=p.source_type==='boamp'?'[BOAMP]':p.source_type==='un'?'[Usine Nouvelle]':'['+p.source+']';
-      mail+=`\n${i+1}. ${p.title} ${srcLabel}\n`;
+      mail+=`\n${i+1}. ${p.title} [${p.source||'—'}]\n`;
       mail+=`   Client : ${p.client||((p.entreprises||[])[0]||'—')}\n`;
       mail+=`   Localisation : ${p.localisation||'—'} | Montant : ${p.montant||'—'}\n`;
       if(p.statut)mail+=`   Statut : ${p.statut}\n`;
       mail+=`   ${p.summary||''}\n`;
       if((p.opportunites||[]).length)mail+=`   NEO2 : ${p.opportunites.slice(0,2).join(' · ')}\n`;
       if((p.contacts||[]).length){const ct=p.contacts[0];mail+=`   Contact : ${ct.nom} — ${ct.titre}\n`;}
-      mail+=`   Source : ${p.source||'—'} | ${p.date_annonce||''}\n`;
+      mail+=`   Date : ${p.date_annonce||'—'}\n`;
     });
     mail+='\n';
   });
-  mail+=`${'═'.repeat(55)}\n${sel.length} projet${sel.length>1?'s':''} | NEO2 Veille · www.neo2.eu\n`;
+  mail+=`${'═'.repeat(55)}\n${sel.length} projet${sel.length>1?'s':''} | NEO2 · www.neo2.eu\n`;
   document.getElementById('mailContent').value=mail;
   document.getElementById('mailModal').classList.remove('hidden');
 }
@@ -790,17 +1061,17 @@ function copyMail(){
 
 function exportCSV(){
   if(!allP.length){alert('Aucun projet.');return}
-  const rows=[['Projet','Source','Secteur','Région','Client','Statut','Localisation','Montant','Date','Sous-traitants','Opportunités','Contact','Titre','Entreprise','LinkedIn','Angle','Score']];
+  const rows=[['Projet','Source','Secteur','Région','Client','Statut','Localisation','Montant','Date annonce','Sous-traitants','Opportunités','Contact','Titre','Entreprise','LinkedIn','Angle','Score']];
   allP.forEach(p=>{const cts=p.contacts||[{}];cts.forEach(c=>{rows.push([p.title,p.source||'',p.sector,p.region||'',p.client||'',p.statut||'',p.localisation||'',p.montant||'',p.date_annonce||'',(p.sous_traitants||[]).join('/'),(p.opportunites||[]).join('|'),c.nom||'',c.titre||'',c.entreprise||p.client||'',c.linkedin_url||'',c.angle||'',p.score_prospection||''])})});
   const csv=rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\n');
   const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8'}));
-  a.download=`NEO2-veille-${fmtISO(week.mon)}.csv`;a.click();
+  a.download=`NEO2-veille-${monISO}.csv`;a.click();
 }
 
 function getDemoP(){return[
-  {id:"d1",title:"AO — Extension STEP Pierre-Bénite",type:"fr",sector:"environnement",region:"Auvergne-Rhône-Alpes",score_prospection:88,montant:"85 M€",montant_num:85,localisation:"Lyon, AuRA",client:"Métropole de Lyon",entreprises:["Veolia Water"],sous_traitants:["OTV"],statut:"AO publié sur BOAMP",date_annonce:"14 avril 2025",source:"BOAMP",source_type:"boamp",summary:"Appel d'offres publié au BOAMP pour l'extension de la station d'épuration de Pierre-Bénite. Travaux de tuyauterie et génie électrique.",opportunites:["Tuyauterie inox procédés eau","Génie électrique BT/HTA","Chaudronnerie cuves"],contacts:[{nom:"Frédéric Morel",titre:"Directeur de projet travaux neufs",entreprise:"Veolia Water Technologies",linkedin_url:"https://www.linkedin.com/search/results/people/?keywords=Fr%C3%A9d%C3%A9ric+Morel+Veolia+Water",angle:"Bonjour Frédéric, nous avons vu votre AO BOAMP pour Pierre-Bénite. NEO2 est spécialisé en tuyauterie inox pour STEP et nous aimerions candidater."}],tags:["eau","STEP","BOAMP"]},
-  {id:"d2",title:"Sanofi — nouvelle unité biopharma Vitry",type:"fr",sector:"industrie",region:"Île-de-France",score_prospection:94,montant:"400 M€",montant_num:400,localisation:"Vitry-sur-Seine, IDF",client:"Sanofi",entreprises:["Sanofi"],sous_traitants:[],statut:"Annoncé cette semaine",date_annonce:"10 avril 2025",source:"Usine Nouvelle",source_type:"un",summary:"Sanofi annonce 400M€ pour une nouvelle unité biopharmaceutique à Vitry. Source : article Usine Nouvelle payant.",opportunites:["Tuyauterie inox pharma GMP","Génie électrique salles propres","Chaudronnerie cuves GMP"],contacts:[{nom:"Hélène Marceau",titre:"Responsable travaux neufs",entreprise:"Sanofi Global Manufacturing",linkedin_url:"https://www.linkedin.com/search/results/people/?keywords=H%C3%A9l%C3%A8ne+Marceau+Travaux+Neufs+Sanofi",angle:"Bonjour Hélène, nous avons lu l'annonce Usine Nouvelle sur votre projet Vitry. NEO2 intervient sur les travaux neufs pharma GMP."}],tags:["pharma","Sanofi","GMP"]},
-  {id:"d3",title:"TotalEnergies Donges — AO tuyauterie",type:"fr",sector:"energie",region:"Pays de la Loire",score_prospection:91,montant:"200 M€",montant_num:200,localisation:"Donges, Loire-Atlantique",client:"TotalEnergies",entreprises:["TotalEnergies"],sous_traitants:["Spie"],statut:"AO BOAMP — clôture 30 mai",date_annonce:"7 avril 2025",source:"BOAMP",source_type:"boamp",summary:"Appel d'offres BOAMP pour l'extension de la raffinerie de Donges. Lots tuyauterie et chaudronnerie. Réponse avant le 30 mai.",opportunites:["Tuyauterie procédés haute pression","Chaudronnerie échangeurs","Instrumentation"],contacts:[{nom:"Stéphane Aubert",titre:"Directeur de projet raffinage",entreprise:"TotalEnergies Raffinage",linkedin_url:"https://www.linkedin.com/search/results/people/?keywords=St%C3%A9phane+Aubert+TotalEnergies+Raffinage",angle:"Bonjour Stéphane, nous répondons à votre AO BOAMP Donges. NEO2 a des références raffinerie chez Exxon et Esso."}],tags:["raffinerie","TotalEnergies","BOAMP"]}
+  {id:"d1",title:"AO BOAMP — Extension STEP Pierre-Bénite",type:"fr",sector:"environnement",region:"Auvergne-Rhône-Alpes",score_prospection:88,montant:"85 M€",montant_num:85,localisation:"Lyon, AuRA",client:"Métropole de Lyon",entreprises:["Veolia Water"],sous_traitants:["OTV"],source:"BOAMP",date_annonce:"14 avril 2026",statut:"AO publié",summary:"Marché public BOAMP pour l'extension de la STEP de Pierre-Bénite. Lots tuyauterie et génie électrique.",opportunites:["Tuyauterie inox procédés eau","Génie électrique BT/HTA","Chaudronnerie cuves"],contacts:[{nom:"Frédéric Morel",titre:"Directeur de projet travaux neufs",entreprise:"Veolia Water",linkedin_url:"https://www.linkedin.com/search/results/people/?keywords=Frederic+Morel+Veolia+Water",angle:"Bonjour Frédéric, nous avons vu votre AO BOAMP. NEO2 est spécialisé en tuyauterie inox pour STEP."}],tags:["eau","STEP","BOAMP"]},
+  {id:"d2",title:"Sanofi — nouvelle unité biopharma Vitry",type:"fr",sector:"industrie",region:"Île-de-France",score_prospection:94,montant:"400 M€",montant_num:400,localisation:"Vitry-sur-Seine, IDF",client:"Sanofi",entreprises:["Sanofi"],sous_traitants:[],source:"Usine Nouvelle",date_annonce:"10 avril 2026",statut:"Annoncé",summary:"Sanofi annonce 400M€ pour une nouvelle unité biopharmaceutique à Vitry. AO construction attendus fin 2026.",opportunites:["Tuyauterie inox pharma GMP","Génie électrique salles propres","Chaudronnerie cuves GMP"],contacts:[{nom:"Hélène Marceau",titre:"Responsable travaux neufs",entreprise:"Sanofi Global Manufacturing",linkedin_url:"https://www.linkedin.com/search/results/people/?keywords=Helene+Marceau+Sanofi+Travaux",angle:"Bonjour Hélène, NEO2 intervient sur les travaux pharma GMP. Votre projet Vitry nous intéresse."}],tags:["pharma","Sanofi","GMP"]},
+  {id:"d3",title:"Batiactu — Nouveau site logistique Geodis",type:"fr",sector:"infra",region:"Hauts-de-France",score_prospection:72,montant:"45 M€",montant_num:45,localisation:"Lens, Hauts-de-France",client:"Geodis",entreprises:["Vinci Construction"],sous_traitants:[],source:"Batiactu",date_annonce:"15 avril 2026",statut:"Permis accordé",summary:"Geodis obtient son permis pour un nouveau hub logistique à Lens. Démarrage travaux prévu T3 2026.",opportunites:["Génie électrique BT","Réseaux utilities","Sécurité incendie"],contacts:[{nom:"Marc Dupont",titre:"Chef de projet construction",entreprise:"Vinci Construction",linkedin_url:"https://www.linkedin.com/search/results/people/?keywords=Marc+Dupont+Chef+Projet+Vinci",angle:"Bonjour Marc, nous intervenons sur le génie électrique et les utilities pour les entrepôts logistiques."}],tags:["logistique","Hauts-de-France","Batiactu"]}
 ];}
 </script>
 </body>
