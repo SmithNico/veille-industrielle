@@ -464,73 +464,128 @@ async function fetchBOAMP(){
 }
 
 // ─── SOURCES WEB via IA ───────────────────────────────────────
-const WEB_SOURCES=[
-  {id:'un',     name:'Usine Nouvelle',    icon:'📰', query:`dernières annonces investissement usine industrie France publiées entre ${monStr} et ${sunStr} sur Usine Nouvelle`},
-  {id:'ud',     name:'Usine Digitale',    icon:'💻', query:`actualités investissement industrie numérique France ${monStr} ${sunStr} Usine Digitale`},
-  {id:'echo',   name:'Les Échos',         icon:'📊', query:`investissement industriel chantier usine France annoncé entre ${monStr} et ${sunStr} Les Échos`},
-  {id:'monitor',name:'Le Moniteur',       icon:'🏗', query:`appel offres chantier construction BTP France annoncé entre ${monStr} et ${sunStr} Le Moniteur`},
-  {id:'bati',   name:'Batiactu',          icon:'🧱', query:`permis construire usine industrie France annoncé entre ${monStr} et ${sunStr} Batiactu`},
-  {id:'mer',    name:'Mer et Marine',     icon:'⚓', query:`investissement chantier naval France annoncé entre ${monStr} et ${sunStr} Mer et Marine`},
-  {id:'air',    name:'Air & Cosmos',      icon:'✈', query:`investissement aéronautique défense France annoncé entre ${monStr} et ${sunStr} Air et Cosmos`},
-  {id:'bf',     name:'Business France',   icon:'🇫🇷', query:`annonces investissements industriels France entre ${monStr} et ${sunStr} Business France`},
-  {id:'fi',     name:'France Industrie',  icon:'🏭', query:`investissement chantier industrie France annoncé entre ${monStr} et ${sunStr} France Industrie`},
-  {id:'ted',    name:'TED Europa',        icon:'🇪🇺', query:`appels offres marchés publics industrie énergie France entre ${monStr} et ${sunStr} TED Europa`},
-  {id:'gn1',    name:'Google News — investissement', icon:'🔍', query:`investissement usine industrie France millions euros annoncé cette semaine entre ${monStr} et ${sunStr}`},
-  {id:'gn2',    name:'Google News — chantier',       icon:'🔍', query:`chantier construction nouveau site industriel France annoncé entre ${monStr} et ${sunStr}`},
-  {id:'gn3',    name:'Google News — énergie eau',    icon:'🔍', query:`investissement énergie nucléaire hydrogène eau traitement environnement France entre ${monStr} et ${sunStr}`},
-  {id:'gn4',    name:'Google News — pharma chimie',  icon:'🔍', query:`investissement usine pharma chimie agroalimentaire France annoncé entre ${monStr} et ${sunStr}`},
-];
+// Sources scannées en un seul appel consolidé
 
-async function fetchWebSource(source){
-  setSrc(source.id,'loading');
-  const queries=source.queries.join('\n');
-  const prompt=`Recherche web pour NEO2 (cabinet ingénierie industrielle).
+async function fetchAllWeb(boampItems, paste){
+  // Mark all web sources as loading
+  ['un','ud','echo','monitor','bati','mer','air','bf','fi','ted','gn'].forEach(id=>setSrc(id,'loading'));
 
-SOURCES À CONSULTER : ${source.name} uniquement.
-REQUÊTES À EXÉCUTER (une par une) :
-${queries}
+  const prompt=`Tu es expert en veille industrielle pour NEO2 (cabinet conseil ingénierie process & infrastructure).
 
-⚠️ DATES STRICTES : inclure UNIQUEMENT les articles publiés entre le ${monStr} et le ${sunStr}.
-Si la date d'un article n'est pas dans cette fenêtre, IGNORE-LE.
+MISSION : Recherche sur le web TOUTES les annonces d'investissements industriels publiées entre le ${monStr} et le ${sunStr} 2026.
 
-Pour chaque article trouvé dans cette fenêtre de dates, extrais :
-- Titre du projet
-- Client / donneur d'ordre
-- Montant si mentionné
-- Localisation
-- Date de publication exacte
-- Résumé factuel en 1 phrase
+Effectue ces recherches dans l'ordre, sur chacune de ces sources :
 
-IMPORTANT : Réponds UNIQUEMENT avec ce JSON exact, rien d'autre avant ou après :
-{"items":[{"title":"titre exact","client":"client","montant":"montant si connu","localisation":"ville","date":"JJ mois AAAA","summary":"1 phrase"}]}
-Si aucun article trouvé dans la fenêtre de dates : {"items":[]}`;
+1. Usine Nouvelle : investissement usine industrie France ${monStr} ${sunStr} 2026
+2. Usine Digitale : investissement industrie numérique France ${monStr} ${sunStr} 2026
+3. Les Échos : investissement industriel chantier usine France ${monStr} ${sunStr} 2026
+4. Le Moniteur : appel offres chantier BTP construction France ${monStr} ${sunStr} 2026
+5. Batiactu : permis construire usine industrie France ${monStr} ${sunStr} 2026
+6. Mer et Marine : investissement chantier naval France ${monStr} ${sunStr} 2026
+7. Air et Cosmos : investissement aéronautique défense France ${monStr} ${sunStr} 2026
+8. Business France : annonces investissements industriels France ${monStr} ${sunStr} 2026
+9. France Industrie : investissement chantier industrie France ${monStr} ${sunStr} 2026
+10. TED Europa : appels offres marchés publics industrie énergie France ${monStr} ${sunStr} 2026
+11. Google Actualités : investissement usine industrie France millions chantier ${monStr} ${sunStr} 2026
+12. Google Actualités : énergie nucléaire hydrogène eau pharma chimie agro investissement France ${monStr} ${sunStr} 2026
+13. Google Actualités : naval aéronautique défense ferroviaire infrastructure investissement France ${monStr} ${sunStr} 2026
+
+RÈGLES ABSOLUES :
+- Inclure UNIQUEMENT des articles publiés entre le ${monStr} et le ${sunStr} 2026
+- Si un article est hors période, l'ignorer complètement
+- Viser 20 à 40 projets distincts au total
+- Indiquer la source exacte pour chaque projet (Usine Nouvelle / Les Échos / Batiactu / etc.)
+
+${paste ? "ARTICLES USINE NOUVELLE FOURNIS PAR L'UTILISATEUR (priorité absolue, inclure même si hors période) :\n" + paste.substring(0,3000) : ""}
+
+Pour chaque projet trouvé, retourne ce JSON :
+{"projects":[{
+  "title":"Nom court du projet",
+  "client":"Entreprise cliente / maître d'ouvrage",
+  "montant":"ex: 120 M€",
+  "montant_num":120,
+  "localisation":"Ville, Région",
+  "region":"Région française",
+  "sector":"energie|environnement|industrie|naval|infra|asd|ferro",
+  "source":"Usine Nouvelle",
+  "date_annonce":"14 avril 2026",
+  "statut":"Vient d'être annoncé / Permis accordé / AO ouvert / Démarrage prévu",
+  "summary":"1-2 phrases factuelles.",
+  "sous_traitants":["ST si mentionné"],
+  "contacts":[{
+    "nom":"Prénom Nom",
+    "titre":"Chef de projet / Directeur de site / Responsable ingénierie / Responsable travaux",
+    "entreprise":"Société",
+    "linkedin_url":"https://www.linkedin.com/search/results/people/?keywords=Prenom+Nom+Societe",
+    "angle":"2 phrases d'accroche personnalisées au projet"
+  }],
+  "tags":["tag1","tag2"]
+}]}
+
+Réponds UNIQUEMENT avec le JSON, rien d'autre.`;
 
   try{
     const r=await fetch('https://api.anthropic.com/v1/messages',{
       method:'POST',
       headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
       body:JSON.stringify({
-        model:'claude-haiku-4-5-20251001',
-        max_tokens:3000,
+        model:'claude-sonnet-4-6',
+        max_tokens:8000,
         tools:[{type:'web_search_20250305',name:'web_search'}],
         messages:[{role:'user',content:prompt}]
       })
     });
-    if(!r.ok)throw new Error('API '+r.status);
+    if(!r.ok){const e=await r.json();throw new Error(e.error?.message||'API '+r.status)}
     const d=await r.json();
     const txt=d.content.map(i=>i.type==='text'?i.text:'').join('');
     const clean=txt.replace(/```json|```/g,'').trim();
-    const s=clean.indexOf('{'),e=clean.lastIndexOf('}');
-    if(s===-1||e===-1){console.warn(source.name,'No JSON in:',txt.substring(0,200));return[];}
-    let parsed;try{parsed=JSON.parse(clean.substring(s,e+1));}catch(pe){console.warn(source.name,'JSON parse error',pe.message);return[];}
-    const items=parsed.items||[];
-    setSrc(source.id,'ok',items.length);
-    return items.map(item=>({...item,source:source.name,source_id:source.id}));
+    const s=clean.indexOf('{'),e2=clean.lastIndexOf('}');
+    if(s===-1||e2===-1)throw new Error('No JSON');
+    const parsed=JSON.parse(clean.substring(s,e2+1));
+    const items=parsed.projects||[];
+
+    // Mark sources as ok/err based on what was found
+    const foundSources=new Set(items.map(i=>(i.source||'').toLowerCase()));
+    const srcMap={un:'usine nouvelle',ud:'usine digitale',echo:'échos',monitor:'moniteur',bati:'batiactu',mer:'mer et marine',air:'air',bf:'business france',fi:'france industrie',ted:'ted',gn:'google'};
+    Object.entries(srcMap).forEach(([id,key])=>{
+      const found=[...foundSources].some(s=>s.includes(key));
+      setSrc(id, found?'ok':'err', found?items.filter(i=>(i.source||'').toLowerCase().includes(key)).length:0);
+    });
+
+    return items;
   }catch(e){
-    console.warn(source.name,e.message);
-    setSrc(source.id,'err',0);
+    console.error('fetchAllWeb',e);
+    ['un','ud','echo','monitor','bati','mer','air','bf','fi','ted','gn'].forEach(id=>setSrc(id,'err'));
     return[];
   }
+}
+
+// ─── MAIN ─────────────────────────────────────────────────────
+function guessSector(txt){
+  const t=txt.toLowerCase();
+  if(t.includes('nucl')||t.includes('energ')||t.includes('hydrog')||t.includes('eolien')||t.includes('solaire'))return'energie';
+  if(t.includes('eau')||t.includes('step')||t.includes('traitement')||t.includes('environ')||t.includes('dechet'))return'environnement';
+  if(t.includes('pharma')||t.includes('chimi')||t.includes('agro')||t.includes('aliment')||t.includes('cosmet'))return'industrie';
+  if(t.includes('naval')||t.includes('marin')||t.includes('navire')||t.includes('port'))return'naval';
+  if(t.includes('aeronaut')||t.includes('defense')||t.includes('militair')||t.includes('airbus')||t.includes('safran'))return'asd';
+  if(t.includes('ferrov')||t.includes('sncf')||t.includes('metro')||t.includes('tramway')||t.includes('alstom'))return'ferro';
+  return'infra';
+}
+function guessOpportunites(txt){
+  const t=txt.toLowerCase();
+  const opps=[];
+  if(t.includes('tuyaut')||t.includes('fluid')||t.includes('process'))opps.push('Tuyauterie procédés');
+  if(t.includes('electr'))opps.push('Génie électrique');
+  if(t.includes('chaudron')||t.includes('metal'))opps.push('Chaudronnerie');
+  if(t.includes('civil')||t.includes('batiment')||t.includes('construct'))opps.push('Génie civil');
+  if(t.includes('mainten'))opps.push('Maintenance industrielle');
+  if(opps.length===0)opps.push('Ingénierie process','Travaux neufs','Sous-traitance spécialisée');
+  return opps.slice(0,3);
+}
+function formatDate(d){
+  if(!d)return'';
+  try{return new Date(d).toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'});}
+  catch{return d;}
 }
 
 // ─── MAIN ─────────────────────────────────────────────────────
@@ -562,101 +617,45 @@ async function fetchAll(){
   setProgress(5,'Interrogation BOAMP + démarrage scan sources web...');
   const boampPromise=fetchBOAMP();
 
-  // 2. Web sources - run in parallel batches of 3
-  const allRawItems=[];
-  const batchSize=3;
-  const total=WEB_SOURCES.length;
-  for(let i=0;i<total;i+=batchSize){
-    if(timedOut)break;
-    const batch=WEB_SOURCES.slice(i,i+batchSize);
-    const pct=Math.round(10+(i/total)*70);
-    setProgress(pct,`Scan ${batch.map(s=>s.name).join(', ')}...`);
-    const results=await Promise.allSettled(batch.map(s=>fetchWebSource(s)));
-    results.forEach(r=>{if(r.status==='fulfilled')allRawItems.push(...r.value)});
-  }
-
+  // 2. Web sources - single consolidated Sonnet call with web_search
+  setProgress(20,'Scan web toutes sources (2-3 min)...');
   const boampItems=await boampPromise;
   if(timedOut)return;
 
-  // 3. Handle paste
+  setProgress(30,'Recherche sur Usine Nouvelle, Les Échos, Batiactu, Google Actualités...');
   if(paste){setSrc('paste','ok',1)}
 
-  // 4. AI final analysis & structuring
-  setProgress(85,'Analyse IA — structuration, classement, identification contacts...');
+  const webProjects=await fetchAllWeb(boampItems, paste);
+  if(timedOut)return;
 
-  const boampCtx=boampItems.slice(0,20).map(b=>`[BOAMP] ${b.date} | ${b.title} | ${b.client} | ${b.localisation}`).join('\n');
-  const webCtx=allRawItems.slice(0,60).map(i=>`[${i.source}] ${i.date||''} | ${i.title} | ${i.client||''} | ${i.localisation||''} | ${i.summary||''}`).join('\n');
+  setProgress(85,'Fusion BOAMP + sources web...');
 
-  const finalPrompt=`Tu es expert en veille industrielle pour NEO2 (cabinet conseil ingénierie process & infrastructure).
+  // Merge BOAMP + web results
+  const boampProjects=boampItems.slice(0,20).map((b,i)=>({
+    id:'boamp_'+i,
+    title:b.title,
+    type:'fr',
+    sector:guessSector(b.title+' '+b.texte),
+    region:'',
+    score_prospection:75,
+    montant:'',montant_num:0,
+    localisation:b.localisation,
+    client:b.client,
+    entreprises:[b.client],
+    sous_traitants:[],
+    source:'BOAMP',
+    date_annonce:formatDate(b.date),
+    statut:'AO publié BOAMP',
+    summary:b.title+' — Marché public publié au BOAMP.',
+    opportunites:guessOpportunites(b.title+' '+b.texte),
+    contacts:[],tags:['BOAMP']
+  }));
 
-⚠️ RÈGLE ABSOLUE : Nous sommes en 2026. N'inclure QUE des projets annoncés entre le ${monStr} et le ${sunStr} 2026.
-Tout projet antérieur à ${monStr} 2026 doit être IGNORÉ.
-
-DONNÉES COLLECTÉES CETTE SEMAINE :
-
-=== BOAMP (${boampItems.length} marchés publics) ===
-${boampCtx||'Aucun marché BOAMP cette semaine'}
-
-=== SOURCES WEB (${allRawItems.length} articles) ===
-${webCtx||'Aucun article web cette semaine'}
-
-${paste?`=== ARTICLES USINE NOUVELLE PAYANTS (priorité absolue) ===\n${paste.substring(0,3000)}`:''}
-
-MISSION : À partir de ces données UNIQUEMENT, génère les fiches projets.
-- Secteurs NEO2 par priorité : energie > environnement > industrie (pharma/chimie/agro/cosmetique) > naval > infra > asd > ferro
-- Contacts : Chef de projet, Directeur de site, Responsable ingénierie, Responsable travaux UNIQUEMENT — jamais PDG/DG
-- Si peu de projets cette semaine, dis-le honnêtement — ne complète pas avec des projets anciens
-- Le champ date_annonce doit contenir une date en 2026
-
-Réponds UNIQUEMENT en JSON valide sans markdown :
-{"projects":[{
-"id":"p1",
-"title":"Nom court projet",
-"type":"fr",
-"sector":"energie|environnement|industrie|naval|infra|asd|ferro",
-"region":"Région française exacte",
-"score_prospection":80,
-"montant":"120 M€",
-"montant_num":120,
-"localisation":"Ville, Région",
-"client":"Nom client donneur d'ordre",
-"entreprises":["MOE principal"],
-"sous_traitants":["ST si mentionné"],
-"source":"Nom source exacte (BOAMP / Usine Nouvelle / etc.)",
-"date_annonce":"14 avril 2026",
-"statut":"Vient d'être annoncé / Permis accordé / AO ouvert / Démarrage T3 2026",
-"summary":"1-2 phrases factuelles tirées des données.",
-"opportunites":["Opportunité NEO2 1","Opportunité 2","Opportunité 3"],
-"contacts":[{
-"nom":"Prénom Nom",
-"titre":"Chef de projet / Directeur de site / Responsable ingénierie",
-"entreprise":"Société",
-"linkedin_url":"https://www.linkedin.com/search/results/people/?keywords=Pr%C3%A9nom+Nom+Soci%C3%A9t%C3%A9",
-"angle":"2 phrases d'accroche personnalisées"
-}],
-"tags":["tag1","tag2"]
-}]}`;
-
-  try{
-    const r=await fetch('https://api.anthropic.com/v1/messages',{
-      method:'POST',
-      headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
-      body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:8000,messages:[{role:'user',content:finalPrompt}]})
-    });
-    if(!r.ok){const e=await r.json();throw new Error(e.error?.message||'API '+r.status)}
-    const d=await r.json();
-    const txt=d.content.map(i=>i.type==='text'?i.text:'').join('');
-    const clean=txt.replace(/```json|```/g,'').trim();
-    const s=clean.indexOf('{'),e2=clean.lastIndexOf('}');
-    allP=JSON.parse(clean.substring(s,e2+1)).projects||[];
-    // Filter out any dates not in 2026
-    allP=allP.filter(p=>!p.date_annonce||p.date_annonce.includes('2026'));
-    allP.sort((a,b)=>(b.score_prospection||0)-(a.score_prospection||0));
-  }catch(e){
-    console.error(e);
-    setStatus(false,'Erreur analyse: '+e.message);
-    if(!allP.length)allP=getDemoP();
-  }
+  allP=[...boampProjects,...webProjects];
+  allP=allP.filter(p=>!p.date_annonce||p.date_annonce.includes('2026')||p.source==='BOAMP');
+  // Add id and type if missing
+  allP=allP.map((p,i)=>({...p,id:p.id||'p'+i,type:p.type||'fr',score_prospection:p.score_prospection||60}));
+  allP.sort((a,b)=>(b.score_prospection||0)-(a.score_prospection||0));
 
   clearTimeout(globalTimer);
   finalizeResults(allRawItems,paste);
