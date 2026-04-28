@@ -465,22 +465,20 @@ async function fetchBOAMP(){
 
 // ─── SOURCES WEB via IA ───────────────────────────────────────
 const WEB_SOURCES=[
-  {id:'un',    name:'Usine Nouvelle',   icon:'📰', queries:[`site:usinenouvelle.com investissement usine industrie France after:${monISO} before:${sunISO}`,`site:usinenouvelle.com chantier construction millions after:${monISO} before:${sunISO}`]},
-  {id:'ud',    name:'Usine Digitale',   icon:'💻', queries:[`site:usine-digitale.fr investissement industrie France after:${monISO} before:${sunISO}`]},
-  {id:'echo',  name:'Les Échos',        icon:'📊', queries:[`site:lesechos.fr investissement industriel usine France after:${monISO} before:${sunISO}`]},
-  {id:'monitor',name:'Le Moniteur',     icon:'🏗', queries:[`site:lemoniteur.fr chantier construction industrie appel offres after:${monISO} before:${sunISO}`]},
-  {id:'bati',  name:'Batiactu',         icon:'🧱', queries:[`site:batiactu.com permis construire usine industrie after:${monISO} before:${sunISO}`]},
-  {id:'mer',   name:'Mer et Marine',    icon:'⚓', queries:[`site:meretmarine.com investissement naval chantier after:${monISO} before:${sunISO}`]},
-  {id:'air',   name:'Air & Cosmos',     icon:'✈', queries:[`site:air-cosmos.com investissement aéronautique défense France after:${monISO} before:${sunISO}`]},
-  {id:'bf',    name:'Business France',  icon:'🇫🇷', queries:[`site:businessfrance.fr investissement France industrie after:${monISO} before:${sunISO}`]},
-  {id:'fi',    name:'France Industrie', icon:'🏭', queries:[`site:franceindustrie.fr investissement chantier France after:${monISO} before:${sunISO}`]},
-  {id:'ted',   name:'TED Europa',       icon:'🇪🇺', queries:[`site:ted.europa.eu appel offres France industrie energie after:${monISO} before:${sunISO}`]},
-  {id:'gn',    name:'Google Actualités',icon:'🔍', queries:[
-    `investissement usine industrie France millions after:${monISO} before:${sunISO}`,
-    `chantier construction industrie France 2026 after:${monISO} before:${sunISO}`,
-    `appel offres industrie énergie environnement France after:${monISO} before:${sunISO}`,
-    `nouveau site industriel France after:${monISO} before:${sunISO}`
-  ]},
+  {id:'un',     name:'Usine Nouvelle',    icon:'📰', query:`dernières annonces investissement usine industrie France publiées entre ${monStr} et ${sunStr} sur Usine Nouvelle`},
+  {id:'ud',     name:'Usine Digitale',    icon:'💻', query:`actualités investissement industrie numérique France ${monStr} ${sunStr} Usine Digitale`},
+  {id:'echo',   name:'Les Échos',         icon:'📊', query:`investissement industriel chantier usine France annoncé entre ${monStr} et ${sunStr} Les Échos`},
+  {id:'monitor',name:'Le Moniteur',       icon:'🏗', query:`appel offres chantier construction BTP France annoncé entre ${monStr} et ${sunStr} Le Moniteur`},
+  {id:'bati',   name:'Batiactu',          icon:'🧱', query:`permis construire usine industrie France annoncé entre ${monStr} et ${sunStr} Batiactu`},
+  {id:'mer',    name:'Mer et Marine',     icon:'⚓', query:`investissement chantier naval France annoncé entre ${monStr} et ${sunStr} Mer et Marine`},
+  {id:'air',    name:'Air & Cosmos',      icon:'✈', query:`investissement aéronautique défense France annoncé entre ${monStr} et ${sunStr} Air et Cosmos`},
+  {id:'bf',     name:'Business France',   icon:'🇫🇷', query:`annonces investissements industriels France entre ${monStr} et ${sunStr} Business France`},
+  {id:'fi',     name:'France Industrie',  icon:'🏭', query:`investissement chantier industrie France annoncé entre ${monStr} et ${sunStr} France Industrie`},
+  {id:'ted',    name:'TED Europa',        icon:'🇪🇺', query:`appels offres marchés publics industrie énergie France entre ${monStr} et ${sunStr} TED Europa`},
+  {id:'gn1',    name:'Google News — investissement', icon:'🔍', query:`investissement usine industrie France millions euros annoncé cette semaine entre ${monStr} et ${sunStr}`},
+  {id:'gn2',    name:'Google News — chantier',       icon:'🔍', query:`chantier construction nouveau site industriel France annoncé entre ${monStr} et ${sunStr}`},
+  {id:'gn3',    name:'Google News — énergie eau',    icon:'🔍', query:`investissement énergie nucléaire hydrogène eau traitement environnement France entre ${monStr} et ${sunStr}`},
+  {id:'gn4',    name:'Google News — pharma chimie',  icon:'🔍', query:`investissement usine pharma chimie agroalimentaire France annoncé entre ${monStr} et ${sunStr}`},
 ];
 
 async function fetchWebSource(source){
