@@ -530,7 +530,7 @@ Réponds UNIQUEMENT avec le JSON, rien d'autre.`;
       headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
       body:JSON.stringify({
         model:'claude-sonnet-4-6',
-        max_tokens:8000,
+        max_tokens:16000,
         tools:[{type:'web_search_20250305',name:'web_search'}],
         messages:[{role:'user',content:prompt}]
       })
@@ -539,9 +539,21 @@ Réponds UNIQUEMENT avec le JSON, rien d'autre.`;
     const d=await r.json();
     const txt=d.content.map(i=>i.type==='text'?i.text:'').join('');
     const clean=txt.replace(/```json|```/g,'').trim();
-    const s=clean.indexOf('{'),e2=clean.lastIndexOf('}');
-    if(s===-1||e2===-1)throw new Error('No JSON');
-    const parsed=JSON.parse(clean.substring(s,e2+1));
+    const s=clean.indexOf('{');
+    if(s===-1)throw new Error('No JSON start');
+    let jsonStr=clean.substring(s);
+    // Try full parse first
+    let parsed;
+    try{parsed=JSON.parse(jsonStr);}
+    catch(e){
+      // Try to recover truncated JSON by finding last complete object
+      const lastBrace=jsonStr.lastIndexOf('},');
+      if(lastBrace>0){
+        jsonStr=jsonStr.substring(0,lastBrace+1)+']}';
+        try{parsed=JSON.parse(jsonStr);}
+        catch(e2){throw new Error('JSON truncated and unrecoverable');}
+      } else throw new Error('JSON parse failed: '+e.message);
+    }
     const items=parsed.projects||[];
 
     // Mark sources as ok/err based on what was found
@@ -610,7 +622,7 @@ async function fetchAll(){
     timedOut=true;
     btn.disabled=false;pw.classList.remove('visible');
     setStatus(false,'Timeout 6min — résultats partiels affichés');
-    finalizeResults([],paste);
+    finalizeResults();
   },360000);
 
   // 1. BOAMP (parallel with web sources)
@@ -658,10 +670,10 @@ async function fetchAll(){
   allP.sort((a,b)=>(b.score_prospection||0)-(a.score_prospection||0));
 
   clearTimeout(globalTimer);
-  finalizeResults(allRawItems,paste);
+  finalizeResults();
 }
 
-function finalizeResults(rawItems,paste){
+function finalizeResults(){
   const pw=document.getElementById('progressWrap');
   setProgress(100,'Terminé');
   setTimeout(()=>pw.classList.remove('visible'),500);
