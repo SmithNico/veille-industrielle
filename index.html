@@ -678,13 +678,13 @@ function finalizeResults(){
   setProgress(100,'Terminé');
   setTimeout(()=>pw.classList.remove('visible'),500);
   document.getElementById('launchBtn').disabled=false;
-  updateStats(rawItems);renderCards();
+  updateStats();renderCards();
   const n=new Date();
   document.getElementById('lastUpdate').textContent='Lancé le '+n.toLocaleDateString('fr-FR')+' à '+n.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
   setStatus(false,allP.length+' projets · '+allP.reduce((s,p)=>s+(p.contacts||[]).length,0)+' contacts');
 }
 
-function updateStats(raw){
+function updateStats(){
   document.getElementById('sT').textContent=allP.length;
   document.getElementById('sSel').textContent=selectedIds.size;
   document.getElementById('sC').textContent=allP.reduce((s,p)=>s+(p.contacts||[]).length,0);
