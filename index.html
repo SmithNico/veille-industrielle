@@ -293,22 +293,15 @@ footer{max-width:1280px;margin:2rem auto 0;padding:1.5rem 2rem 2rem;border-top:.
       <div class="week-label">Semaine analysée</div>
       <div class="week-dates" id="weekDates">—</div>
     </div>
-    <div class="week-right">13 sources · Dates vérifiées<br>BOAMP · Usine Nouvelle · Les Échos · Batiactu · +9</div>
+    <div class="week-right">5 sources sélectionnées · Dates vérifiées<br>BOAMP · Usine Nouvelle · Journal des Entreprises · Le Moniteur · Google</div>
   </div>
 
   <!-- SOURCES STATUS GRID -->
   <div class="sources-grid" id="sourcesGrid">
     <div class="src-card idle" id="sc-boamp"><span class="src-icon">📋</span><span class="src-name">BOAMP</span><span class="src-count" id="ct-boamp"></span></div>
-    <div class="src-card idle" id="sc-ted"><span class="src-icon">🇪🇺</span><span class="src-name">TED Europa</span><span class="src-count" id="ct-ted"></span></div>
     <div class="src-card idle" id="sc-un"><span class="src-icon">📰</span><span class="src-name">Usine Nouvelle</span><span class="src-count" id="ct-un"></span></div>
-    <div class="src-card idle" id="sc-ud"><span class="src-icon">💻</span><span class="src-name">Usine Digitale</span><span class="src-count" id="ct-ud"></span></div>
-    <div class="src-card idle" id="sc-echo"><span class="src-icon">📊</span><span class="src-name">Les Échos</span><span class="src-count" id="ct-echo"></span></div>
+    <div class="src-card idle" id="sc-jde"><span class="src-icon">📊</span><span class="src-name">Journal des Entreprises</span><span class="src-count" id="ct-jde"></span></div>
     <div class="src-card idle" id="sc-monitor"><span class="src-icon">🏗</span><span class="src-name">Le Moniteur</span><span class="src-count" id="ct-monitor"></span></div>
-    <div class="src-card idle" id="sc-bati"><span class="src-icon">🧱</span><span class="src-name">Batiactu</span><span class="src-count" id="ct-bati"></span></div>
-    <div class="src-card idle" id="sc-mer"><span class="src-icon">⚓</span><span class="src-name">Mer et Marine</span><span class="src-count" id="ct-mer"></span></div>
-    <div class="src-card idle" id="sc-air"><span class="src-icon">✈</span><span class="src-name">Air & Cosmos</span><span class="src-count" id="ct-air"></span></div>
-    <div class="src-card idle" id="sc-bf"><span class="src-icon">🇫🇷</span><span class="src-name">Business France</span><span class="src-count" id="ct-bf"></span></div>
-    <div class="src-card idle" id="sc-fi"><span class="src-icon">🏭</span><span class="src-name">France Industrie</span><span class="src-count" id="ct-fi"></span></div>
     <div class="src-card idle" id="sc-gn"><span class="src-icon">🔍</span><span class="src-name">Google Actualités</span><span class="src-count" id="ct-gn"></span></div>
     <div class="src-card idle" id="sc-paste"><span class="src-icon">📝</span><span class="src-name">Articles collés</span><span class="src-count" id="ct-paste"></span></div>
   </div>
@@ -338,7 +331,7 @@ footer{max-width:1280px;margin:2rem auto 0;padding:1.5rem 2rem 2rem;border-top:.
     <div class="stat-card"><div class="stat-label">Projets</div><div class="stat-value" id="sT">—</div><div class="stat-sub">identifiés</div></div>
     <div class="stat-card"><div class="stat-label">✅ Sélectionnés</div><div class="stat-value" id="sSel" style="color:var(--neo-red)">0</div><div class="stat-sub">pour mail</div></div>
     <div class="stat-card"><div class="stat-label">Contacts</div><div class="stat-value" id="sC" style="color:var(--blue)">—</div><div class="stat-sub">terrain</div></div>
-    <div class="stat-card"><div class="stat-label">Sources actives</div><div class="stat-value" id="sSrc">—</div><div class="stat-sub">sur 13</div></div>
+    <div class="stat-card"><div class="stat-label">Sources actives</div><div class="stat-value" id="sSrc">—</div><div class="stat-sub">sur 5</div></div>
     <div class="stat-card"><div class="stat-label">Volume</div><div class="stat-value" id="sV">—</div><div class="stat-sub">estimé</div></div>
   </div>
 
@@ -355,13 +348,10 @@ footer{max-width:1280px;margin:2rem auto 0;padding:1.5rem 2rem 2rem;border-top:.
     <span class="filter-label">Source</span>
     <span class="chip active" onclick="setF('source','all',this)">Toutes</span>
     <span class="chip" onclick="setF('source','BOAMP',this)">📋 BOAMP</span>
-    <span class="chip" onclick="setF('source','TED Europa',this)">🇪🇺 TED</span>
     <span class="chip" onclick="setF('source','Usine Nouvelle',this)">📰 Usine Nouvelle</span>
-    <span class="chip" onclick="setF('source','Les Échos',this)">📊 Les Échos</span>
-    <span class="chip" onclick="setF('source','Le Moniteur',this)">🏗 Moniteur</span>
-    <span class="chip" onclick="setF('source','Batiactu',this)">🧱 Batiactu</span>
-    <span class="chip" onclick="setF('source','Mer et Marine',this)">⚓ Mer & Marine</span>
-    <span class="chip" onclick="setF('source','Google Actualités',this)">🔍 Google</span>
+    <span class="chip" onclick="setF('source','Journal des Entreprises',this)">📊 Journal des Entreprises</span>
+    <span class="chip" onclick="setF('source','Le Moniteur',this)">🏗 Le Moniteur</span>
+    <span class="chip" onclick="setF('source','Google',this)">🔍 Google Actualités</span>
   </div>
   <div class="filter-row" style="margin-bottom:5px">
     <span class="filter-label">Secteur</span>
@@ -468,27 +458,19 @@ async function fetchBOAMP(){
 
 async function fetchAllWeb(boampItems, paste){
   // Mark all web sources as loading
-  ['un','ud','echo','monitor','bati','mer','air','bf','fi','ted','gn'].forEach(id=>setSrc(id,'loading'));
+  ['un','jde','monitor','gn'].forEach(id=>setSrc(id,'loading'));
 
   const prompt=`Tu es expert en veille industrielle pour NEO2 (cabinet conseil ingénierie process & infrastructure).
 
 MISSION : Recherche sur le web TOUTES les annonces d'investissements industriels publiées entre le ${monStr} et le ${sunStr} 2026.
 
-Effectue ces recherches dans l'ordre, sur chacune de ces sources :
+Effectue ces recherches dans l'ordre :
 
-1. Usine Nouvelle : investissement usine industrie France ${monStr} ${sunStr} 2026
-2. Usine Digitale : investissement industrie numérique France ${monStr} ${sunStr} 2026
-3. Les Échos : investissement industriel chantier usine France ${monStr} ${sunStr} 2026
-4. Le Moniteur : appel offres chantier BTP construction France ${monStr} ${sunStr} 2026
-5. Batiactu : permis construire usine industrie France ${monStr} ${sunStr} 2026
-6. Mer et Marine : investissement chantier naval France ${monStr} ${sunStr} 2026
-7. Air et Cosmos : investissement aéronautique défense France ${monStr} ${sunStr} 2026
-8. Business France : annonces investissements industriels France ${monStr} ${sunStr} 2026
-9. France Industrie : investissement chantier industrie France ${monStr} ${sunStr} 2026
-10. TED Europa : appels offres marchés publics industrie énergie France ${monStr} ${sunStr} 2026
-11. Google Actualités : investissement usine industrie France millions chantier ${monStr} ${sunStr} 2026
-12. Google Actualités : énergie nucléaire hydrogène eau pharma chimie agro investissement France ${monStr} ${sunStr} 2026
-13. Google Actualités : naval aéronautique défense ferroviaire infrastructure investissement France ${monStr} ${sunStr} 2026
+1. Usine Nouvelle (usinenouvelle.com) : investissement usine industrie chantier France entre ${monStr} et ${sunStr} 2026
+2. Le Journal des Entreprises (lejournaldesentreprises.com) : investissement industriel usine chantier France entre ${monStr} et ${sunStr} 2026
+3. Le Moniteur (lemoniteur.fr) : chantier construction industrie appel offres France entre ${monStr} et ${sunStr} 2026
+4. Google Actualités : investissement usine industrie chantier France millions entre ${monStr} et ${sunStr} 2026
+5. Google Actualités : énergie nucléaire hydrogène eau pharma chimie agro naval investissement France entre ${monStr} et ${sunStr} 2026
 
 RÈGLES ABSOLUES :
 - Inclure UNIQUEMENT des articles publiés entre le ${monStr} et le ${sunStr} 2026
@@ -558,7 +540,7 @@ Réponds UNIQUEMENT avec le JSON, rien d'autre.`;
 
     // Mark sources as ok/err based on what was found
     const foundSources=new Set(items.map(i=>(i.source||'').toLowerCase()));
-    const srcMap={un:'usine nouvelle',ud:'usine digitale',echo:'échos',monitor:'moniteur',bati:'batiactu',mer:'mer et marine',air:'air',bf:'business france',fi:'france industrie',ted:'ted',gn:'google'};
+    const srcMap={un:'usine nouvelle',jde:'journal des entreprises',monitor:'moniteur',gn:'google'};
     Object.entries(srcMap).forEach(([id,key])=>{
       const found=[...foundSources].some(s=>s.includes(key));
       setSrc(id, found?'ok':'err', found?items.filter(i=>(i.source||'').toLowerCase().includes(key)).length:0);
@@ -567,7 +549,7 @@ Réponds UNIQUEMENT avec le JSON, rien d'autre.`;
     return items;
   }catch(e){
     console.error('fetchAllWeb',e);
-    ['un','ud','echo','monitor','bati','mer','air','bf','fi','ted','gn'].forEach(id=>setSrc(id,'err'));
+    ['un','jde','monitor','gn'].forEach(id=>setSrc(id,'err'));
     return[];
   }
 }
@@ -609,7 +591,7 @@ async function fetchAll(){
   btn.disabled=true;allP=[];selectedIds=new Set();
 
   // Reset source cards
-  ['un','ud','echo','monitor','bati','mer','air','bf','fi','ted','gn'].forEach(id=>setSrc(id,'idle'));
+  ['un','jde','monitor','gn'].forEach(id=>setSrc(id,'idle'));
   setSrc('boamp','idle');setSrc('paste','idle');
 
   const pw=document.getElementById('progressWrap');pw.classList.add('visible');
